@@ -21,8 +21,11 @@ class PostController extends Controller
            'post_image'=>'file',
            'body'=>'required'
        ]);
-       if ($request->input('post_image')){
-            $inputs['post_image'] = $request->input(post_image)->store('images');
+       if ($request->post_image){
+            $inputs['post_image'] = $request->post_image->store('images');
         }
+
+       auth()->user()->posts()->create($inputs);
+       return back();
     }
 }
