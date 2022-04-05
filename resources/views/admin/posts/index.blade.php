@@ -5,6 +5,8 @@
            <div class="alert alert-danger">{{session('message')}}</div>
             @elseif(session('post-created-message'))
             <div class="alert alert-success">{{session('post-created-message')}}</div>
+            @elseif(session('post-updated-message'))
+            <div class="alert alert-success">{{session('post-updated-message')}}</div>
         @endif
         <div class="card shadow mb-4">
             <div class="card-header py-3">

@@ -49,4 +49,22 @@ class PostController extends Controller
         $request->session()->flash('message','post was deleted');
         return back();
     }
+
+    public function update(Post $post,Request $request){
+        $inputs= $request->validate([
+            'title'=>'required|min:8|max:255',
+            'post_image'=>'file',
+            'body'=>'required'
+        ]);
+        if ($request->post_image){
+            $inputs['post_image'] = $request->post_image->store('images');
+            $post->post_image =$inputs['post_image'];
+        }
+        $post->title =$inputs['title'];
+        $post->body=$inputs['body'];
+
+        posts()->update();
+        session()->flash('post-updated-message','post '.strtoupper($inputs['title']). 'was updated');
+        return redirect()->route('post.index');
+    }
 }
