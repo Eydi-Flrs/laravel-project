@@ -20,10 +20,11 @@ class PostController extends Controller
         return view('blog-post',['post'=>$post]);
     }
     public function create(){
-
+        $this->authorize('create',Post::class);
         return view('admin.posts.create');
     }
     public function store(Request $request){
+        $this->authorize('create',Post::class);
        $inputs= $request->validate([
            'title'=>'required|min:8|max:255',
            'post_image'=>'file',
@@ -45,6 +46,7 @@ class PostController extends Controller
     }
 
     public function destroy(Post $post, Request $request){
+        $this->authorize('delete',$post);
         $post->delete();
         $request->session()->flash('message','post was deleted');
         return back();
