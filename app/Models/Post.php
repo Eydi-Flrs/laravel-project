@@ -17,7 +17,8 @@ class Post extends Model
     }
     public function PostImage():Attribute{
         return Attribute::make(
-            get: fn($value)=>URL::asset("storage/".$value),
+            set:fn($value)=>substr($value,7),
+            get: fn($value)=>asset("storage/images/".$value),
         );
 
     }
