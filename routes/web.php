@@ -31,7 +31,9 @@ Route::middleware('auth')->group(function(){
 
     Route::delete('/admin/posts/{post}/destroy', [PostController::class, 'destroy'])->name('post.destroy');
     Route::patch('/admin/posts/{post}/update', [PostController::class, 'update'])->name('post.update');
+
+    Route::get('/admin/posts/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
 });
 
-Route::get('/admin/posts/{post}/edit', [PostController::class, 'edit'])->middleware('can:view,post')->name('post.edit');
+
 
