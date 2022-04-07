@@ -62,9 +62,9 @@ class User extends Authenticatable
         }return false;
     }
 
-    public function setPassword():Attribute{
+    public function Password():Attribute{
         return Attribute::make(
-            set:fn($value)=>bcypt($value),
+            set:fn($value)=>bcrypt($value),
         );
 
     }
