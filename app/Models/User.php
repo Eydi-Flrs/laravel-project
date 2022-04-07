@@ -21,6 +21,7 @@ class User extends Authenticatable
     protected $fillable = [
         'username',
         'name',
+        'avatar',
         'email',
         'password',
     ];
@@ -65,6 +66,13 @@ class User extends Authenticatable
     public function Password():Attribute{
         return Attribute::make(
             set:fn($value)=>bcrypt($value),
+        );
+
+    }
+    public function Avatar():Attribute{
+        return Attribute::make(
+            set:fn($value)=>substr($value,7),
+            get: fn($value)=>asset("storage/images/".$value),
         );
 
     }
