@@ -8,6 +8,10 @@
 {{--        @elseif(session('post-updated-message'))--}}
 {{--            <div class="alert alert-success">{{session('post-updated-message')}}</div>--}}
 {{--        @endif--}}
+
+        @if(session('user-deleted'))
+                    <div class="alert alert-danger">{{session('user-deleted')}}</div>
+        @endif
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
@@ -51,7 +55,7 @@
                                 <td>{{$user->updated_at->diffForHumans()}}</td>
                                 <td>
                                     {{--                                    @can('view',$post)--}}
-                                    <form method="post" action="#" enctype="multipart/form-data">
+                                    <form method="post" action="{{route('user.destroy',$user->id)}}" enctype="multipart/form-data">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger">Delete</button>
