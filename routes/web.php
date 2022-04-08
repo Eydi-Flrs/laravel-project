@@ -40,9 +40,11 @@ Route::middleware('auth')->group(function(){
     Route::get('admin/users',[UserController::class,'index'])->name('users.index');
     Route::delete('admin/users/{user}/destroy',[UserController::class,'destroy'])->name('user.destroy');
 });
-Route::middleware('role:ADMIN')->group(function(){
+Route::middleware(['role:ADMIN','auth'])->group(function(){
     Route::get('admin/users',[UserController::class,'index'])->name('users.index');
 });
 
-
+Route::middleware(['can:view,user'])->group(function(){
+    Route::get('/admin/users/{user}/profile',[UserController::class,'show'])->name('user.profile.show');
+});
 
