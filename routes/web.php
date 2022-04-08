@@ -40,6 +40,9 @@ Route::middleware('auth')->group(function(){
     Route::get('admin/users',[UserController::class,'index'])->name('users.index');
     Route::delete('admin/users/{user}/destroy',[UserController::class,'destroy'])->name('user.destroy');
 });
+Route::middleware('role:ADMIN')->group(function(){
+    Route::get('admin/users',[UserController::class,'index'])->name('users.index');
+});
 
 
 
