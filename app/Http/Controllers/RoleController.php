@@ -16,9 +16,15 @@ class RoleController extends Controller
             'name'=>['required']
         ]);
         Role::create([
-           'name'=>request('name'),
+           'name'=>Str::ucfirst(request('name')),
             'slug'=>Str::of(Str::lower(request('name')))->slug('-')
         ]);
        return back();
+    }
+    public function destroy(Role $role){
+
+        $role->delete();
+        session()->flash('role-deleted','Deleted Role '.$role->name);
+        return back();
     }
 }
