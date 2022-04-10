@@ -28,7 +28,7 @@ class RoleController extends Controller
         }else{
             session()->flash('role-updated','Nothing has been updated');
         }
-        $role->save();
+
 
         return back();
     }
