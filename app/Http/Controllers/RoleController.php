@@ -11,6 +11,9 @@ class RoleController extends Controller
     public function index(){
         return view('admin.roles.index',['roles'=>Role::all()]);
     }
+    public function edit(Role $role){
+        return view('admin.roles.edit',['role'=>$role]);
+    }
     public function store(){
         request()->validate([
             'name'=>['required']
@@ -21,6 +24,7 @@ class RoleController extends Controller
         ]);
        return back();
     }
+
     public function destroy(Role $role){
 
         $role->delete();
