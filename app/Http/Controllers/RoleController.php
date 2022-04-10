@@ -14,6 +14,19 @@ class RoleController extends Controller
     public function edit(Role $role){
         return view('admin.roles.edit',['role'=>$role]);
     }
+    public function update(Role $role){
+        $role->name=Str::ucfirst(request('name'));
+        $role->slug=Str::of(request('name'))->slug('-');
+        if($role->isDirty('name')){
+            session()->flash('role-updated','Role Update '.request('name'));
+            $role->save();
+        }else{
+            session()->flash('role-updated','Nothing has been updated');
+        }
+        $role->save();
+
+        return back();
+    }
     public function store(){
         request()->validate([
             'name'=>['required']
