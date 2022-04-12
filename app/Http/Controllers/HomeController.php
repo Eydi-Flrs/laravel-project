@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -25,6 +26,15 @@ class HomeController extends Controller
     public function index()
     {
         $posts= Post::all();
+
         return view('home',['posts' => $posts]);
+    }
+    public function search(Request $request){
+        $posts= Post::where('title','LIKE','%'.$request->search.'%')
+            ->orWhere('title','LIKE','%'.$request->search.'%')
+            ->orWhere('body','LIKE','%'.$request->search.'%')->get();
+
+        return view('home',['posts'=>$posts]);
+
     }
 }

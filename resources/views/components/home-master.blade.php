@@ -75,10 +75,16 @@
                 <h5 class="card-header">Search</h5>
                 <div class="card-body">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for...">
-                        <span class="input-group-btn">
-                <button class="btn btn-secondary" type="button">Go!</button>
-              </span>
+                        <form method="get" action="{{route('search')}}">
+                            @csrf
+                            <input type="text" name="search" id="search" class="form-control" placeholder="Search for...">
+                            <span class="input-group-btn">
+                            <button class="btn btn-secondary" type="submit">Go!</button>
+                            </span>
+                        </form>
+
+
+
                     </div>
                 </div>
             </div>
@@ -146,6 +152,21 @@
 <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
+{{--<script>--}}
+{{--    $(document).ready(function (){--}}
+{{--        $('#search').on('keyup',function(){--}}
+{{--          var query=$(this).val();--}}
+{{--          $.ajax({--}}
+{{--              url:"search",--}}
+{{--              type:"GET",--}}
+{{--              data:{'search':query},--}}
+{{--              success:function(data){--}}
+{{--                $('#search_list').html(data);--}}
+{{--              }--}}
+{{--          });--}}
+{{--        });--}}
+{{--    });--}}
+{{--</script>--}}
 </body>
 
 </html>
