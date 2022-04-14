@@ -17,15 +17,17 @@ class UserController extends Controller
     }
     public function update(User $user,Request $request){
         $inputs =$request->validate([
-           'username'=>['required','string','max:255','alpha_dash'],
-            'name'=>['required','string','max:255'],
+            'firstname'=>['required','string','max:255'],
+            'lastname'=>['required','string','max:255'],
             'email'=>['required','string','max:255'],
+            'contact_number'=>['required','string','min:8','max:11'],
             'avatar'=>['file'],
-
         ]);
+
         if(request('avatar')){
             $inputs['avatar'] = $request->avatar->store('images');
         }
+        $user->name =$request->lastname.",".$request->firstname;
         $user->update($inputs);
         return back();
     }

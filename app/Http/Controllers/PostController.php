@@ -12,11 +12,9 @@ class PostController extends Controller
 //        $posts =auth()->user()->posts()->paginate(5);
         $posts=Post::paginate(5);
         return view('admin.posts.index',['posts'=>$posts]);
-
     }
 
     public function show(Post $post){
-
         return view('blog-post',['post'=>$post]);
     }
 
@@ -27,7 +25,7 @@ class PostController extends Controller
     public function store(Request $request){
         $this->authorize('create',Post::class);
        $inputs= $request->validate([
-           'title'=>'required|min:8|max:255',
+           'title'=>'required|min:0|max:255',
            'post_image'=>'file',
            'body'=>'required'
        ]);
@@ -55,7 +53,7 @@ class PostController extends Controller
 
     public function update(Post $post,Request $request){
         $inputs= $request->validate([
-            'title'=>'required|min:8|max:255',
+            'title'=>'required|min:0|max:255',
             'post_image'=>'file',
             'body'=>'required'
         ]);

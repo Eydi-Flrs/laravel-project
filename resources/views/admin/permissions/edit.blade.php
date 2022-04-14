@@ -16,7 +16,7 @@
                         <label for="name">Name</label>
                         <input type="text" name="name" class="form-control" id="name" value="{{$permission->name}}">
                     </div>
-                    <button class="btn btn-primary">Update</button>
+                    <button class="btn btn-primary" type="submit">Update</button>
                 </form>
             </div>
         </div>
