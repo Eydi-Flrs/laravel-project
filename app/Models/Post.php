@@ -12,10 +12,13 @@ class Post extends Model
     use HasFactory;
     protected $guarded=[];
 
-    public function user(){
-        return $this->belongsTo(User::class);
+    public function author(){
+        return $this->belongsToMany(Author::class);
     }
-    public function PostImage():Attribute{
+    public function category(){
+        return $this->belongsToMany(Category::class);
+    }
+    public function QrImage():Attribute{
         return Attribute::make(
             set:fn($value)=>substr($value,7),
             get: fn($value)=>asset("storage/images/".$value),
