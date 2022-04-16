@@ -16,12 +16,17 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('course');
             $table->date('date_published')->nullable();
-            $table->string('courses');
+            $table->string('pages');
             $table->string('pdf');
-            $table->text('qr_image')->nullable();
+            $table->string('volume')->nullable();
+            $table->string('series')->nullable();
+            $table->string('publisher')->nullable();
+            $table->string('year')->nullable();
+            $table->text('qr')->nullable();
             $table->text('abstract');
-
+            $table->string('type');
             $table->timestamps();
         });
     }

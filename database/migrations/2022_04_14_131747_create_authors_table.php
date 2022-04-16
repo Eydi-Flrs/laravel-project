@@ -16,10 +16,11 @@ return new class extends Migration
         Schema::create('authors', function (Blueprint $table) {
             $table->id();
             $table->string('lastname');
-            $table->string('middle_initial');
-            $table->string('firstname');
-            $table->string('suffix');
+            $table->string('firstname')->nullable();
+            $table->string('middle_initial')->nullable();
+            $table->string('suffix')->nullable();
             $table->string('name');
+            $table->string('email')->nullable();
             $table->timestamps();
         });
     }

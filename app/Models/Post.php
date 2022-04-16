@@ -18,7 +18,14 @@ class Post extends Model
     public function category(){
         return $this->belongsToMany(Category::class);
     }
-    public function QrImage():Attribute{
+    public function qr():Attribute{
+        return Attribute::make(
+            set:fn($value)=>substr($value,7),
+            get: fn($value)=>asset("storage/images/".$value),
+        );
+
+    }
+    public function pdf():Attribute{
         return Attribute::make(
             set:fn($value)=>substr($value,7),
             get: fn($value)=>asset("storage/images/".$value),
