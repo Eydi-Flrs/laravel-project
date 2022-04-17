@@ -34,13 +34,17 @@ class PostController extends Controller
            'series'=>['string','max:255'],
            'publisher'=>['string','max:255'],
            'year'=>['string','max:255'],
-           'qr'=>'file',
+           'qr'=>['string','max:255'],
            'abstract'=>['required','string','max:255'],
            'type'=>['string','max:255']
        ]);
-       if ($request->qr){
-            $inputs['qr'] = $request->qr->store('images');
-        }
+       $width="250";
+       $height="250";
+       $data= $request->title." ".$request->abstract;
+       $url="https://chart.googleapis.com/chart?cht=qr&chs={$width}x{$height}&chl={$data}";
+       $inputs['qr']=$url;
+//       dd($inputs['qr']);
+
        if ($request->pdf){
             $inputs['pdf'] = $request->pdf->store('pdf');
         }
