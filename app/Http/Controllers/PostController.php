@@ -25,16 +25,28 @@ class PostController extends Controller
     public function store(Request $request){
         $this->authorize('create',Post::class);
        $inputs= $request->validate([
-           'title'=>'required|min:0|max:255',
-           'post_image'=>'file',
-           'body'=>'required'
+           'title'=>['required','string','max:255'],
+           'course'=>['required','string','max:255'],
+           'date_published'=>'date',
+           'pages'=>['string','max:255'],
+           'pdf'=>'file',
+           'volume'=>['string','max:255'],
+           'series'=>['string','max:255'],
+           'publisher'=>['string','max:255'],
+           'year'=>['string','max:255'],
+           'qr'=>'file',
+           'abstract'=>['required','string','max:255'],
+           'type'=>['string','max:255']
        ]);
-       if ($request->post_image){
-            $inputs['post_image'] = $request->post_image->store('images');
+       if ($request->qr){
+            $inputs['qr'] = $request->qr->store('images');
+        }
+       if ($request->pdf){
+            $inputs['pdf'] = $request->pdf->store('pdf');
         }
 
        auth()->user()->posts()->create($inputs);
-        session()->flash('post-created-message','post '.strtoupper($inputs['title']). 'was created');
+       session()->flash('post-created-message','post '.strtoupper($inputs['title']). 'was created');
        return redirect()->route('post.index');
     }
 

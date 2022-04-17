@@ -56,9 +56,25 @@
                                     <div class="form-group">
                                         <label for="email">Email Address</label><input type="email" class="form-control form-control-user" id="email" name="email" placeholder="Author's Email Address">
                                     </div>
-                                    <div class="form-group">
-                                        <label for="course">Course</label><input type="email" class="form-control form-control-user" id="course" name="course" placeholder="Course">
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                        <label for="course">Course</label>
+                                        <select class="form-select" aria-label="Default select example" id="course" name="course">
+                                            <option selected value="Bachelor of Science in Information System">Bachelor of Science in Information System</option>
+                                            <option value="Bachelor of Science in Information Technology">Bachelor of Science in Information Technology</option>
+                                            <option value="Bachelor of Science in Computer Science">Bachelor of Science in Computer Science</option>
+                                        </select>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label for="type">Type</label>
+                                            <select class="form-select" aria-label="Default select example" id="type" name="type">
+                                                <option selected value="Thesis Paper">Thesis Paper</option>
+                                                <option value="Book">Book</option>
+
+                                            </select>
+                                        </div>
                                     </div>
+
 
 
                                     <h3>Publication Info</h3>
@@ -96,8 +112,6 @@
                                             <label for="year">Year Published</label><input  onkeypress="return onlyNumberKey(event)"   type="text" class="form-control form-control-user" id="year" minlength="4" maxlength="4" name="year"placeholder="Year Published" >
                                         </div>
                                     </div>
-
-
 
 
                                     <div class="form-group">

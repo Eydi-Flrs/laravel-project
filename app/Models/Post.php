@@ -12,10 +12,14 @@ class Post extends Model
     use HasFactory;
     protected $guarded=[];
 
-    public function author(){
+    public function authors(){
         return $this->belongsToMany(Author::class);
     }
-    public function category(){
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function categories(){
         return $this->belongsToMany(Category::class);
     }
     public function qr():Attribute{
