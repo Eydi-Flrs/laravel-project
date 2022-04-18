@@ -1,10 +1,10 @@
 <x-home-master>
 
     @section('content')
-        <h1 class="my-4">Page Heading
+
+            <h1 class="my-4">Page Heading
             <small>Secondary Text</small>
         </h1>
-
         <!-- Blog Post -->
         @foreach($posts as $post)
         <div class="card mb-4">

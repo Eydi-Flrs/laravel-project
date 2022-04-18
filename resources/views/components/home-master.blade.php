@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Blog Home - Start Bootstrap Template</title>
+    <title>TUP KMS</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{asset('vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -23,7 +23,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="{{route('home')}}">HOME</a>
+        <a class="navbar-brand" href="{{route('home')}}">KNOWLEDGE MANAGEMENT SYSTEM</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -38,6 +38,24 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('admin.index')}}">Admin</a>
                 </li>
+                    <li class="nav-item dropdown no-arrow">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
+                            <img class="img-profile rounded-circle" src=" ">
+                        </a>
+                        <!-- Dropdown - User Information -->
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="profile.html">
+                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Profile
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </li>
                 @else
                     <li class="nav-item">
                         <a class="nav-link" href="/login">Login</a>
@@ -47,6 +65,9 @@
                     </li>
                 @endif
 
+                <li class="nav-item">
+                    <a class="nav-link" href="aboutus.html">About</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Contact</a>
                 </li>
@@ -75,16 +96,13 @@
                 <h5 class="card-header">Search</h5>
                 <div class="card-body">
                     <div class="input-group">
-                        <form method="get" action="{{route('search')}}">
+                        <form method="get" class="form-inline" action="{{route('search')}}">
                             @csrf
-                            <input type="text" name="search" id="search" class="form-control" placeholder="Search for...">
+                            <input type="text" name="search" id="search" class="form-control mr-sm-2" placeholder="Search for...">
                             <span class="input-group-btn">
-                            <button class="btn btn-secondary" type="submit">Go!</button>
+                            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Go!</button>
                             </span>
                         </form>
-
-
-
                     </div>
                 </div>
             </div>

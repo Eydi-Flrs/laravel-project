@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Author;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -23,7 +24,6 @@ class PostController extends Controller
         return view('admin.posts.create');
     }
     public function store(Request $request){
-        $this->authorize('create',Post::class);
        $inputs= $request->validate([
            'title'=>['required','string','max:255'],
            'course'=>['required','string','max:255'],
