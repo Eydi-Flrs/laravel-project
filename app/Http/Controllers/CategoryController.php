@@ -23,10 +23,33 @@ class CategoryController extends Controller
         session()->flash('category-created-message','post '.strtoupper($request->category). 'was created');
         return redirect()->route('categories.index');
     }
+
     public function destroy(Category $category, Request $request){
         $this->authorize('delete',$category);
         $category->delete();
         $request->session()->flash('message','post was deleted');
         return back();
+    }
+
+    public function edit(Category $category){
+        $this->authorize('view', $category);
+        return view('admin.categories.edit',['category'=> $category]);
+
+    }
+
+    public function update(Category $category,Request $request){
+
+            $category->name=Str::ucfirst(request('name'));
+            $category->slug=Str::of(request('name'))->slug('-');
+            if($category->isDirty('name')){
+                session()->flash('category-updated','Category Update '.request('name'));
+                $category->save();
+            }else{
+                session()->flash('category-updated','Nothing has been updated');
+            }
+
+
+            return back();
+
     }
 }

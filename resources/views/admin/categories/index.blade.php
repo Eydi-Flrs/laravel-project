@@ -9,12 +9,7 @@
             <h1 class="h3 mb-2 text-gray-800">Manage Categories</h1>
             <div class="d-flex flex-row-reverse bd-highlight">
 
-                <a data-toggle="modal" data-target="#deleteModal">
-                    <button class="btn btn-primary" type="submit">
-                        Delete
-                    </button>
 
-                </a>
             </div>
         </div>
 
@@ -71,7 +66,7 @@
                                         @foreach($categories as $category)
                                             <tr>
                                                 <td>{{$category->id}}</td>
-                                                <td>{{$category->name}}</td>
+                                                <td><a href="{{route('categories.edit',$category->id)}}">{{$category->name}}</a></td>
                                                 <td>{{$category->slug}}</td>
                                                 <td>
                                                     {{--                                    @can('view',$post)--}}
