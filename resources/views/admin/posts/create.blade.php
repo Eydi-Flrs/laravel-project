@@ -82,9 +82,17 @@
                                         <label for="title">Title</label><input type="text" name="title" class="form-control" id="title" aria-describedby="" placeholder="Enter Title" required>
                                     </div>
 
+
+
                                     <div class="form-group row">
+
                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                            <label for="categories">Categories</label><input type="text" class="form-control form-control-user" id="categories" name="categories" placeholder="Category" required>
+                                            <label for="course">Categories</label>
+                                            <select class="form-select" aria-label="Default select example" id="category_id" name="category_id">
+                                                @foreach($categories as $category)
+                                                    <option selected value="{{$category->id}}">{{$category->name}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="col-sm-4">
                                             <label for="date_published">Date Published</label><input type="date" class="form-control form-control-user" id="date_published" name="date_published" placeholder="Date published" required>
@@ -106,7 +114,7 @@
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-sm-6 mb-2 mb-sm-0">
-                                            <label for="publisher">Publisher</label><input type="text" class="form-control form-control-user" id="publisher"  placeholder="Publisher" >
+                                            <label for="publisher">Publisher</label><input type="text" class="form-control form-control-user" id="publisher" name="publisher"  placeholder="Publisher" >
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="year">Year Published</label><input  onkeypress="return onlyNumberKey(event)"   type="text" class="form-control form-control-user" id="year" minlength="4" maxlength="4" name="year"placeholder="Year Published" >
