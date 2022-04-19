@@ -37,7 +37,7 @@ class PostController extends Controller
            'publisher'=>['string','max:255'],
            'year'=>['string','max:255'],
            'qr'=>['string','max:255'],
-           'abstract'=>['required','string','max:255'],
+           'abstract'=>['required','string','max:500'],
            'type'=>['string','max:255']
        ]);
        $width="250";
