@@ -25,6 +25,7 @@
 {{--            </div>--}}
 
 
+
         <div class="col-md-12">
 
             <div class="card-body">
@@ -87,13 +88,23 @@
                                     <div class="form-group row">
 
                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                            <label for="course">Categories</label>
+                                            <label for="category_id">Categories</label>
                                             <select class="form-select" aria-label="Default select example" id="category_id" name="category_id">
                                                 @foreach($categories as $category)
                                                     <option selected value="{{$category->id}}">{{$category->name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
+                                        @if($tags->count()>0)
+                                        <div class="col-sm-4 mb-3 mb-sm-0">
+                                            <label for="tag_id">Tags</label>
+                                            <select class="form-select" aria-label="Default select example" id="tag_id" name="tag_id[]" multiple>
+                                                @foreach($tags as $tag)
+                                                    <option value="{{$tag->id}}">{{$tag->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        @endif
                                         <div class="col-sm-4">
                                             <label for="date_published">Date Published</label><input type="date" class="form-control form-control-user" id="date_published" name="date_published" placeholder="Date published" required>
                                         </div>
@@ -140,6 +151,7 @@
                 </div>
             </div>
         </div>
+
 
 
         <script src="{{asset('https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js')}}"></script>

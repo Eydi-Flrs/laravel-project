@@ -57,6 +57,7 @@
         <!-- Nav Item - Pages Collapse Menu -->
         <x-admin.sidebar.admin-sidebar-posts-links></x-admin.sidebar.admin-sidebar-posts-links>
         <x-admin.sidebar.admin-sidebar-categories-links></x-admin.sidebar.admin-sidebar-categories-links>
+        <x-admin.sidebar.admin-sidebar-tags-links></x-admin.sidebar.admin-sidebar-tags-links>
         @if(auth()->user()->userHasRole('Admin'))
         <x-admin.sidebar.admin-sidebar-users-links></x-admin.sidebar.admin-sidebar-users-links>
         <x-admin.sidebar.authorization-links></x-admin.sidebar.authorization-links>
