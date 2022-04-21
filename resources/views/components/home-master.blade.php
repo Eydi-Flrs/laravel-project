@@ -16,6 +16,7 @@
     <!-- Custom styles for this template -->
     <link href="{{asset('css/blog-home.css')}}" rel="stylesheet">
 
+
 </head>
 
 <body>
@@ -170,6 +171,7 @@
 <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
+
 {{--<script>--}}
 {{--    $(document).ready(function (){--}}
 {{--        $('#search').on('keyup',function(){--}}
@@ -185,6 +187,8 @@
 {{--        });--}}
 {{--    });--}}
 {{--</script>--}}
+
+
 </body>
 
 </html>
