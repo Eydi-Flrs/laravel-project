@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\Author;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class PostController extends Controller
@@ -56,7 +57,50 @@ class PostController extends Controller
 //       if($request->tag_id){
 //        ;
 //       }
-       auth()->user()->posts()->create($inputs)->tags()->attach($request->tag_id);
+//        dd(count($request->lastname));
+        $author= new Author();
+        $num=count($request->lastname);
+        $data=[];
+        $id=[];
+        for($i=0;$i<$num;$i++){
+            $data[$i]=[
+                   'lastname'=>$request->lastname[$i],
+                   'firstname'=>$request->firstname[$i],
+                   'middle_initial'=>$request->middle_initial[$i],
+                   'suffix'=>$request->suffix[$i],
+                   'name'=>$request->lastname[$i].",".$request->firstname[$i],
+                   'email'=>$request->email[$i],
+                ];
+
+            $id[$i]=$author->insertGetId($data[$i]);
+//
+        }
+
+//     dd($data);
+//
+
+//          Author::insert($data);
+
+
+
+        $post=auth()->user()->posts()->create($inputs);
+//        dd($post->id);
+        $post->tags()->attach($request->tag_id);
+        $post->authors()->attach($id);
+
+
+
+
+//        $authors->posts()->attach($id);
+
+
+//        $authors=Author::where('name',$request->lastname.",".$request->firstname)->get();
+//        dd($post);
+
+//        $post->authors()->attach($authors_id);
+
+
+
        session()->flash('post-created-message','post '.strtoupper($inputs['title']). 'was created');
        return redirect()->route('post.index');
     }
