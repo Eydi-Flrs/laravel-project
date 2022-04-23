@@ -31,9 +31,7 @@ class HomeController extends Controller
     }
     public function search(Request $request){
         $posts= Post::where('title','LIKE','%'.$request->search.'%')
-            ->orWhere('title','LIKE','%'.$request->search.'%')
-            ->orWhere('body','LIKE','%'.$request->search.'%')->get();
-
+            ->orWhere('abstract','LIKE','%'.$request->search.'%')->get();
         return view('home',['posts'=>$posts]);
 
     }

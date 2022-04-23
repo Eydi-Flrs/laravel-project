@@ -76,29 +76,10 @@ class PostController extends Controller
 //
         }
 
-//     dd($data);
-//
-
-//          Author::insert($data);
-
-
 
         $post=auth()->user()->posts()->create($inputs);
-//        dd($post->id);
         $post->tags()->attach($request->tag_id);
         $post->authors()->attach($id);
-
-
-
-
-//        $authors->posts()->attach($id);
-
-
-//        $authors=Author::where('name',$request->lastname.",".$request->firstname)->get();
-//        dd($post);
-
-//        $post->authors()->attach($authors_id);
-
 
 
        session()->flash('post-created-message','post '.strtoupper($inputs['title']). 'was created');

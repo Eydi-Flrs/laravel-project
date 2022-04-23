@@ -35,8 +35,8 @@ class Post extends Model
 //    }
     public function pdf():Attribute{
         return Attribute::make(
-            set:fn($value)=>substr($value,7),
-            get: fn($value)=>asset("storage/images/".$value),
+            set:fn($value)=>substr($value,4),
+            get: fn($value)=>asset("/storage/pdf/".$value),
         );
 
     }
