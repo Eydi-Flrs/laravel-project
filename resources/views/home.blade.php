@@ -26,13 +26,14 @@
                     <h2 class="card-title">{{$post->title}}</h2>
                     <div>
                         <div style="text-align: justify" >
+                            <p>Views: {{$post->views}}</p>
                             <p class="card-text">{{Str::limit($post->abstract,'280','...')}}</p>
                             <a href="{{route('post',$post->id)}}" class="btn btn-primary">Read More &rarr; </a>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer text-muted">
-                    Posted on June 1, 2022 by
+                    {{$post->created_at->diffForHumans()}}
                     <a href="#">KMS Admin</a>
                 </div>
             </div>

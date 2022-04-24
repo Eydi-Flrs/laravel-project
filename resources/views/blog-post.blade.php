@@ -41,6 +41,7 @@
             @foreach($post->authors as $author)
             {{$author->name."  ,"}}
             @endforeach
+             <p>Views: {{$post->views}}</p>
             <hr>
             <!-- Date/Time -->
             <p>Published Date: {{$post->date_published}}</p>
