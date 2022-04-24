@@ -8,9 +8,15 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index(){
-        $users=User::all();
-        return view('admin.users.index',['users'=>$users]);
+    public function index(Request $request){
+//        $users=User::all();
+        $users = User::select("*")
+            ->whereNotNull('last_seen')
+            ->orderBy('last_seen', 'DESC')
+            ->paginate(10);
+
+        return view('admin.users.index', compact('users'));
+//        return view('admin.users.index',['users'=>$users]);
     }
     public function show(User $user){
         return view('admin.users.profile',['user'=>$user,'roles'=>Role::all()]);

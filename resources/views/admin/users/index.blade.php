@@ -22,37 +22,33 @@
                         <thead>
                         <tr>
                             <th>Id</th>
-                            <th>Username</th>
                             <th>Name</th>
-                            <th>Email</th>
-                            <th>Image</th>
                             <th>Created At</th>
                             <th>Updated At</th>
+                            <th>Last seen</th>
+                            <th>Status</th>
                             <th>Delete</th>
                         </tr>
                         </thead>
-                        <tfoot>
-                        <tr>
-                            <th>Id</th>
-                            <th>Username</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Image</th>
-                            <th>Created At</th>
-                            <th>Updated At</th>
-                            <th>Delete</th>
-                        </tr>
-                        </tfoot>
+
                         <tbody>
                         @foreach($users as $user)
                             <tr>
                                 <td>{{$user->id}}</td>
-                                <td>{{$user->username}}</td>
                                 <td><a href="{{route('user.profile.show',$user->id)}}">{{$user->name}}</a></td>
-                                <td>{{$user->email}}</td>
-                                <td><img height="40px" src="{{$user->avatar}}" alt=""></td>
+{{--                                <td><img height="40px" src="{{$user->avatar}}" alt=""></td>--}}
                                 <td>{{$user->created_at->diffForHumans()}}</td>
                                 <td>{{$user->updated_at->diffForHumans()}}</td>
+                                <td>
+                                    {{ Carbon\Carbon::parse($user->last_seen)->diffForHumans() }}
+                                </td>
+                                <td>
+                                    @if(Cache::has('user-is-online-' . $user->id))
+                                        <span class="text-success">Online</span>
+                                    @else
+                                        <span class="text-secondary">Offline</span>
+                                    @endif
+                                </td>
                                 <td>
                                     {{--                                    @can('view',$post)--}}
                                     <form method="post" action="{{route('user.destroy',$user->id)}}" enctype="multipart/form-data">
