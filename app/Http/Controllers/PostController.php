@@ -19,6 +19,7 @@ class PostController extends Controller
     }
 
     public function show(Post $post){
+        $post->increment('views');
         return view('blog-post',['post'=>$post]);
     }
 
@@ -33,13 +34,13 @@ class PostController extends Controller
            'category_id'=>['required','string','max:255'],
            'date_published'=>'date',
            'pages'=>['string','max:255'],
-           'pdf'=>'file',
+           'pdf'=>['required','file'],
            'volume'=>['string','max:255'],
            'series'=>['string','max:255'],
            'publisher'=>['string','max:255'],
            'year'=>['string','max:255'],
            'qr'=>['string','max:255'],
-           'abstract'=>['required','string','max:500'],
+           'abstract'=>['required','string','max:1000'],
            'type'=>['string','max:255']
        ]);
        $width="250";
@@ -48,7 +49,6 @@ class PostController extends Controller
        $url="https://chart.googleapis.com/chart?cht=qr&chs={$width}x{$height}&chl={$data}";
        $inputs['qr']=$url;
 //       dd($inputs['qr']);
-
 
        if ($request->pdf){
             $inputs['pdf'] = $request->pdf->store('pdf');
@@ -100,20 +100,76 @@ class PostController extends Controller
     }
 
     public function update(Post $post,Request $request){
-        $inputs= $request->validate([
-            'title'=>'required|min:0|max:255',
-            'post_image'=>'file',
-            'body'=>'required'
-        ]);
-        if ($request->post_image){
-            $inputs['post_image'] = $request->post_image->store('images');
-            $post->post_image =$inputs['post_image'];
-        }
-        $post->title =$inputs['title'];
-        $post->body=$inputs['body'];
-        $this->authorize('update',$post);
+//        $inputs= $request->validate([
+//            'title'=>'required|min:0|max:255',
+//            'post_image'=>'file',
+//            'body'=>'required'
+//        ]);
+//        if ($request->post_image){
+//            $inputs['post_image'] = $request->post_image->store('images');
+//            $post->post_image =$inputs['post_image'];
+//        }
+//        $post->title =$inputs['title'];
+//        $post->body=$inputs['body'];
+//        $this->authorize('update',$post);
+//
+//        posts()->update();
 
-        posts()->update();
+        $inputs= $request->validate([
+            'title'=>['required','string','max:255'],
+            'course'=>['required','string','max:255'],
+            'category_id'=>['required','string','max:255'],
+            'date_published'=>'date',
+            'pages'=>['string','max:255'],
+            'pdf'=>['file'],
+            'volume'=>['string','max:255'],
+            'series'=>['string','max:255'],
+            'publisher'=>['string','max:255'],
+            'year'=>['string','max:255'],
+            'qr'=>['string','max:255'],
+            'abstract'=>['required','string','max:1000'],
+            'type'=>['string','max:255']
+        ]);
+        $width="250";
+        $height="250";
+        $data= $request->title." ".$request->abstract;
+        $url="https://chart.googleapis.com/chart?cht=qr&chs={$width}x{$height}&chl={$data}";
+        $inputs['qr']=$url;
+//       dd($inputs['qr']);
+
+        if ($request->pdf){
+            $inputs['pdf'] = $request->pdf->store('pdf');
+        }
+
+//       if($request->tag_id){
+//        ;
+//       }
+//        dd(count($request->lastname));
+        $author= new Author();
+        $num=count($request->lastname);
+        $data=[];
+        $id=[];
+        for($i=0;$i<$num;$i++){
+            $data[$i]=[
+                'lastname'=>$request->lastname[$i],
+                'firstname'=>$request->firstname[$i],
+                'middle_initial'=>$request->middle_initial[$i],
+                'suffix'=>$request->suffix[$i],
+                'name'=>$request->lastname[$i].",".$request->firstname[$i],
+                'email'=>$request->email[$i],
+            ];
+
+            $author_id=$author->updateOrCreate($data[$i]);
+            $id[$i]=$author_id->id;
+//
+        }
+        $post->category_id=$request->category_id;
+        $post->update($inputs);
+        $post->tags()->sync($request->tag_id);
+        $post->authors()->sync($id);
+
+
+
         session()->flash('post-updated-message','post '.strtoupper($inputs['title']). 'was updated');
         return redirect()->route('post.index');
     }

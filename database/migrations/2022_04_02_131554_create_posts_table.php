@@ -29,6 +29,7 @@ return new class extends Migration
             $table->text('qr')->nullable();
             $table->text('abstract');
             $table->string('type');
+            $table->integer('views')->default('0');
             $table->timestamps();
         });
     }

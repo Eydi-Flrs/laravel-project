@@ -2,36 +2,9 @@
     @section('content')
         <h1>Create Post</h1>
 
-
-{{--            <div class="form-group">--}}
-{{--                <label for="title">Title</label>--}}
-{{--                <input type="text"--}}
-{{--                       name="title"--}}
-{{--                       class="form-control"--}}
-{{--                       id="title"--}}
-{{--                       aria-describedby=""--}}
-{{--                       placeholder="Enter Title">--}}
-{{--            </div>--}}
-{{--            <div class="form-group">--}}
-{{--                <label for="file">File</label>--}}
-{{--                <input type="file"--}}
-{{--                       name="post_image"--}}
-{{--                       class="form-control-file"--}}
-{{--                       id="post_image"--}}
-{{--                       aria-describedby="">--}}
-{{--            </div>--}}
-{{--            <div class="form-group">--}}
-{{--                <textarea name="body" id="body" class="form-control" cols="30" rows="10"></textarea>--}}
-{{--            </div>--}}
-
-
-
         <div class="col-md-12">
-
-
                         <div class="card mb-4">
                             <div class="card-body">
-
                                 <form method="post" action="{{route('post.store')}}" enctype="multipart/form-data">
                                     @csrf
                                     <h3>Authors</h3>
@@ -44,18 +17,18 @@
                                                 <th class="col-sm-2">M.I</th>
                                                 <th class="col-sm-1">Suffix</th>
                                                 <th class="col-sm-3">Email</th>
-                                                <th><a href="javascript:void(0)" class="btn btn-primary addRow">Add</a></th>
+                                                <th></th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td class="col-sm-3"><input type="text" class="form-control form-control-user" id="lastname" name="lastname[]" placeholder="Last Name" required></td>
-                                                    <td class="col-sm-3"><input type="text" class="form-control form-control-user" id="firstname" name="firstname[]" placeholder="First Name"required></td>
+                                                    <td class="col-sm-3"><input type="text" class="form-control form-control-user @error('lastname') is-invalid @enderror" id="lastname" name="lastname[]" placeholder="Last Name" required></td>
+                                                    <td class="col-sm-3"><input type="text" class="form-control form-control-user @error('firstname') is-invalid @enderror" id="firstname" name="firstname[]" placeholder="First Name" required></td>
                                                     <td class="col-sm-2"><input type="text" class="form-control form-control-user" id="middle_initial" name="middle_initial[]" placeholder="Middle Initial"></td>
                                                     <td class="col-sm-1"><input type="text" class="form-control form-control-user" id="suffix"  name="suffix[]" placeholder="Suffix"></td>
                                                     <td class="col-sm-3"><input type="email" class="form-control form-control-user" id="email" name="email[]" placeholder="Email"></td>
                                                     <td>
-                                                        <a href="javascript:void(0)" class="btn btn-danger deleteRow">Delete</a>
+                                                        <a href="javascript:void(0)" class="btn btn-primary addRow">+</a>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -65,7 +38,7 @@
                                     <div class="form-group row">
                                         <div class="col-sm-6">
                                         <label for="course">Course</label>
-                                        <select class="form-select" aria-label="Default select example" id="course" name="course">
+                                        <select class="form-select" aria-label="Default select example" id="course" name="course" required>
                                             <option selected value="Bachelor of Science in Information System">Bachelor of Science in Information System</option>
                                             <option value="Bachelor of Science in Information Technology">Bachelor of Science in Information Technology</option>
                                             <option value="Bachelor of Science in Computer Science">Bachelor of Science in Computer Science</option>
@@ -94,7 +67,7 @@
 
                                         <div class="col-sm-4 mb-3 mb-sm-0">
                                             <label for="category_id">Categories</label>
-                                            <select class="form-select" aria-label="Default select example" id="category_id" name="category_id">
+                                            <select class="form-select" aria-label="Default select example" id="category_id" name="category_id" required>
                                                 @foreach($categories as $category)
                                                     <option selected value="{{$category->id}}">{{$category->name}}</option>
                                                 @endforeach
@@ -103,7 +76,7 @@
                                         @if($tags->count()>0)
                                         <div class="col-sm-4 mb-3 mb-sm-0">
                                             <label for="tag_id">Tags</label>
-                                            <select class="form-select" aria-label="Default select example" id="tag_id" name="tag_id[]" multiple>
+                                            <select class="form-select" aria-label="Default select example" id="tag_id" name="tag_id[]" multiple required>
                                                 @foreach($tags as $tag)
                                                     <option value="{{$tag->id}}">{{$tag->name}}</option>
                                                 @endforeach
@@ -111,7 +84,7 @@
                                         </div>
                                         @endif
                                         <div class="col-sm-4">
-                                            <label for="date_published">Date Published</label><input type="date" class="form-control form-control-user" id="date_published" name="date_published" placeholder="Date published" required>
+                                            <label for="date_published">Date Published</label><input type="date" class="form-control form-control-user" id="date_published" name="date_published" placeholder="Date published">
                                         </div>
                                         <div class="col-sm-4">
                                             <label for="pages">Pages</label><input type="number" class="form-control form-control-user" id="pages" name="pages" placeholder="Pages" required>
@@ -145,6 +118,8 @@
                                     <div class="form-group">
                                         <label for="abstract">Abstract</label>
                                         <textarea name="abstract" id="body" class="form-control" cols="30" rows="10" required></textarea>
+{{--                                        <input id="abstract" type="hidden" name="abstract" required>--}}
+{{--                                        <trix-editor input="abstract"></trix-editor>--}}
                                     </div>
 
                                     <button type="submit" class="btn btn-primary">Submit</button>
@@ -155,11 +130,11 @@
 
         </div>
 
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.css" integrity="sha512-CWdvnJD7uGtuypLLe5rLU3eUAkbzBR3Bm1SFPEaRfvXXI2v2H5Y0057EMTzNuGGRIznt8+128QIDQ8RqmHbAdg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <script src="{{asset('https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js')}}"></script>
         <script src="{{asset('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js')}}"></script>
         <link href="{{asset('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css')}}" rel="stylesheet"/>
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.js" integrity="sha512-/1nVu72YEESEbcmhE/EvjH/RxTg62EKvYWLG3NdeZibTCuEtW5M4z3aypcvsoZw03FAopi94y04GhuqRU9p+CQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script>
         $("#year").datepicker({
                 format: "yyyy",
@@ -176,7 +151,9 @@
         }
         </script>
         <script>
-            $('thead').on('click','.addRow',function (){
+
+            $('tbody').on('click','.addRow',function (){
+
                 var tr=
                     "<tr>"+
                     " <td class='col-sm-3'><input type='text' class='form-control' form-control-user id='lastname' name='lastname[]' placeholder='Last Name' required></td>"+
@@ -184,13 +161,14 @@
                     " <td class='col-sm-2'><input type='text' class='form-control' form-control-user id='middle_initial' name='middle_initial[]' placeholder='Middle Initial' required></td>"+
                     " <td class='col-sm-1'><input type='text' class='form-control' form-control-user id='suffix' name='suffix[]' placeholder='Suffix' required></td>"+
                     " <td class='col-sm-3'><input type='text' class='form-control' form-control-user id='email' name='email[]' placeholder='Email' required></td>"+
-                    "<td><a href='javascript:void(0)' class='btn btn-danger deleteRow'>Delete</a></td>"+
+                    "<td><a href='javascript:void(0)' class='btn btn-danger deleteRow'>-</a></td>"+
                     "</tr>"
                 $('tbody').append(tr);
+
             });
 
             $('tbody').on('click','.deleteRow',function (){
-               $(this).parent().parent().remove();
+                    $(this).parent().parent().remove();
             });
 
 
