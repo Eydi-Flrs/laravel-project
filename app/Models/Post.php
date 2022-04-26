@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 
 class Post extends Model
@@ -44,9 +45,19 @@ class Post extends Model
     }
 
 
-
     public function hasTag($tagId){
         return in_array($tagId,$this->tags->pluck('id')->toArray());
+    }
+
+    public function deletePdf(){
+        $myString=$this->pdf;
+        $findMe='/';
+        $lenght0fString=strlen($myString);
+        $pos=strrpos($myString, $findMe)+1;
+        $trim=substr($myString,$pos,$lenght0fString);
+        $pdfPath='pdf/'.$trim;
+//            dd($pdfPath);
+        Storage::delete($pdfPath);
     }
 }
 

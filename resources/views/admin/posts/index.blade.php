@@ -50,7 +50,7 @@
                                     <form method="post" action="{{route('post.destroy',$post->id)}}" enctype="multipart/form-data">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                        <button type="submit" class="btn btn-danger">Archived</button>
                                     </form>
                                 </td>
                             </tr>

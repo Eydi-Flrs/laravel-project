@@ -90,18 +90,33 @@ class PostController extends Controller
     }
 
 
-    public function destroy(Post $post, Request $request){
+    public function destroy($id, Request $request){
+        $post=Post::withTrashed()->where('id',$id)->firstOrFail();
         $this->authorize('delete',$post);
-        Storage::delete($post->pdf);
-        $post->delete();
-        $request->session()->flash('message','post was archived');
+        if(!is_null($post->deleted_at)){
+            $post->deletePdf();
+            $post->forceDelete();
+            $request->session()->flash('message','post was deleted');
+        }
+        else{
+            $post->delete();
+            $request->session()->flash('message','post was archived');
+        }
+
         return back();
     }
 
 
     public function archived(){
-        $archived= Post::withTrashed()->paginate(5);
+        $archived= Post::onlyTrashed()->paginate(5);//onlytrashed
         return view('admin.posts.archived',['posts'=>$archived]);
+    }
+
+    public function restore($id,Request $request){
+        $post=Post::withTrashed()->where('id',$id)->firstOrFail();
+        $post->restore();
+        $request->session()->flash('post-updated-message','post restored successfully');
+        return back();
     }
 
 
@@ -129,6 +144,7 @@ class PostController extends Controller
         $inputs['qr']=$url;
 
         if ($request->pdf){
+            $post->deletePdf();
             $inputs['pdf'] = $request->pdf->store('pdf');
         }
         $author= new Author();

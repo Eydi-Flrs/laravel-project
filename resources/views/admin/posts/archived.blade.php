@@ -22,7 +22,7 @@
                             <th>Title</th>
                             <th>Image</th>
                             <th>Created At</th>
-                            <th>Updated At</th>
+                            <th>Restore</th>
                             <th>Delete</th>
                         </tr>
                         </thead>
@@ -33,20 +33,27 @@
                             <th>Title</th>
                             <th>Image</th>
                             <th>Created At</th>
-                            <th>Updated At</th>
+                            <th>Restore</th>
                             <th>Delete</th>
                         </tr>
                         </tfoot>
                         <tbody>
                         @foreach($posts as $post)
-                            @if(!is_null($post->deleted_at))
+{{--                            @if(!is_null($post->deleted_at))--}}
+
                                 <tr>
                                     <td>{{$post->id}}</td>
                                     <td>{{$post->user->name}}</td>
-                                    <td><a href="{{route('post.edit',$post->id)}}">{{$post->title}}</a></td>
+                                    <td>{{$post->title}}</td>
                                     <td><img height="40px" src="{{$post->post_image}}" alt=""></td>
                                     <td>{{$post->created_at->diffForHumans()}}</td>
-                                    <td>{{$post->updated_at->diffForHumans()}}</td>
+                                    <td>
+                                        <form method="post" action="{{route('post.restore',$post->id)}}" enctype="multipart/form-data">
+                                            @csrf
+                                            @method('PUT')
+                                            <button type="submit" class="btn btn-success">Restore</button>
+                                        </form>
+                                    </td>
                                     <td>
                                         {{--                                    @can('view',$post)--}}
                                         <form method="post" action="{{route('post.destroy',$post->id)}}" enctype="multipart/form-data">
@@ -57,7 +64,7 @@
                                         {{--                                    @endcan--}}
                                     </td>
                                 </tr>
-                            @endif
+
                         @endforeach
                         </tbody>
                     </table>
