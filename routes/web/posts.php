@@ -13,6 +13,7 @@ Route::middleware(['auth'])->group(function(){
     Route::delete('/posts/{post}/destroy', [PostController::class, 'destroy'])->name('post.destroy');
     Route::patch('/posts/{post}/update', [PostController::class, 'update'])->name('post.update');
     Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
+    Route::get('/posts/archived',[PostController::class,'archived'])->name('post.archived');
 });
 
 ?>

@@ -25,7 +25,11 @@ class TagController extends Controller
     }
 
     public function destroy(Tag $tag, Request $request){
-//        $this->authorize('delete',$tag);
+        if($tag->posts->count()>0){
+            $request->session()->flash('message','Tag cannot be deleted because it has some posts');
+            return redirect()->back();
+        }
+        $this->authorize('delete',$tag);
         $tag->delete();
         $request->session()->flash('message','post was deleted');
         return back();

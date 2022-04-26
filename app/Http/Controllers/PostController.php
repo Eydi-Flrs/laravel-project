@@ -9,6 +9,7 @@ use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -27,6 +28,8 @@ class PostController extends Controller
         $this->authorize('create',Post::class);
         return view('admin.posts.create',['categories'=>Category::all(),'tags'=>Tag::all()]);
     }
+
+
     public function store(Request $request){
        $inputs= $request->validate([
            'title'=>['required','string','max:255'],
@@ -48,16 +51,11 @@ class PostController extends Controller
        $data= $request->title." ".$request->abstract;
        $url="https://chart.googleapis.com/chart?cht=qr&chs={$width}x{$height}&chl={$data}";
        $inputs['qr']=$url;
-//       dd($inputs['qr']);
 
        if ($request->pdf){
             $inputs['pdf'] = $request->pdf->store('pdf');
         }
 
-//       if($request->tag_id){
-//        ;
-//       }
-//        dd(count($request->lastname));
         $author= new Author();
         $num=count($request->lastname);
         $data=[];
@@ -76,15 +74,14 @@ class PostController extends Controller
 //
         }
 
-
         $post=auth()->user()->posts()->create($inputs);
         $post->tags()->attach($request->tag_id);
         $post->authors()->attach($id);
 
-
        session()->flash('post-created-message','post '.strtoupper($inputs['title']). 'was created');
        return redirect()->route('post.index');
     }
+
 
     public function edit(Post $post){
         $this->authorize('view',$post);
@@ -92,29 +89,24 @@ class PostController extends Controller
 
     }
 
+
     public function destroy(Post $post, Request $request){
         $this->authorize('delete',$post);
+        Storage::delete($post->pdf);
         $post->delete();
-        $request->session()->flash('message','post was deleted');
+        $request->session()->flash('message','post was archived');
         return back();
     }
 
-    public function update(Post $post,Request $request){
-//        $inputs= $request->validate([
-//            'title'=>'required|min:0|max:255',
-//            'post_image'=>'file',
-//            'body'=>'required'
-//        ]);
-//        if ($request->post_image){
-//            $inputs['post_image'] = $request->post_image->store('images');
-//            $post->post_image =$inputs['post_image'];
-//        }
-//        $post->title =$inputs['title'];
-//        $post->body=$inputs['body'];
-//        $this->authorize('update',$post);
-//
-//        posts()->update();
 
+    public function archived(){
+        $archived= Post::withTrashed()->paginate(5);
+        return view('admin.posts.archived',['posts'=>$archived]);
+    }
+
+
+    public function update(Post $post,Request $request){
+//        $this->authorize('update',$post);
         $inputs= $request->validate([
             'title'=>['required','string','max:255'],
             'course'=>['required','string','max:255'],
@@ -135,16 +127,10 @@ class PostController extends Controller
         $data= $request->title." ".$request->abstract;
         $url="https://chart.googleapis.com/chart?cht=qr&chs={$width}x{$height}&chl={$data}";
         $inputs['qr']=$url;
-//       dd($inputs['qr']);
 
         if ($request->pdf){
             $inputs['pdf'] = $request->pdf->store('pdf');
         }
-
-//       if($request->tag_id){
-//        ;
-//       }
-//        dd(count($request->lastname));
         $author= new Author();
         $num=count($request->lastname);
         $data=[];
@@ -161,14 +147,11 @@ class PostController extends Controller
 
             $author_id=$author->updateOrCreate($data[$i]);
             $id[$i]=$author_id->id;
-//
         }
         $post->category_id=$request->category_id;
         $post->update($inputs);
         $post->tags()->sync($request->tag_id);
         $post->authors()->sync($id);
-
-
 
         session()->flash('post-updated-message','post '.strtoupper($inputs['title']). 'was updated');
         return redirect()->route('post.index');
