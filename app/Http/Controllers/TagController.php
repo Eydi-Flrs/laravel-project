@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Models\Tag;
 use Illuminate\Support\Str;
@@ -25,14 +26,24 @@ class TagController extends Controller
     }
 
     public function destroy(Tag $tag, Request $request){
-        if($tag->posts->count()>0){
+        $post=Post::all();
+        if($post->count()==0){
+            $tag->delete();
+            $request->session()->flash('message','tag was deleted');
+            return back();
+        }
+        else if($tag->posts->count()>0){
             $request->session()->flash('message','Tag cannot be deleted because it has some posts');
             return redirect()->back();
         }
-        $this->authorize('delete',$tag);
-        $tag->delete();
-        $request->session()->flash('message','post was deleted');
-        return back();
+        else{
+            $this->authorize('delete',$tag); //ilalagay sa taas aayusin pa
+            $tag->delete();
+            $request->session()->flash('message','post was deleted');
+            return back();
+        }
+
+
     }
 
     public function edit(Tag $tag){

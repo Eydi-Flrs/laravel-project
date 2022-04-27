@@ -51,6 +51,7 @@
                                             <th>Id</th>
                                             <th>Name</th>
                                             <th>Slug</th>
+                                            <th>Post Count</th>
                                             <th>Delete</th>
                                         </tr>
                                         </thead>
@@ -59,6 +60,7 @@
                                             <th>Id</th>
                                             <th>Name</th>
                                             <th>Slug</th>
+                                            <th>Post Count</th>
                                             <th>Delete</th>
                                         </tr>
                                         </tfoot>
@@ -68,6 +70,7 @@
                                                 <td>{{$tag->id}}</td>
                                                 <td><a href="{{route('tags.edit',$tag->id)}}">{{$tag->name}}</a></td>
                                                 <td>{{$tag->slug}}</td>
+                                                <td>{{$tag->posts->count()}}</td>
                                                 <td>
                                                     {{--                                    @can('view',$post)--}}
                                                     <form method="post" action="{{route('tags.destroy',$tag->id)}}" enctype="multipart/form-data">

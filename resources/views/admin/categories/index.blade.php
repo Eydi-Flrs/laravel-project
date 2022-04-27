@@ -51,6 +51,7 @@
                                             <th>Id</th>
                                             <th>Name</th>
                                             <th>Slug</th>
+                                            <th>Post Count</th>
                                             <th>Delete</th>
                                         </tr>
                                         </thead>
@@ -59,6 +60,7 @@
                                             <th>Id</th>
                                             <th>Name</th>
                                             <th>Slug</th>
+                                            <th>Post Count</th>
                                             <th>Delete</th>
                                         </tr>
                                         </tfoot>
@@ -68,6 +70,7 @@
                                                 <td>{{$category->id}}</td>
                                                 <td><a href="{{route('categories.edit',$category->id)}}">{{$category->name}}</a></td>
                                                 <td>{{$category->slug}}</td>
+                                                <td>{{$category->posts->count()}}</td>
                                                 <td>
                                                     {{--                                    @can('view',$post)--}}
                                                     <form method="post" action="{{route('categories.destroy',$category->id)}}" enctype="multipart/form-data">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use Illuminate\Support\Str;
@@ -25,15 +26,24 @@ class CategoryController extends Controller
     }
 
     public function destroy(Category $category, Request $request){
-        if($category->posts->count()>0){
+        $post=Post::all();
+       if($post->count()==0){
+           $category->delete();
+           $request->session()->flash('message','post was deleted');
+           return back();
+       }
+       else if($category->posts->count()>0){
             $request->session()->flash('message','Category cannot be deleted because it has some posts');
             return redirect()->back();
-        }
+       }
+       else{
+           $this->authorize('delete',$category); //ilalagay sa taas aayusin pa
+           $category->delete();
+           $request->session()->flash('message','post was deleted');
+           return back();
+       }
 
-        $this->authorize('delete',$category);
-        $category->delete();
-        $request->session()->flash('message','post was deleted');
-        return back();
+
     }
 
     public function edit(Category $category){
