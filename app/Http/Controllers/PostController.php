@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
+
+//    public function _construct(){
+//        $this->middleware('verifyCategoriesCount')->only(['create','store']);
+//    }
+
+
     public function index(){
 //        $posts =auth()->user()->posts()->paginate(5);
         $posts=Post::paginate(5);

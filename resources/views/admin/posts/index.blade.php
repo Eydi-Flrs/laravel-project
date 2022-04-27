@@ -17,35 +17,45 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                         <tr>
-                            <th>Id</th>
-                            <th>Owner</th>
+                            <th><input type="checkbox"></th>
+                            <th>ID</th>
                             <th>Title</th>
-                            <th>Image</th>
-                            <th>Created At</th>
-                            <th>Updated At</th>
-                            <th>Delete</th>
+                            <th>Category</th>
+                            <th>Course</th>
+                            <th>Author</th>
+                            <th>Date Published</th>
+                            <th>Views</th>
+                            <th>Archived</th>
                         </tr>
                         </thead>
                         <tfoot>
                         <tr>
-                            <th>Id</th>
-                            <th>Owner</th>
+                           <th></th>
+                            <th>ID</th>
                             <th>Title</th>
-                            <th>Image</th>
-                            <th>Created At</th>
-                            <th>Updated At</th>
-                            <th>Delete</th>
+                            <th>Category</th>
+                            <th>Course</th>
+                            <th>Author</th>
+                            <th>Date Published</th>
+                            <th>Views</th>
+                            <th>Archived</th>
                         </tr>
                         </tfoot>
                         <tbody>
                         @foreach($posts as $post)
                             <tr>
+                                <td><input type="checkbox"></td>
                                 <td>{{$post->id}}</td>
-                                <td>{{$post->user->name}}</td>
                                 <td><a href="{{route('post.edit',$post->id)}}">{{$post->title}}</a></td>
-                                <td><img height="40px" src="{{$post->post_image}}" alt=""></td>
-                                <td>{{$post->created_at->diffForHumans()}}</td>
-                                <td>{{$post->updated_at->diffForHumans()}}</td>
+                                <td>{{$post->category->name}}</td>
+                                <td>{{$post->course}}</td>
+                                <td>
+                                @foreach($post->authors as $author)
+                               {{$author->name}}
+                                @endforeach
+                                </td>
+                                <td>{{$post->date_published}}</td>
+                                <td>{{$post->views}}</td>
                                 <td>
                                     <form method="post" action="{{route('post.destroy',$post->id)}}" enctype="multipart/form-data">
                                         @csrf

@@ -17,36 +17,45 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                         <tr>
-                            <th>Id</th>
-                            <th>Owner</th>
+                            <th><input type="checkbox"></th>
+                            <th>ID</th>
                             <th>Title</th>
-                            <th>Image</th>
-                            <th>Created At</th>
-                            <th>Restore</th>
+                            <th>Category</th>
+                            <th>Course</th>
+                            <th>Author</th>
+                            <th>Date Published</th>
+                            <th>Views</th>
                             <th>Delete</th>
                         </tr>
                         </thead>
                         <tfoot>
                         <tr>
-                            <th>Id</th>
-                            <th>Owner</th>
+                            <th></th>
+                            <th>ID</th>
                             <th>Title</th>
-                            <th>Image</th>
-                            <th>Created At</th>
-                            <th>Restore</th>
+                            <th>Category</th>
+                            <th>Course</th>
+                            <th>Author</th>
+                            <th>Date Published</th>
+                            <th>Views</th>
                             <th>Delete</th>
                         </tr>
                         </tfoot>
                         <tbody>
                         @foreach($posts as $post)
 {{--                            @if(!is_null($post->deleted_at))--}}
-
                                 <tr>
                                     <td>{{$post->id}}</td>
-                                    <td>{{$post->user->name}}</td>
                                     <td>{{$post->title}}</td>
-                                    <td><img height="40px" src="{{$post->post_image}}" alt=""></td>
-                                    <td>{{$post->created_at->diffForHumans()}}</td>
+                                    <td>{{$post->category->name}}</td>
+                                    <td>{{$post->course}}</td>
+                                    <td>
+                                        @foreach($post->authors as $author)
+                                            {{$author->name}}
+                                        @endforeach
+                                    </td>
+                                    <td>{{$post->date_published}}</td>
+                                    <td>{{$post->views}}</td>
                                     <td>
                                         <form method="post" action="{{route('post.restore',$post->id)}}" enctype="multipart/form-data">
                                             @csrf
