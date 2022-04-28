@@ -13,11 +13,14 @@
                 <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
             </div>
             <div class="card-body">
+
+                    <a href="#" class="btn btn-danger" id="archivedAllSelected">Archived Selected</a>
+
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                         <tr>
-                            <th><input type="checkbox"></th>
+                            <th><input type="checkbox" id="chkCheckAll"></th>
                             <th>ID</th>
                             <th>Title</th>
                             <th>Category</th>
@@ -43,8 +46,8 @@
                         </tfoot>
                         <tbody>
                         @foreach($posts as $post)
-                            <tr>
-                                <td><input type="checkbox"></td>
+                            <tr id="pid{{$post->id}}">
+                                <td><input type="checkbox" name="ids" class="checkBoxClass" value="{{$post->id}}"/></td>
                                 <td>{{$post->id}}</td>
                                 <td><a href="{{route('post.edit',$post->id)}}">{{$post->title}}</a></td>
                                 <td>{{$post->category->name}}</td>
@@ -85,5 +88,39 @@
 
             <!-- Page level custom scripts -->
             <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
+            <script>
+                $(function(e){
+                    $("#chkCheckAll").click(function(){
+                        $(".checkBoxClass").prop('checked',$(this).prop('checked'));
+                    });
+
+                    $('#archivedAllSelected').click(function (e){
+                        e.preventDefault();
+                        var allids=[];
+
+                        $("input:checkbox[name=ids]:checked").each(function (){
+                           allids.push($(this).val());
+                        });
+
+                        $.ajax({
+                            url:"{{route('post.deleteChecked')}}",
+                            type:"DELETE",
+                            data:{
+                                _token:$("input[name=_token]").val(),
+                                ids:allids
+                            },
+                            success:function (response){
+                                $.each(allids,function(key,val){
+                                    $("#pid"+val).remove();
+                                })
+                            }
+                        });
+                    })
+
+
+                });
+            </script>
         @endsection
+
+
 </x-admin-master>

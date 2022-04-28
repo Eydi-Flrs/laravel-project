@@ -178,4 +178,11 @@ class PostController extends Controller
         session()->flash('post-updated-message','post '.strtoupper($inputs['title']). 'was updated');
         return redirect()->route('post.index');
     }
+
+    public function deleteCheckedPosts(Request $request){
+        $ids=$request->ids;
+        Post::whereIn('id',$ids)->delete();
+
+        return response()->json(['success'=>"posts have been deleted"]);
+    }
 }

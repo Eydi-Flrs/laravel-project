@@ -15,6 +15,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
     Route::get('/posts/archived',[PostController::class,'archived'])->name('post.archived');
     Route::put('/posts/{post}/restore',[PostController::class,'restore'])->name('post.restore');
+    Route::delete('/posts/delete-checked',[PostController::class,'deleteCheckedPosts'])->name('post.deleteChecked');
 });
 
 ?>
