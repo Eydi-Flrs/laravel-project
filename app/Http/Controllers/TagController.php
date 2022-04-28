@@ -26,14 +26,14 @@ class TagController extends Controller
     }
 
     public function destroy(Tag $tag, Request $request){
-        $post=Post::all();
+        $post=Post::withTrashed()->get();
         if($post->count()==0){
             $tag->delete();
             $request->session()->flash('message','tag was deleted');
             return back();
         }
-        else if($tag->posts->count()>0){
-            $request->session()->flash('message','Tag cannot be deleted because it has some posts');
+        else if($tag->posts->count()>0 || $post->count()>0){
+            $request->session()->flash('message','Tag cannot be deleted because it has some related posts and archived still has posts');
             return redirect()->back();
         }
         else{
