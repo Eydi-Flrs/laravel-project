@@ -25,6 +25,7 @@
                             <th>Author</th>
                             <th>Date Published</th>
                             <th>Views</th>
+                            <th>Restore</th>
                             <th>Delete</th>
                         </tr>
                         </thead>
@@ -38,6 +39,7 @@
                             <th>Author</th>
                             <th>Date Published</th>
                             <th>Views</th>
+                            <th>Restore</th>
                             <th>Delete</th>
                         </tr>
                         </tfoot>
@@ -45,6 +47,7 @@
                         @foreach($posts as $post)
 {{--                            @if(!is_null($post->deleted_at))--}}
                                 <tr>
+                                    <td><input type="checkbox"></td>
                                     <td>{{$post->id}}</td>
                                     <td>{{$post->title}}</td>
                                     <td>{{$post->category->name}}</td>

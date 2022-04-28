@@ -26,14 +26,14 @@ class CategoryController extends Controller
     }
 
     public function destroy(Category $category, Request $request){
-        $post=Post::all();
+        $post=Post::withTrashed()->get();
        if($post->count()==0){
            $category->delete();
            $request->session()->flash('message','post was deleted');
            return back();
        }
-       else if($category->posts->count()>0){
-            $request->session()->flash('message','Category cannot be deleted because it has some posts');
+       else if($category->posts->count()>0 || $post->count()>0){
+            $request->session()->flash('message','Category cannot be deleted because it has some related posts and archived still has posts');
             return redirect()->back();
        }
        else{
