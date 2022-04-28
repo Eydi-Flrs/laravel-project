@@ -72,15 +72,35 @@
                                                 <td>{{$tag->slug}}</td>
                                                 <td>{{$tag->posts->count()}}</td>
                                                 <td>
-                                                    {{--                                    @can('view',$post)--}}
-                                                    <form method="post" action="{{route('tags.destroy',$tag->id)}}" enctype="multipart/form-data">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger">Delete</button>
-                                                    </form>
-                                                    {{--                                    @endcan--}}
+                                                    <!-- Button trigger modal -->
+                                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal-{{$tag->id}}">
+                                                      Delete
+                                                    </button>
                                                 </td>
                                             </tr>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="deleteModal-{{$tag->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to permanently delete "{{strtoupper($tag->name)}}" ?</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                            {{--                                    @can('view',$post)--}}
+                                                            <form method="post" action="{{route('tags.destroy',$tag->id)}}" enctype="multipart/form-data">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                                            </form>
+                                                            {{--                                    @endcan--}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         @endforeach
                                         </tbody>
                                     </table>

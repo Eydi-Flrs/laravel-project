@@ -39,7 +39,7 @@ class TagController extends Controller
         else{
             $this->authorize('delete',$tag); //ilalagay sa taas aayusin pa
             $tag->delete();
-            $request->session()->flash('message','post was deleted');
+            $request->session()->flash('message','Category was deleted');
             return back();
         }
 

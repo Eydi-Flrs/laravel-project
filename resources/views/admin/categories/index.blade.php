@@ -72,14 +72,33 @@
                                                 <td>{{$category->slug}}</td>
                                                 <td>{{$category->posts->count()}}</td>
                                                 <td>
-                                                    {{--                                    @can('view',$post)--}}
-                                                    <form method="post" action="{{route('categories.destroy',$category->id)}}" enctype="multipart/form-data">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger">Delete</button>
-                                                    </form>
-                                                    {{--                                    @endcan--}}
+                                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal-{{$category->id}}">
+                                                        Delete
+                                                    </button>
                                                 </td>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="deleteModal-{{$category->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to permanently delete "{{strtoupper($category->name)}}" ?</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                                {{--                                    @can('view',$post)--}}
+                                                                <form method="post" action="{{route('categories.destroy',$category->id)}}" enctype="multipart/form-data">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                                </form>
+                                                                {{--                                    @endcan--}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </tr>
                                         @endforeach
                                         </tbody>
