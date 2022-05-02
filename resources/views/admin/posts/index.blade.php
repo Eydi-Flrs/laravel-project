@@ -14,13 +14,16 @@
             </div>
             <div class="card-body">
 
-                    <a href="#" class="btn btn-danger" id="archivedAllSelected">Archived Selected</a>
-
                 <div class="table-responsive">
+
+                    <form action="{{route('post.deleteChecked')}}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <input type="submit" name="delete_all" class="btn btn-danger like" value="archived selected">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                         <tr>
-                            <th><input type="checkbox" id="chkCheckAll"></th>
+                            <th><input type="checkbox" id="options"></th>
                             <th>ID</th>
                             <th>Title</th>
                             <th>Category</th>
@@ -28,7 +31,7 @@
                             <th>Author</th>
                             <th>Date Published</th>
                             <th>Views</th>
-                            <th>Archived</th>
+                            <th>Edit</th>
                         </tr>
                         </thead>
                         <tfoot>
@@ -41,15 +44,15 @@
                             <th>Author</th>
                             <th>Date Published</th>
                             <th>Views</th>
-                            <th>Archived</th>
+                            <th>Edit</th>
                         </tr>
                         </tfoot>
                         <tbody>
                         @foreach($posts as $post)
                             <tr id="pid{{$post->id}}">
-                                <td><input type="checkbox" name="ids" class="checkBoxClass" value="{{$post->id}}"/></td>
+                                <td><input type="checkbox" name="checkBoxArray[]" class="checkBoxes" value="{{$post->id}}"/></td>
                                 <td>{{$post->id}}</td>
-                                <td><a href="{{route('post.edit',$post->id)}}">{{$post->title}}</a></td>
+                                <td><a href="/post/{{$post->id}}">{{$post->title}}</a></td>
                                 <td>{{$post->category->name}}</td>
                                 <td>{{$post->course}}</td>
                                 <td>
@@ -60,16 +63,16 @@
                                 <td>{{$post->date_published}}</td>
                                 <td>{{$post->views}}</td>
                                 <td>
-                                    <form method="post" action="{{route('post.destroy',$post->id)}}" enctype="multipart/form-data">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">Archived</button>
-                                    </form>
+{{--                                        <input type="hidden" name="post" value={{$post->id}}>--}}
+{{--                                        <input type="submit" name= "delete_single" class="btn btn-danger" value="Archived">--}}
+                                    <a href="{{route('post.edit',$post->id)}}" class="btn btn-primary">Edit</a>
+
                                 </td>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
+                    </form>
                 </div>
             </div>
         </div>
@@ -89,35 +92,13 @@
             <!-- Page level custom scripts -->
             <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
             <script>
+
+            </script>
+            <script>
                 $(function(e){
-                    $("#chkCheckAll").click(function(){
-                        $(".checkBoxClass").prop('checked',$(this).prop('checked'));
+                    $("#options").click(function(){
+                        $(".checkBoxes").prop('checked',$(this).prop('checked'));
                     });
-
-                    $('#archivedAllSelected').click(function (e){
-                        e.preventDefault();
-                        var allids=[];
-
-                        $("input:checkbox[name=ids]:checked").each(function (){
-                           allids.push($(this).val());
-                        });
-
-                        $.ajax({
-                            url:"{{route('post.deleteChecked')}}",
-                            type:"DELETE",
-                            data:{
-                                _token:$("input[name=_token]").val(),
-                                ids:allids
-                            },
-                            success:function (response){
-                                $.each(allids,function(key,val){
-                                    $("#pid"+val).remove();
-                                })
-                            }
-                        });
-                    })
-
-
                 });
             </script>
         @endsection

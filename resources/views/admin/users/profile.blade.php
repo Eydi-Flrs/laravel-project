@@ -1,4 +1,4 @@
-<x-admin-master>
+<x-home-master>
     @section('content')
         <h1>User Profile for:{{$user->name}}</h1>
         <div class="row">
@@ -7,7 +7,7 @@
                     @csrf
                     @method('PUT')
                     <div class="mb-4">
-                        <img height="300px" class="rounded-circle" src="{{$user->avatar}}">
+                        <img height="300px" class="rounded-circle" src="{{dd($user->avatar)}}">
                     </div>
                     <div class="form-group">
                         <input type="file" name="avatar">
@@ -100,7 +100,7 @@
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <th>Oprtions</th>
+                                    <th>Options</th>
                                     <th>Id</th>
                                     <th>Name</th>
                                     <th>Slug</th>
@@ -110,7 +110,7 @@
                                 </thead>
                                 <tfoot>
                                 <tr>
-                                    <th>Oprtions</th>
+                                    <th>Options</th>
                                     <th>Id</th>
                                     <th>Name</th>
                                     <th>Slug</th>
@@ -153,9 +153,6 @@
                                                     @endif
                                             ">Detach</button>
                                         </form></td>
-
-
-
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -166,4 +163,4 @@
             </div>
         </div>
     @endsection
-</x-admin-master>
+</x-home-master>

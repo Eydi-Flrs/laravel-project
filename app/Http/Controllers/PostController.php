@@ -96,17 +96,17 @@ class PostController extends Controller
     }
 
 
-    public function destroy($id, Request $request){
+    public function destroy($id){
         $post=Post::withTrashed()->where('id',$id)->firstOrFail();
         $this->authorize('delete',$post);
         if(!is_null($post->deleted_at)){
             $post->deletePdf();
             $post->forceDelete();
-            $request->session()->flash('message','post was deleted');
+           session()->flash('message','post was deleted');
         }
         else{
             $post->delete();
-            $request->session()->flash('message','post was archived');
+            session()->flash('message','post was archived');
         }
 
         return back();
@@ -180,9 +180,26 @@ class PostController extends Controller
     }
 
     public function deleteCheckedPosts(Request $request){
-        $ids=$request->ids;
-        Post::whereIn('id',$ids)->delete();
 
-        return response()->json(['success'=>"posts have been deleted"]);
+        if(isset($request->delete_single)){
+            $this->destroy($request->post);
+            return redirect()->back();
+        }
+
+        if(isset($request->delete_all) && !empty($request->checkBoxArray)){
+            $posts=Post::withTrashed()->whereIn('id',$request->checkBoxArray)->get();
+            foreach ($posts as $post) {
+                if (!is_null($post->deleted_at)) {
+                    $post->deletePdf();
+                    $post->forceDelete();
+                    session()->flash('message', 'post was deleted');
+                } else {
+                    $post->delete();
+                    session()->flash('message', 'post was archived');
+                }
+            }
+            return redirect()->back();
+        }
+        return redirect()->back();
     }
 }
