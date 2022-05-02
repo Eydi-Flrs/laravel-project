@@ -52,7 +52,7 @@
                             <tr id="pid{{$post->id}}">
                                 <td><input type="checkbox" name="checkBoxArray[]" class="checkBoxes" value="{{$post->id}}"/></td>
                                 <td>{{$post->id}}</td>
-                                <td><a href="/post/{{$post->id}}">{{$post->title}}</a></td>
+                                <td><a href="/post/{{$post->id}}" target="_blank">{{$post->title}}</a></td>
                                 <td>{{$post->category->name}}</td>
                                 <td>{{$post->course}}</td>
                                 <td>
