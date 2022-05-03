@@ -1,37 +1,15 @@
 <x-admin-master>
     @section('content')
         <h1>Edit a Post</h1>
-
-{{--        <form method="post" action="{{route('post.update',$post->id)}}" enctype="multipart/form-data">--}}
-{{--            @csrf--}}
-{{--            @method('PATCH')--}}
-{{--            <div class="form-group">--}}
-{{--                <label for="title">Title</label>--}}
-{{--                <input type="text"--}}
-{{--                       name="title"--}}
-{{--                       class="form-control"--}}
-{{--                       id="title"--}}
-{{--                       aria-describedby=""--}}
-{{--                       placeholder="Enter Title"--}}
-{{--                       value="{{$post->title}}"--}}
-{{--                >--}}
-{{--            </div>--}}
-{{--            <div class="form-group">--}}
-{{--                <div><img height="100px" src="{{$post->post_image}}" alt=""></div>--}}
-{{--                <label for="file">File</label>--}}
-{{--                <input type="file"--}}
-{{--                       name="post_image"--}}
-{{--                       class="form-control-file"--}}
-{{--                       id="post_image"--}}
-{{--                       aria-describedby="">--}}
-{{--            </div>--}}
-{{--            <div class="form-group">--}}
-{{--                <textarea name="body" id="body" class="form-control" cols="30" rows="10">{{$post->body}}</textarea>--}}
-{{--            </div>--}}
-{{--            <button type="submit" class="btn btn-primary">Submit</button>--}}
-{{--        </form>--}}
-
-
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="col-md-12">
             <div class="card mb-4">
                 <div class="card-body">
@@ -125,10 +103,28 @@
                                 </div>
                             @endif
                             <div class="col-sm-4">
-                                <label for="date_published">Date Published</label><input  value="{{$post->date_published}}" type="date" class="form-control form-control-user" id="date_published" name="date_published" placeholder="Date published">
+                                <label for="pages">Pages</label><input value="{{$post->pages}}" type="number" class="form-control form-control-user" id="pages" name="pages" placeholder="Pages">
+                            </div>
+                        </div>
+                        <h3>Date</h3>
+                        <div class="form-group row">
+                            <div class="col-sm-4">
+                                <label for="month">Month:</label>
+                                <select class="form-select" name="month" id="month">
+                                    <option value="none">None</option>
+                                </select>
                             </div>
                             <div class="col-sm-4">
-                                <label for="pages">Pages</label><input value="{{$post->pages}}" type="number" class="form-control form-control-user" id="pages" name="pages" placeholder="Pages" required>
+                                <label for="day">Day:</label>
+                                <select class="form-select" name="day" id="day" >
+                                    <option value="none">None</option>
+                                    @for($i=1;$i<=31;$i++)
+                                        <option @if($i==$post->day) selected @endif value="{{$i}}">{{$i}}</option>
+                                    @endfor
+                                </select>
+                            </div>
+                            <div class="col-sm-4">
+                                <label for="year">Year Published</label><input value="{{$post->year}}" onkeypress="return onlyNumberKey(event)"   type="text" class="form-control form-control-user" id="year" minlength="4" maxlength="4" name="year"placeholder="Year Published" required>
                             </div>
                         </div>
 
@@ -145,9 +141,6 @@
                         <div class="form-group row">
                             <div class="col-sm-6 mb-2 mb-sm-0">
                                 <label for="publisher">Publisher</label><input value="{{$post->publisher}}" type="text" class="form-control form-control-user" id="publisher" name="publisher"  placeholder="Publisher" >
-                            </div>
-                            <div class="col-sm-6">
-                                <label for="year">Year Published</label><input value="{{$post->year}}" onkeypress="return onlyNumberKey(event)"   type="text" class="form-control form-control-user" id="year" minlength="4" maxlength="4" name="year"placeholder="Year Published" >
                             </div>
                         </div>
 
@@ -176,6 +169,85 @@
         <script src="{{asset('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js')}}"></script>
         <link href="{{asset('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css')}}" rel="stylesheet"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.js" integrity="sha512-/1nVu72YEESEbcmhE/EvjH/RxTg62EKvYWLG3NdeZibTCuEtW5M4z3aypcvsoZw03FAopi94y04GhuqRU9p+CQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>
+            const monthSelect = document.getElementById("month");
+            const daySelect = document.getElementById("day");
+            const yearSelect = document.getElementById("year");
+
+            const months = ['January', 'February', 'March', 'April',
+                'May', 'June', 'July', 'August', 'September', 'October',
+                'November', 'December'];
+            (function populateMonths(){
+                for(let i = 0; i < months.length; i++){
+                    const option = document.createElement('option');
+                    option.textContent = months[i];
+                    option.name='month';
+                    monthSelect.appendChild(option);
+                }
+                monthSelect.value = '{{$post->month}}';
+            })();
+
+            // let previousDay;
+            // function populateDays(month){
+            //     //Delete all of the children of the day dropdown
+            //     //if they do exist
+            //     while(daySelect.firstChild){
+            //         daySelect.removeChild(daySelect.firstChild);
+            //     }
+            //     //Holds the number of days in the month
+            //     let dayNum;
+            //     //Get the current year
+            //     let year = yearSelect.value;
+            //
+            //     if(month === 'January' || month === 'March' ||
+            //         month === 'May' || month === 'July' || month === 'August'
+            //         || month === 'October' || month === 'December') {
+            //         dayNum = 31;
+            //     } else if(month === 'April' || month === 'June'
+            //         || month === 'September' || month === 'November') {
+            //         dayNum = 30;
+            //     }else{
+            //         //Check for a leap year
+            //         if(new Date(year, 1, 29).getMonth() === 1){
+            //             dayNum = 29;
+            //         }else{
+            //             dayNum = 28;
+            //         }
+            //     }
+            //     //Insert the correct days into the day <select>
+            //     for(let i = 1; i <= dayNum; i++){
+            //         const option = document.createElement("option");
+            //         option.textContent = i;
+            //         daySelect.appendChild(option);
+            //     }
+            //     if(previousDay){
+            //         daySelect.value = previousDay;
+            //         if(daySelect.value === ""){
+            //             daySelect.value = previousDay - 1;
+            //         }
+            //         if(daySelect.value === ""){
+            //             daySelect.value = previousDay - 2;
+            //         }
+            //         if(daySelect.value === ""){
+            //             daySelect.value = previousDay - 3;
+            //         }
+            //     }
+            // }
+
+            // populateDays(monthSelect.value);
+            // populateYears();
+            //
+            // yearSelect.onchange = function() {
+            //     populateDays(monthSelect.value);
+            // }
+            // monthSelect.onchange = function() {
+            //     populateDays(monthSelect.value);
+            // }
+            // daySelect.onchange = function() {
+            //     previousDay = daySelect.value;
+            // }
+
+        </script>
         <script>
             $("#year").datepicker({
                 format: "yyyy",

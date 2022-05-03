@@ -19,13 +19,14 @@ return new class extends Migration
             $table->foreignId('category_id');
             $table->string('title');
             $table->string('course');
-            $table->date('date_published')->nullable();
-            $table->string('pages');
+            $table->string('pages')->nullable();
             $table->string('pdf');
+            $table->string('month')->nullable();
+            $table->string('day')->nullable();
+            $table->string('year');
             $table->string('volume')->nullable();
             $table->string('series')->nullable();
             $table->string('publisher')->nullable();
-            $table->string('year')->nullable();
             $table->text('qr')->nullable();
             $table->text('abstract');
             $table->string('type');

@@ -1,6 +1,7 @@
 <x-admin-master>
     @section('content')
         <h1>All Posts</h1>
+
         @if(session('message'))
            <div class="alert alert-danger">{{session('message')}}</div>
             @elseif(session('post-created-message'))
@@ -29,7 +30,7 @@
                             <th>Category</th>
                             <th>Course</th>
                             <th>Author</th>
-                            <th>Date Published</th>
+                            <th>Year</th>
                             <th>Views</th>
                             <th>Edit</th>
                         </tr>
@@ -42,7 +43,7 @@
                             <th>Category</th>
                             <th>Course</th>
                             <th>Author</th>
-                            <th>Date Published</th>
+                            <th>Year</th>
                             <th>Views</th>
                             <th>Edit</th>
                         </tr>
@@ -60,7 +61,7 @@
                                {{$author->name}}
                                 @endforeach
                                 </td>
-                                <td>{{$post->date_published}}</td>
+                                <td>{{$post->year}}</td>
                                 <td>{{$post->views}}</td>
                                 <td>
 {{--                                        <input type="hidden" name="post" value={{$post->id}}>--}}

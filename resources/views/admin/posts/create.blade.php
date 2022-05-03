@@ -1,11 +1,19 @@
 <x-admin-master>
     @section('content')
         <h1>Create Post</h1>
-
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="col-md-12">
                         <div class="card mb-4">
                             <div class="card-body">
-                                <form method="post" action="{{route('post.store')}}" enctype="multipart/form-data">
+                                <form method="post" action="{{route('post.store')}}" enctype="multipart/form-data" autocomplete="off">
                                     @csrf
                                     <h3>Authors</h3>
 
@@ -39,7 +47,8 @@
                                         <div class="col-sm-6">
                                         <label for="course">Course</label>
                                         <select class="form-select" aria-label="Default select example" id="course" name="course" required>
-                                            <option selected value="Bachelor of Science in Information System">Bachelor of Science in Information System</option>
+                                            <option value="none">none</option>
+                                            <option value="Bachelor of Science in Information System">Bachelor of Science in Information System</option>
                                             <option value="Bachelor of Science in Information Technology">Bachelor of Science in Information Technology</option>
                                             <option value="Bachelor of Science in Computer Science">Bachelor of Science in Computer Science</option>
                                         </select>
@@ -55,16 +64,13 @@
                                     </div>
 
 
-
+                                    <br>
                                     <h3>Publication Info</h3>
                                     <div class="form-group ">
                                         <label for="title">Title</label><input type="text" name="title" class="form-control" id="title" aria-describedby="" placeholder="Enter Title" required>
                                     </div>
 
-
-
                                     <div class="form-group row">
-
                                         <div class="col-sm-4 mb-3 mb-sm-0">
                                             <label for="category_id">Categories</label>
                                             <select class="form-select" aria-label="Default select example" id="category_id" name="category_id" required>
@@ -76,18 +82,38 @@
                                         @if($tags->count()>0)
                                         <div class="col-sm-4 mb-3 mb-sm-0">
                                             <label for="tag_id">Tags</label>
-                                            <select class="form-select" aria-label="Default select example" id="tag_id" name="tag_id[]" multiple required>
+                                            <select class="form-select" aria-label="Default select example" id="tag_id" name="tag_id[]" multiple="multiple" required>
                                                 @foreach($tags as $tag)
                                                     <option value="{{$tag->id}}">{{$tag->name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                         @endif
+
                                         <div class="col-sm-4">
-                                            <label for="date_published">Date Published</label><input type="date" class="form-control form-control-user" id="date_published" name="date_published" placeholder="Date published">
+                                            <label for="pages">Pages</label><input type="number" class="form-control form-control-user" id="pages" name="pages" placeholder="Pages">
+                                        </div>
+                                    </div>
+
+                                    <h3>Date</h3>
+                                    <div class="form-group row">
+                                        <div class="col-sm-4">
+                                            <label for="month">Month:</label>
+                                            <select class="form-select" name="month" id="month">
+                                                <option value="none">None</option>
+                                            </select>
                                         </div>
                                         <div class="col-sm-4">
-                                            <label for="pages">Pages</label><input type="number" class="form-control form-control-user" id="pages" name="pages" placeholder="Pages" required>
+                                            <label for="day">Day:</label>
+                                            <select class="form-select" name="day" id="day" >
+                                                 <option value="none">None</option>
+                                                @for($i=1;$i<=31;$i++)
+                                                    <option value="{{$i}}">{{$i}}</option>
+                                                @endfor
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label for="year">Year Published</label><input  onkeypress="return onlyNumberKey(event)"   type="text" class="form-control form-control-user" id="year" minlength="4" maxlength="4" name="year"placeholder="Year Published" required>
                                         </div>
                                     </div>
 
@@ -105,9 +131,7 @@
                                         <div class="col-sm-6 mb-2 mb-sm-0">
                                             <label for="publisher">Publisher</label><input type="text" class="form-control form-control-user" id="publisher" name="publisher"  placeholder="Publisher" >
                                         </div>
-                                        <div class="col-sm-6">
-                                            <label for="year">Year Published</label><input  onkeypress="return onlyNumberKey(event)"   type="text" class="form-control form-control-user" id="year" minlength="4" maxlength="4" name="year"placeholder="Year Published" >
-                                        </div>
+
                                     </div>
 
 
@@ -130,11 +154,98 @@
 
         </div>
 
+
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.css" integrity="sha512-CWdvnJD7uGtuypLLe5rLU3eUAkbzBR3Bm1SFPEaRfvXXI2v2H5Y0057EMTzNuGGRIznt8+128QIDQ8RqmHbAdg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <script src="{{asset('https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js')}}"></script>
         <script src="{{asset('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js')}}"></script>
         <link href="{{asset('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css')}}" rel="stylesheet"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.js" integrity="sha512-/1nVu72YEESEbcmhE/EvjH/RxTg62EKvYWLG3NdeZibTCuEtW5M4z3aypcvsoZw03FAopi94y04GhuqRU9p+CQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{{--        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />--}}
+{{--        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>--}}
+{{--        <script>--}}
+{{--            $(document).ready(function() {--}}
+{{--                $('.select2').select2();--}}
+{{--            });--}}
+{{--        </script>--}}
+        <script>
+            const monthSelect = document.getElementById("month");
+            const daySelect = document.getElementById("day");
+            const yearSelect = document.getElementById("year");
+
+            const months = ['January', 'February', 'March', 'April',
+                'May', 'June', 'July', 'August', 'September', 'October',
+                'November', 'December'];
+            (function populateMonths(){
+                for(let i = 0; i < months.length; i++){
+                    const option = document.createElement('option');
+                    option.textContent = months[i];
+                    option.name='month';
+                    monthSelect.appendChild(option);
+                }
+                monthSelect.value = "none";
+            })();
+
+            // let previousDay;
+            // function populateDays(month){
+            //     //Delete all of the children of the day dropdown
+            //     //if they do exist
+            //     while(daySelect.firstChild){
+            //         daySelect.removeChild(daySelect.firstChild);
+            //     }
+            //     //Holds the number of days in the month
+            //     let dayNum;
+            //     //Get the current year
+            //     let year = yearSelect.value;
+            //
+            //     if(month === 'January' || month === 'March' ||
+            //         month === 'May' || month === 'July' || month === 'August'
+            //         || month === 'October' || month === 'December') {
+            //         dayNum = 31;
+            //     } else if(month === 'April' || month === 'June'
+            //         || month === 'September' || month === 'November') {
+            //         dayNum = 30;
+            //     }else{
+            //         //Check for a leap year
+            //         if(new Date(year, 1, 29).getMonth() === 1){
+            //             dayNum = 29;
+            //         }else{
+            //             dayNum = 28;
+            //         }
+            //     }
+            //     //Insert the correct days into the day <select>
+            //     for(let i = 1; i <= dayNum; i++){
+            //         const option = document.createElement("option");
+            //         option.textContent = i;
+            //         daySelect.appendChild(option);
+            //     }
+            //     if(previousDay){
+            //         daySelect.value = previousDay;
+            //         if(daySelect.value === ""){
+            //             daySelect.value = previousDay - 1;
+            //         }
+            //         if(daySelect.value === ""){
+            //             daySelect.value = previousDay - 2;
+            //         }
+            //         if(daySelect.value === ""){
+            //             daySelect.value = previousDay - 3;
+            //         }
+            //     }
+            // }
+
+            // populateDays(monthSelect.value);
+            // populateYears();
+            //
+            // yearSelect.onchange = function() {
+            //     populateDays(monthSelect.value);
+            // }
+            // monthSelect.onchange = function() {
+            //     populateDays(monthSelect.value);
+            // }
+            // daySelect.onchange = function() {
+            //     previousDay = daySelect.value;
+            // }
+
+        </script>
         <script>
         $("#year").datepicker({
                 format: "yyyy",
@@ -151,7 +262,6 @@
         }
         </script>
         <script>
-
             $('tbody').on('click','.addRow',function (){
 
                 var tr=
@@ -173,5 +283,5 @@
 
 
         </script>
-    @endsection
+        @endsection
 </x-admin-master>

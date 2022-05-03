@@ -37,20 +37,22 @@ class PostController extends Controller
 
 
     public function store(Request $request){
+
        $inputs= $request->validate([
            'title'=>['required','string','max:255'],
            'course'=>['required','string','max:255'],
            'category_id'=>['required','string','max:255'],
-           'date_published'=>'date',
-           'pages'=>['string','max:255'],
+           'month'=>['nullable','string','max:255'],
+           'day'=>['nullable','string','max:255'],
+           'year'=>['required','string','max:255'],
+           'pages'=>['nullable','string','max:255'],
            'pdf'=>['required','file'],
-           'volume'=>['string','max:255'],
-           'series'=>['string','max:255'],
-           'publisher'=>['string','max:255'],
-           'year'=>['string','max:255'],
+           'volume'=>['nullable','string','max:255'],
+           'series'=>['nullable','string','max:255'],
+           'publisher'=>['nullable','string','max:255'],
            'qr'=>['string','max:255'],
            'abstract'=>['required','string','max:1000'],
-           'type'=>['string','max:255']
+           'type'=>['required','string','max:255']
        ]);
        $width="250";
        $height="250";
@@ -132,16 +134,17 @@ class PostController extends Controller
             'title'=>['required','string','max:255'],
             'course'=>['required','string','max:255'],
             'category_id'=>['required','string','max:255'],
-            'date_published'=>'date',
-            'pages'=>['string','max:255'],
+            'month'=>['nullable','string','max:255'],
+            'day'=>['nullable','string','max:255'],
+            'year'=>['required','string','max:255'],
+            'pages'=>['nullable','string','max:255'],
             'pdf'=>['file'],
-            'volume'=>['string','max:255'],
-            'series'=>['string','max:255'],
-            'publisher'=>['string','max:255'],
-            'year'=>['string','max:255'],
+            'volume'=>['nullable','string','max:255'],
+            'series'=>['nullable','string','max:255'],
+            'publisher'=>['nullable','string','max:255'],
             'qr'=>['string','max:255'],
             'abstract'=>['required','string','max:1000'],
-            'type'=>['string','max:255']
+            'type'=>['required','string','max:255']
         ]);
         $width="250";
         $height="250";
