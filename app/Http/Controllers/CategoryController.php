@@ -14,30 +14,33 @@ class CategoryController extends Controller
         return view('admin.categories.index',['categories'=>Category::all()]);
     }
     public function store(Request $request){
-        request()->validate(['category'=>['required','string','max:255']]);
+        request()->validate(['name'=>['unique:categories','required','string','max:255']]);
 
         Category::create([
-            'name'=>Str::ucfirst(request('category')),
-            'slug'=>Str::of(Str::lower(request('category')))->slug('-')
+            'name'=>Str::ucfirst(request('name')),
+            'slug'=>Str::of(Str::lower(request('name')))->slug('-')
             ]
         );
-        session()->flash('category-created-message','post '.strtoupper($request->category). 'was created');
+        session()->flash('category-created-message','post '.strtoupper($request->name). 'was created');
         return redirect()->route('categories.index');
     }
 
     public function destroy(Category $category, Request $request){
-        $post=Post::withTrashed()->get();
-       if($post->count()==0){
+        //ayusin ko pa destroy logic
+        $postAll=Post::all();
+        $postTrashed=Post::onlyTrashed()->get();
+//        dd($category->posts->count());
+       if($postAll->count()==0 && $postTrashed->count()==0){
            $category->delete();
            $request->session()->flash('message','post was deleted');
            return back();
        }
-       else if($category->posts->count()>0 || $post->count()>0){
+       else if($category->posts->count()>0 || $postTrashed->count()>0){
             $request->session()->flash('message','Category cannot be deleted because it has some related posts and archived still has posts');
             return redirect()->back();
        }
        else{
-           $this->authorize('delete',$category); //ilalagay sa taas aayusin pa
+//           $this->authorize('delete',$category); //ilalagay sa taas aayusin pa
            $category->delete();
            $request->session()->flash('message','post was deleted');
            return back();
