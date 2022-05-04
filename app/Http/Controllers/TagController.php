@@ -14,30 +14,32 @@ class TagController extends Controller
         return view('admin.tags.index',['tags'=>Tag::all()]);
     }
     public function store(Request $request){
-        request()->validate(['tag'=>['required','string','max:255']]);
+        request()->validate(['name'=>['unique:tags','required','string','max:255']]);
 
         Tag::create([
-                'name'=>Str::ucfirst(request('tag')),
-                'slug'=>Str::of(Str::lower(request('tag')))->slug('-')
+                'name'=>Str::ucfirst(request('name')),
+                'slug'=>Str::of(Str::lower(request('name')))->slug('-')
             ]
         );
-        session()->flash('tag-created-message','post '.strtoupper($request->tag). 'was created');
+        session()->flash('tag-created-message','tag '.strtoupper($request->name).' was created');
         return redirect()->route('tags.index');
     }
 
     public function destroy(Tag $tag, Request $request){
-        $post=Post::withTrashed()->get();
-        if($post->count()==0){
+        $postAll=Post::all();
+        $postTrashed=Post::onlyTrashed()->get();
+
+        if($postAll->count()==0 && $postTrashed->count()==0){
             $tag->delete();
             $request->session()->flash('message','tag was deleted');
             return back();
         }
-        else if($tag->posts->count()>0 || $post->count()>0){
+        else if($tag->posts->count()>0 || $postTrashed->count()>0){
             $request->session()->flash('message','Tag cannot be deleted because it has some related posts and archived still has posts');
             return redirect()->back();
         }
         else{
-            $this->authorize('delete',$tag); //ilalagay sa taas aayusin pa
+//            $this->authorize('delete',$tag); //ilalagay sa taas aayusin pa
             $tag->delete();
             $request->session()->flash('message','Category was deleted');
             return back();

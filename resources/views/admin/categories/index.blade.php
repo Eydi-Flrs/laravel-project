@@ -12,6 +12,7 @@
         @if(session('message'))
             <div class="alert alert-danger">{{session('message')}}</div>
         @elseif(session('category-created-message'))
+                <div class="alert alert-success">{{session('category-created-message')}}</div>
             @endif
     <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -25,7 +26,7 @@
         <!-- DataTales Example -->
         <div class="row">
             <div class="col-lg-6">
-                    <div class="card shadow mb-4">
+
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
                                 <h6 class="m-0 font-weight-bold text-primary">Categories</h6>
@@ -106,7 +107,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+
                 </div>
             </div>
 

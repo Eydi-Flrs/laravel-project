@@ -21,7 +21,7 @@ class CategoryController extends Controller
             'slug'=>Str::of(Str::lower(request('name')))->slug('-')
             ]
         );
-        session()->flash('category-created-message','post '.strtoupper($request->name). 'was created');
+        session()->flash('category-created-message','category '.strtoupper($request->name).' was created');
         return redirect()->route('categories.index');
     }
 
