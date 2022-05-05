@@ -30,11 +30,6 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{route('home')}}">Home
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
                 @if(Auth::check())
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('admin.index')}}">Admin</a>
@@ -78,8 +73,10 @@
 </nav>
 
 <!-- Page Content -->
+
 <div class="container">
 
+    @yield('profile')
     <div class="row">
 
         <!-- Blog Entries Column -->
@@ -92,64 +89,10 @@
         <!-- Sidebar Widgets Column -->
         <div class="col-md-4">
 
-            <!-- Search Widget -->
-            <div class="card my-4">
-                <h5 class="card-header">Search</h5>
-                <div class="card-body">
-                    <div class="input-group">
-                        <form method="get" class="form-inline" action="{{route('search')}}">
-                            @csrf
-                            <input type="text" name="search" id="search" class="form-control mr-sm-2" placeholder="Search for...">
-                            <span class="input-group-btn">
-                            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Go!</button>
-                            </span>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
             <!-- Categories Widget -->
-            <div class="card my-4">
-                <h5 class="card-header">Categories</h5>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <ul class="list-unstyled mb-0">
-                                <li>
-                                    <a href="#">Web Design</a>
-                                </li>
-                                <li>
-                                    <a href="#">HTML</a>
-                                </li>
-                                <li>
-                                    <a href="#">Freebies</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-lg-6">
-                            <ul class="list-unstyled mb-0">
-                                <li>
-                                    <a href="#">JavaScript</a>
-                                </li>
-                                <li>
-                                    <a href="#">CSS</a>
-                                </li>
-                                <li>
-                                    <a href="#">Tutorials</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Side Widget -->
-            <div class="card my-4">
-                <h5 class="card-header">Side Widget</h5>
-                <div class="card-body">
-                    You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
-                </div>
-            </div>
+            @yield('categories_widget')
+
 
         </div>
 

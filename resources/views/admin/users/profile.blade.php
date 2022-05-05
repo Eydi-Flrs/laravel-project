@@ -1,93 +1,98 @@
 <x-home-master>
-    @section('content')
-        <h1>User Profile for:{{$user->name}}</h1>
-        <div class="row">
-            <div class="col-sm-6">
-                <form method="post" action="{{route('user.profile.update',$user)}}" enctype="multipart/form-data" >
-                    @csrf
-                    @method('PUT')
-                    <div class="mb-4">
-                        <img height="300px" class="rounded-circle" src="{{dd($user->avatar)}}">
-                    </div>
-                    <div class="form-group">
-                        <input type="file" name="avatar">
-                    </div>
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <input type="text"
-                               name="username"
-                               class="form-control @error('username') is-invalid @enderror"
-                               id="username"
-                               aria-describedby=""
-                               value="{{$user->username}}"
-                        >
-                        @error('username')
-                        <div class="invalid-feedback">
-                            {{$message}}
+    @section('profile')
+            <div class="container rounded bg-white mt-5 mb-5">
+            <form method="post" action="{{route('user.profile.update',$user)}}" enctype="multipart/form-data" >
+                @csrf
+                @method('PUT')
+                <div class="row">
+                    <div class="col-md-3 ">
+                        <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+
+                            <img class="rounded-circle"  id="output" src="{{$user->avatar}}" width="90%"><span class="font-weight-bold">{{$user->name}}</span>
                         </div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text"
-                               name="name"
-                               class="form-control"
-                               id="name"
-                               aria-describedby=""
-                               value="{{$user->name}}"
-                        >
-                        @error('name')
-                        <div class="alert alert-danger">
-                            {{$message}}
+                        <div class="form-group">
+                            <input type="file" name="avatar"  accept="image/*" id="file"  onchange="loadFile(event)">
                         </div>
-                        @enderror
                     </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="text"
-                               name="email"
-                               class="form-control"
-                               id="email"
-                               aria-describedby=""
-                               value="{{$user->email}}"
-                        >
-                        @error('email')
-                        <div class="alert alert-danger">
-                            {{$message}}
+                    <div class="col-md-8">
+                        <div class="p-3 py-5">
+                            <div class="card mb-12">
+
+                                <div class="card-body justify-content">
+
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h3>User Profile for: {{$user->name}}</h3>
+                                    </div>
+                                    <div class="form-group row">
+
+                                        <div class="col-md-6">  <label for="firstname">Name</label><input type="text" name="firstname" class="form-control" value="{{$user->firstname}}"></div>
+
+                                        <div class="col-md-6">  <label for="firstname">LastName</label><input type="text" name="lastname" class="form-control" value="{{$user->lastname}}"></div>
+                                    </div>
+                                    <div class=" form-group row">
+                                        <div class="col-md-12"> <label for="email">Email</label> <input type="text" class="form-control" name="email" value="{{$user->email}}" ></div>
+
+                                        <div class="col-md-12"> <label for="contact_number">Contact Number</label><input type="text" name="contact_number" class="form-control" value="{{$user->contact_number}}" ></div>
+                                    </div>
+                                    <br>
+                                    <div class="form-group row">
+
+                                        <div class="col-sm-6">
+                                            <input type="password"
+                                                   name="password"
+                                                   class="form-control"
+                                                   id="password"
+                                                   aria-describedby=""
+                                                   placeholder="Password">
+                                            @error('password')
+                                            <div class="alert alert-danger">
+                                                {{$message}}
+                                            </div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-sm-6">
+
+                                            <input type="password"
+                                                   name="password_confirmation"
+                                                   class="form-control"
+                                                   id="password_confirmation"
+                                                   aria-describedby=""
+                                                   placeholder="Confirm Password">
+                                            @error('password_confirmation')
+                                            <div class="alert alert-danger">
+                                                {{$message}}
+                                            </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="mt-5 text-center">
+                                        <button type="submit" class="btn btn-primary">Update Profile</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        @enderror
                     </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password"
-                               name="password"
-                               class="form-control"
-                               id="password"
-                               aria-describedby=""
-                        >
-                        @error('password')
-                        <div class="alert alert-danger">
-                            {{$message}}
+
+
+                    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                    <a class="btn btn-primary" href="login.html">Logout</a>
+                                </div>
+                            </div>
                         </div>
-                        @enderror
                     </div>
-                    <div class="form-group">
-                        <label for="password_confirmation">Confirm Password</label>
-                        <input type="password"
-                               name="password_confirmation"
-                               class="form-control"
-                               id="password_confirmation"
-                               aria-describedby=""
-                        >
-                        @error('password_confirmation')
-                        <div class="alert alert-danger">
-                            {{$message}}
-                        </div>
-                        @enderror
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
         <div class="row">
             <div class="col-sm-12">
@@ -162,5 +167,12 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            var loadFile = function(event) {
+                var image = document.getElementById('output');
+                image.src = URL.createObjectURL(event.target.files[0]);
+            };
+        </script>
     @endsection
 </x-home-master>
