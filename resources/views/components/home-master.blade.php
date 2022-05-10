@@ -77,6 +77,11 @@
 <div class="container">
 
     @yield('profile')
+
+    <div class="row">
+        @yield('search')
+    </div>
+
     <div class="row">
 
         <!-- Blog Entries Column -->
@@ -92,6 +97,8 @@
             <!-- Categories Widget -->
 
             @yield('categories_widget')
+            @yield('year')
+            @yield('tags')
 
 
         </div>
@@ -113,6 +120,7 @@
 <!-- Bootstrap core JavaScript -->
 <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
 
 
 {{--<script>--}}

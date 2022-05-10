@@ -129,7 +129,7 @@ class PostController extends Controller
 
 
     public function update(Post $post,Request $request){
-//        $this->authorize('update',$post);
+//      $this->authorize('update',$post);
         $inputs= $request->validate([
             'title'=>['required','string','max:255'],
             'course'=>['required','string','max:255'],

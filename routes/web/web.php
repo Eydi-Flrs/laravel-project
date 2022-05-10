@@ -20,14 +20,17 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+
 Route::get('/search', [HomeController::class, 'search'])->name('search');
+Route::get('/search/category/{category_id}', [HomeController::class, 'searchCategory'])->name('search.category');
+Route::get('/search/year/{year}', [HomeController::class, 'searchYear'])->name('search.year');
+Route::get('/search/tag/{tag}', [HomeController::class, 'searchTag'])->name('search.tag');
 Route::get('/post/{post}', [PostController::class, 'show'])->name('post');
 
 
 Route::middleware('auth')->group(function(){
     Route::get('/admin', [AdminsController::class, 'index'])->name('admin.index');
-
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
 

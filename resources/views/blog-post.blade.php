@@ -2,10 +2,10 @@
     @section('content')
 
 
+
             <div style="float: right">
                 <img src="{{$post->qr}}">
             </div>
-
             <!-- Title -->
             <h1 class="my-5">{{$post->title}}</h1>
             <!-- Author -->
@@ -14,6 +14,11 @@
             {{$author->name."  ,"}}
             @endforeach
              <p>Views: {{$post->views}}</p>
+             <p>
+                <div class="product-wish">
+                    <a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                </div>
+             </p>
             <hr>
             <!-- Date/Time -->
             <p>Published Date: {{$post->date_published}}</p>
