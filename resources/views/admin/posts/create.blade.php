@@ -82,7 +82,7 @@
                                         @if($tags->count()>0)
                                         <div class="col-sm-4 mb-3 mb-sm-0">
                                             <label for="tag_id">Tags</label>
-                                            <select class="form-select" aria-label="Default select example" id="tag_id" name="tag_id[]" multiple="multiple" required>
+                                            <select class="form-control select2" aria-label="Default select example" id="tag_id" name="tag_id[]" multiple="multiple"  multiple="multiple" required>
                                                 @foreach($tags as $tag)
                                                     <option value="{{$tag->id}}">{{$tag->name}}</option>
                                                 @endforeach
@@ -155,6 +155,7 @@
         </div>
 
 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.css" integrity="sha512-CWdvnJD7uGtuypLLe5rLU3eUAkbzBR3Bm1SFPEaRfvXXI2v2H5Y0057EMTzNuGGRIznt8+128QIDQ8RqmHbAdg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <script src="{{asset('https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js')}}"></script>
         <script src="{{asset('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js')}}"></script>
@@ -167,6 +168,27 @@
 {{--                $('.select2').select2();--}}
 {{--            });--}}
 {{--        </script>--}}
+
+{{--    tag selector--}}
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+                crossorigin="anonymous"></script>
+
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+                integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+                crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
+
+        <script>
+            $('.select2').select2({
+                tokenSeparators: [',', ' '],
+                placeholder: "Select or type keywords"
+            });
+        </script>
+        {{--   end-tag selector--}}
+
+
         <script>
             const monthSelect = document.getElementById("month");
             const daySelect = document.getElementById("day");
