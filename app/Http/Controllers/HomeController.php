@@ -49,6 +49,7 @@ class HomeController extends Controller
             ->with('tags',Tag::all());
     }
     public function search(Request $request){
+        $posts= Post::all();
         $categories=Category::all();
         $favorites= Favorite::where('user_id',Auth::id())->get();
 
@@ -92,8 +93,6 @@ class HomeController extends Controller
                 ->where('year',$request->year)
                 ->get();
         }
-
-
 
         return view('home',['posts'=>$posts])
             ->with('categories',$categories)

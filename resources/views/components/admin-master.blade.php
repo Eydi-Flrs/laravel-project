@@ -61,11 +61,12 @@
         <!-- Divider -->
         <x-admin.sidebar.admin-sidebar-archived-links></x-admin.sidebar.admin-sidebar-archived-links>
         <hr class="sidebar-divider">
-        @if(auth()->user()->userHasRole('Admin'))
-
         <x-admin.sidebar.authorization-links></x-admin.sidebar.authorization-links>
+{{--        @if(auth()->user()->userHasRole('Admin'))--}}
+{{--            --}}
+{{--        <x-admin.sidebar.authorization-links></x-admin.sidebar.authorization-links>--}}
 
-        @endif
+{{--        @endif--}}
 
 
 

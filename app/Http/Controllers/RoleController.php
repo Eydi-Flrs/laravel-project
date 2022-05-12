@@ -29,7 +29,6 @@ class RoleController extends Controller
             session()->flash('role-updated','Nothing has been updated');
         }
 
-
         return back();
     }
     public function store(){

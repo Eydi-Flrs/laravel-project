@@ -30,6 +30,12 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="aboutus.html">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
                 @if(Auth::check())
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('admin.index')}}">Admin</a>
@@ -46,12 +52,19 @@
                                 Profile
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Logout
-                            </a>
+                            <div class="d-flex justify-content-center">
+                                <form action="/logout" method="post">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger">  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Logout</button>
+                                </form>
+                            </div>
+
+
+
                         </div>
                     </li>
+
                 @else
                     <li class="nav-item">
                         <a class="nav-link" href="/login">Login</a>
@@ -61,12 +74,7 @@
                     </li>
                 @endif
 
-                <li class="nav-item">
-                    <a class="nav-link" href="aboutus.html">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li>
+
             </ul>
         </div>
     </div>
