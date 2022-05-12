@@ -100,7 +100,7 @@ class PostController extends Controller
 
     public function destroy($id){
         $post=Post::withTrashed()->where('id',$id)->firstOrFail();
-        $this->authorize('delete',$post);
+//        $this->authorize('delete',$post);
         if(!is_null($post->deleted_at)){
             $post->deletePdf();
             $post->forceDelete();

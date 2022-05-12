@@ -94,11 +94,12 @@
                 </div>
             </form>
         </div>
+        @if(auth()->user()->userHasRole('ADMIN'))
         <div class="row">
             <div class="col-sm-12">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Make User admin</h6>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -167,7 +168,7 @@
                 </div>
             </div>
         </div>
-
+        @endif
         <script>
             var loadFile = function(event) {
                 var image = document.getElementById('output');
