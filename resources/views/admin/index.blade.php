@@ -68,13 +68,7 @@
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Active Users:</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">
-
-                                        @foreach($users as $key => $user)
-                                        @if(Cache::has('user-is-online-' . $user->id))
-                                           {{++$key}}
-                                        @endif
-                                        @endforeach
-
+                                        {{$activeUser}}
                                 </div>
 
                             </div>
