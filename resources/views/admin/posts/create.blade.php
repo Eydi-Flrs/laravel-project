@@ -162,13 +162,13 @@
         <link href="{{asset('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css')}}" rel="stylesheet"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.js" integrity="sha512-/1nVu72YEESEbcmhE/EvjH/RxTg62EKvYWLG3NdeZibTCuEtW5M4z3aypcvsoZw03FAopi94y04GhuqRU9p+CQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-                crossorigin="anonymous"></script>
+{{--        <script src="https://code.jquery.com/jquery-3.3.1.min.js"--}}
+{{--                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="--}}
+{{--                crossorigin="anonymous"></script>--}}
 
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
-                integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
-                crossorigin="anonymous"></script>
+{{--        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"--}}
+{{--                integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="--}}
+{{--                crossorigin="anonymous"></script>--}}
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
 
