@@ -32,7 +32,7 @@
                                     <div class=" form-group row">
                                         <div class="col-md-12"> <label for="email">Email</label> <input type="text" class="form-control" name="email" value="{{$user->email}}" ></div>
 
-                                        <div class="col-md-12"> <label for="contact_number">Contact Number</label><input type="text" name="contact_number" class="form-control" value="{{$user->contact_number}}" ></div>
+                                        <div class="col-md-12"> <label for="contact_number">Contact Number</label><input type="text" name="contact_number" maxlength="11" class="form-control" value="{{$user->contact_number}}" ></div>
                                     </div>
                                     <br>
                                     <div class="form-group row">
