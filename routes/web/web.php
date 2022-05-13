@@ -29,7 +29,7 @@ Route::get('/post/{post}', [PostController::class, 'show'])->name('post');
 
 
 Route::middleware('auth')->group(function(){
-    Route::get('/admin', [AdminsController::class, 'index'])->name('admin.index')->middleware('role:ADMIN');
+    Route::get('/admin', [AdminsController::class, 'index'])->name('admin.index')->middleware('role:Admin');
     Route::get('/', [HomeController::class, 'index'])->name('home');
 });
 

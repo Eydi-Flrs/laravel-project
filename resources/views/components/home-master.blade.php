@@ -36,7 +36,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Contact</a>
                 </li>
-                @if(auth()->user()->userHasRole('ADMIN'))
+                @if(auth()->user()->userHasRole('Admin'))
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('admin.index')}}">Admin</a>
                 </li>

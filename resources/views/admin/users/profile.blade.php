@@ -94,7 +94,7 @@
                 </div>
             </form>
         </div>
-        @if(auth()->user()->userHasRole('ADMIN'))
+        @if(auth()->user()->userHasRole('Admin'))
         <div class="row">
             <div class="col-sm-12">
                 <div class="card shadow mb-4">
