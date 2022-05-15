@@ -28,6 +28,7 @@ class UserController extends Controller
             'email'=>['required','string','max:255'],
             'contact_number'=>['required','string','min:8','max:11'],
             'avatar'=>['file'],
+            'password'=>['string',' same:password_confirmation']
         ]);
 
         if(request('avatar')){

@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Auth::routes();
+Auth::routes(['verify'=>true]);
 
 
 Route::get('/search', [HomeController::class, 'search'])->name('search');
@@ -30,6 +30,6 @@ Route::get('/post/{post}', [PostController::class, 'show'])->name('post');
 
 Route::middleware('auth')->group(function(){
     Route::get('/admin', [AdminsController::class, 'index'])->name('admin.index')->middleware('role:Admin');
-    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/', [HomeController::class, 'index'])->name('home')->middleware(['verified']);
 });
 
