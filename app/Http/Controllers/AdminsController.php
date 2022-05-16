@@ -19,7 +19,7 @@ class AdminsController extends Controller
             }
         }
 
-        return view('admin.index')->with('posts',Post::all())
+        return view('admin.dashboard.index')->with('posts',Post::all())
             ->with('categories',Category::all())
             ->with('users',User::all())->with('activeUser',$activeUser);
     }

@@ -164,20 +164,21 @@
 
         </div>
 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.css" integrity="sha512-CWdvnJD7uGtuypLLe5rLU3eUAkbzBR3Bm1SFPEaRfvXXI2v2H5Y0057EMTzNuGGRIznt8+128QIDQ8RqmHbAdg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <script src="{{asset('https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js')}}"></script>
         <script src="{{asset('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js')}}"></script>
         <link href="{{asset('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css')}}" rel="stylesheet"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.js" integrity="sha512-/1nVu72YEESEbcmhE/EvjH/RxTg62EKvYWLG3NdeZibTCuEtW5M4z3aypcvsoZw03FAopi94y04GhuqRU9p+CQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         {{--    tag selector--}}
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" />
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-                crossorigin="anonymous"></script>
 
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
-                integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
-                crossorigin="anonymous"></script>
+{{--        <script src="https://code.jquery.com/jquery-3.3.1.min.js"--}}
+{{--                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="--}}
+{{--                crossorigin="anonymous"></script>--}}
+
+{{--        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"--}}
+{{--                integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="--}}
+{{--                crossorigin="anonymous"></script>--}}
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
 
@@ -294,7 +295,7 @@
                     " <td class='col-sm-3'><input type='text' class='form-control' form-control-user id='lastname' name='lastname[]' placeholder='Last Name' required></td>"+
                     " <td class='col-sm-3'><input type='text' class='form-control' form-control-user id='firstname' name='firstname[]' placeholder='First Name' required></td>"+
                     " <td class='col-sm-2'><input type='text' class='form-control' form-control-user id='middle_initial' name='middle_initial[]' placeholder='Middle Initial' required></td>"+
-                    " <td class='col-sm-1'><input type='text' class='form-control' form-control-user id='suffix' name='suffix[]' placeholder='Suffix' required></td>"+
+                    " <td class='col-sm-1'><input type='text' class='form-control' form-control-user id='suffix' name='suffix[]' placeholder='Suffix'></td>"+
                     " <td class='col-sm-3'><input type='text' class='form-control' form-control-user id='email' name='email[]' placeholder='Email' required></td>"+
                     "<td><a href='javascript:void(0)' class='btn btn-danger deleteRow'>-</a></td>"+
                     "</tr>"

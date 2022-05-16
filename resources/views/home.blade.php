@@ -55,15 +55,22 @@
                         <div style="text-align: justify" >
                             <p>Views: {{$post->views}}</p>
                             <p class="card-text">{{Str::limit($post->abstract,'280','...')}}</p>
-                            <a href="{{route('post',$post->id)}}" class="btn btn-primary">Read More &rarr; </a>
-
-
-
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                    <a href="{{route('post',$post->id)}}" class="btn btn-primary">Read More &rarr; </a>
+                                </div>
+                                <div class="col-sm-4">
                                     <form action="{{route('favorite.store')}}" method="post" enctype="multipart/form-data" autocomplete="off" >
                                         @csrf
                                         <input type="hidden" value="{{$post->id}}" name="post_id">
-                                                <button @foreach($favorites as $favorite) @if($favorite->post_id === $post->id) hidden @else  @endif   @endforeach type="submit" class="btn btn-success">Add to Favorites</button>
+                                        <button @foreach($favorites as $favorite) @if($favorite->post_id === $post->id)  hidden
+                                                @endif   @endforeach type="submit" class="btn btn-success">Add to Favorites</button>
+                                        {{--need lumabas message--}}
                                     </form>
+                                </div>
+                            </div>
+
+
 {{--                                    <form action="{{route('favorite.store')}}" method="post" enctype="multipart/form-data" autocomplete="off" >--}}
 {{--                                        @csrf--}}
 {{--                                        <input type="hidden" value="{{$post->id}}" name="post_id">--}}

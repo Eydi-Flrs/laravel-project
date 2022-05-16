@@ -283,7 +283,7 @@
                     " <td class='col-sm-3'><input type='text' class='form-control' form-control-user id='lastname' name='lastname[]' placeholder='Last Name' required></td>"+
                     " <td class='col-sm-3'><input type='text' class='form-control' form-control-user id='firstname' name='firstname[]' placeholder='First Name' required></td>"+
                     " <td class='col-sm-2'><input type='text' class='form-control' form-control-user id='middle_initial' name='middle_initial[]' placeholder='Middle Initial' required></td>"+
-                    " <td class='col-sm-1'><input type='text' class='form-control' form-control-user id='suffix' name='suffix[]' placeholder='Suffix' required></td>"+
+                    " <td class='col-sm-1'><input type='text' class='form-control' form-control-user id='suffix' name='suffix[]' placeholder='Suffix'></td>"+
                     " <td class='col-sm-3'><input type='text' class='form-control' form-control-user id='email' name='email[]' placeholder='Email' required></td>"+
                     "<td><a href='javascript:void(0)' class='btn btn-danger deleteRow'>-</a></td>"+
                     "</tr>"

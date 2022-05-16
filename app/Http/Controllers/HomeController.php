@@ -40,6 +40,9 @@ class HomeController extends Controller
 //                echo $post->title . ",";
 //            }
 //        }
+//        if ($favorites->isEmpty()){
+//            echo "alaws laman";
+//        }
 
         return view('home',['posts' => $posts])
             ->with('categories',$categories)
