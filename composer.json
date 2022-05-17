@@ -13,6 +13,7 @@
         "laravel/ui": "^3.4",
         "livewire/livewire": "^2.10",
         "nesbot/carbon": "^2.58",
+        "spatie/pdf-to-image": "^1.2",
         "symfony/http-client": "^6.0",
         "symfony/mailgun-mailer": "^6.0"
     },
