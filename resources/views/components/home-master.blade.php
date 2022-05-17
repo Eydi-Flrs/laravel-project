@@ -53,6 +53,10 @@
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Profile
                             </a>
+                            <a class="dropdown-item" href="{{route('favorite.index',auth()->user())}}">
+                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Favorites
+                            </a>
                             <div class="dropdown-divider"></div>
                             <div class="d-flex justify-content-center">
                                 <form action="/logout" method="post">

@@ -18,6 +18,10 @@ class Post extends Model
     public function authors(){
         return $this->belongsToMany(Author::class);
     }
+    public function favorites(){
+        return $this->belongsToMany(Favorite::class);
+    }
+
     public function user(){
         return $this->belongsTo(User::class);
     }
