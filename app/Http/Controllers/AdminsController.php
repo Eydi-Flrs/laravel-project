@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Carbon\Carbon;
 
 class AdminsController extends Controller
 {
@@ -21,6 +22,7 @@ class AdminsController extends Controller
 
         return view('admin.dashboard.index')->with('posts',Post::all())
             ->with('categories',Category::all())
-            ->with('users',User::all())->with('activeUser',$activeUser);
+            ->with('users',User::all())->with('activeUser',$activeUser)
+            ->with('carbon',Carbon::now());
     }
 }

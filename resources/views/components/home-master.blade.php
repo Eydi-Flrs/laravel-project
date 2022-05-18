@@ -104,6 +104,7 @@
            @yield('content')
 
         </div>
+    @yield('pdfview')
 
         <!-- Sidebar Widgets Column -->
         <div class="col-md-4">
