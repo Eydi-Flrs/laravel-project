@@ -63,7 +63,7 @@
                                         @csrf
                                         <input type="hidden" value="{{$post->id}}" name="post_id">
                                         <button @foreach($favorites as $favorite) @if($favorite->post_id === $post->id)  hidden
-                                                @endif   @endforeach type="submit" class="btn btn-success">Add to Favorites</button>
+                                                @endif   @endforeach type="submit" class="btn btn-success">Read It Later</button>
                                         {{--need lumabas message--}}
                                     </form>
                                 </div>

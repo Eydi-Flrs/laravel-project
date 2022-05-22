@@ -55,7 +55,7 @@
                             </a>
                             <a class="dropdown-item" href="{{route('favorite.index',auth()->user())}}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Favorites
+                                Saved
                             </a>
                             <div class="dropdown-divider"></div>
                             <div class="d-flex justify-content-center">

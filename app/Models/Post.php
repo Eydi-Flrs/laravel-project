@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class Post extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes,Sluggable;
     use HasFactory;
     protected $guarded=[];
 
@@ -30,13 +31,19 @@ class Post extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
-
     public function category(){
         return $this->belongsTo(Category::class);
     }
-
     public function tags(){
         return $this->belongsToMany(Tag::class);
+    }
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
     }
 //    public function qr():Attribute{
 //        return Attribute::make(

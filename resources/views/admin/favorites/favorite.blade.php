@@ -3,7 +3,7 @@
         <div style="height:80vh">
 
 
-        <h1>Favorites</h1>
+        <h1>Saved Academic resource</h1>
 
         @if(session('message'))
             <div class="alert alert-danger">{{session('message')}}</div>
