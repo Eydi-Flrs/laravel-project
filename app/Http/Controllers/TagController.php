@@ -49,7 +49,7 @@ class TagController extends Controller
     }
 
     public function edit(Tag $tag){
-        $this->authorize('view', $tag);
+//        $this->authorize('view', $tag);
         return view('admin.tags.edit',['tag'=> $tag]);
 
     }
@@ -65,8 +65,7 @@ class TagController extends Controller
             session()->flash('tag-updated','Nothing has been updated');
         }
 
-
-        return back();
+        return redirect()->route('tags.index');
 
     }
 }

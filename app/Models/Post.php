@@ -21,7 +21,12 @@ class Post extends Model
     public function favorites(){
         return $this->belongsToMany(Favorite::class);
     }
-
+    public function images(){
+        return $this->hasMany(Image::class);
+    }
+    public function payments(){
+        return $this->hasMany(Payment::class);
+    }
     public function user(){
         return $this->belongsTo(User::class);
     }
@@ -48,7 +53,6 @@ class Post extends Model
 
     }
 
-
     public function hasTag($tagId){
         return in_array($tagId,$this->tags->pluck('id')->toArray());
     }
@@ -63,5 +67,20 @@ class Post extends Model
 //            dd($pdfPath);
         Storage::delete($pdfPath);
     }
+
+    public function deletePdfImages(){
+        $pdfImages=$this->images;
+        foreach ($pdfImages as $pdf) {
+            $myString =$pdf->image;
+            $findMe = '/';
+            $lenght0fString = strlen($myString);
+            $pos = strrpos($myString, $findMe) + 1;
+            $trim = substr($myString, $pos, $lenght0fString);
+            $pdfPath = 'pdf_images/' . $trim;
+            Storage::delete($pdfPath);
+        }
+    }
+
+
 }
 

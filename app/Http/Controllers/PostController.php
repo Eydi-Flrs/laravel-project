@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Image;
+use App\Models\Payment;
 use App\Models\Post;
 use App\Models\Author;
 use App\Models\Tag;
@@ -21,13 +23,25 @@ class PostController extends Controller
 
     public function index(){
 //        $posts =auth()->user()->posts()->paginate(5);
-        $posts=Post::paginate(5);
+        $posts=Post::paginate(10);
+//        dd(route('post',1));
         return view('admin.posts.index',['posts'=>$posts]);
     }
 
     public function show(Post $post){
         $post->increment('views');
-        return view('blog-post',['post'=>$post]);
+        $paidPosts=Payment::where('user_id',Auth::id())->get();
+        $paid= array();
+        $count=0;
+        foreach($paidPosts as $paidPost){
+
+               $paid[$count]=$paidPost->post_id;
+               $count++;
+            }
+
+//       dd($paid);
+//        dd($paidPosts);
+        return view('blog-post',['post'=>$post])->with('paid',$paid);
     }
 
     public function create(){
@@ -86,6 +100,20 @@ class PostController extends Controller
         $post->tags()->attach($request->tag_id);
         $post->authors()->attach($id);
 
+        if($request->has('images')){
+            $count=1;
+            foreach ($request->file('images') as $image){
+               $imageName=$inputs['title'].'-image-'.'page-'.$count.'.'.$image->extension();
+               $image->storeAs('pdf_images',$imageName);
+
+                   Image::create([
+                       'post_id'=>$post->id,
+                       'image'=>$imageName
+                   ]);
+                   $count++;
+            }
+        }
+
        session()->flash('post-created-message','post '.strtoupper($inputs['title']). 'was created');
        return redirect()->route('post.index');
     }
@@ -103,6 +131,7 @@ class PostController extends Controller
 //        $this->authorize('delete',$post);
         if(!is_null($post->deleted_at)){
             $post->deletePdf();
+            $post->deletePdfImages();
             $post->forceDelete();
            session()->flash('message','post was deleted');
         }
@@ -155,6 +184,20 @@ class PostController extends Controller
         if ($request->pdf){
             $post->deletePdf();
             $inputs['pdf'] = $request->pdf->store('pdf');
+        }
+        if($request->has('images')){
+            $post->deletePdfImages();
+            $count=1;
+            foreach ($request->file('images') as $image){
+                $imageName=$inputs['title'].'-image-'.'page-'.$count.'.'.$image->extension();
+                $image->storeAs('pdf_images',$imageName);
+
+                Image::create([
+                    'post_id'=>$post->id,
+                    'image'=>$imageName
+                ]);
+                $count++;
+            }
         }
         $author= new Author();
         $num=count($request->lastname);

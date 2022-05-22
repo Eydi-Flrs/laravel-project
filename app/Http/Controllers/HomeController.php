@@ -31,7 +31,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $posts= Post::all();
+        $posts= Post::paginate(5);
         $categories=Category::all();
 
         $favorites= Favorite::where('user_id',Auth::id())->get();
@@ -52,30 +52,30 @@ class HomeController extends Controller
             ->with('tags',Tag::all());
     }
     public function search(Request $request){
-        $posts= Post::all();
+        $posts= Post::paginate(5);
         $categories=Category::all();
         $favorites= Favorite::where('user_id',Auth::id())->get();
 
         if($request->title){
             $posts= Post::where('title','LIKE','%'.$request->title.'%')
-                ->orWhere('abstract','LIKE','%'.$request->title.'%')->get();
+                ->orWhere('abstract','LIKE','%'.$request->title.'%')->paginate(5);
         }
         if($request->author){
             $author=$request->author;
             $posts=Post::whereHas('authors',function ($query) use($author){
                 $query->where('name','LIKE','%'.$author.'%');
-            })->get();}
+            })->paginate(5);}
         if($request->category_id){
-            $posts= Post::where('category_id',$request->category_id)->get();
+            $posts= Post::where('category_id',$request->category_id)->paginate(5);
         }
         if($request->year) {
-            $posts= Post::where('year',$request->year)->get();
+            $posts= Post::where('year',$request->year)->paginate(5);
         }
         if($request->title && $request->author) {
             $posts= Post::where('title','LIKE','%'.$request->title.'%')
                 ->whereHas('authors',function ($query) use($author){
                     $query->where('name','LIKE','%'.$author.'%');
-                })->get();
+                })->paginate(5);
         }
 
         if($request->title && $request->author && $request->category_id) {
@@ -84,7 +84,7 @@ class HomeController extends Controller
                     $query->where('name','LIKE','%'.$author.'%');
                 })
                 ->where('category_id',$request->category_id)
-                ->get();
+                ->paginate(5);
         }
 
         if($request->title && $request->author && $request->category_id && $request->year) {
@@ -94,7 +94,7 @@ class HomeController extends Controller
                 })
                 ->where('category_id',$request->category_id)
                 ->where('year',$request->year)
-                ->get();
+                ->paginate(5);
         }
 
         return view('home',['posts'=>$posts])
@@ -108,7 +108,7 @@ class HomeController extends Controller
     public function searchCategory($category_id){
         $categories=Category::all();
         $favorites= Favorite::where('user_id',Auth::id())->get();
-        $posts= Post::where('category_id',$category_id)->get();
+        $posts= Post::where('category_id',$category_id)->paginate(5);
 
         return view('home',['posts'=>$posts])
             ->with('categories',$categories)
@@ -120,7 +120,7 @@ class HomeController extends Controller
     public function searchYear($year){
         $categories=Category::all();
         $favorites= Favorite::where('user_id',Auth::id())->get();
-        $posts= Post::where('year',$year)->get();
+        $posts= Post::where('year',$year)->paginate(5);
 
         return view('home',['posts'=>$posts])
             ->with('categories',$categories)
@@ -135,7 +135,7 @@ class HomeController extends Controller
         $favorites= Favorite::where('user_id',Auth::id())->get();
         $posts=Post::whereHas('tags',function ($query) use ($tag){
             $query->where('tag_id',$tag);
-        })->get();
+        })->paginate(5);
         return view('home',['posts'=>$posts])
             ->with('categories',$categories)
             ->with('favorites',$favorites)

@@ -5,6 +5,12 @@
         @elseif(session('tag-created-message'))
             <div class="alert alert-success">{{session('tag-created-message')}}</div>
             @endif
+
+            @if(session('tag-updated'))
+                <div class="alert alert-success">
+                    {{session('tag-updated')}}
+                </div>
+            @endif
     <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-2 text-gray-800">Manage Tags</h1>

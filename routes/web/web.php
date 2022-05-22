@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AdminsController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\Pdf;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -31,5 +33,9 @@ Route::get('/post/{post}', [PostController::class, 'show'])->name('post');
 Route::middleware('auth')->group(function(){
     Route::get('/admin', [AdminsController::class, 'index'])->name('admin.index')->middleware('role:Admin');
     Route::get('/', [HomeController::class, 'index'])->name('home')->middleware(['verified']);
+    Route::get('/posts/{post}/pdf', [Pdf::class, 'downloadpdf'])->name('pdf.download');
+    Route::post('/pay/{post}', [PaymentController::class, 'pay'])->name('payment');
+    Route::get('/success/{id}', [PaymentController::class, 'success'])->name('success');
+    Route::get('error', [PaymentController::class, 'error']);
 });
 

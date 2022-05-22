@@ -13,7 +13,7 @@ class FavoriteController extends Controller
     public function index(){
         $favorites=Favorite::where('user_id', auth()->user()->id)->get();
         $ids= $favorites->pluck('post_id');
-        $posts = Post::whereIn('id',$ids)->get();
+        $posts = Post::whereIn('id',$ids)->paginate(10);
 
         return view('admin.favorites.favorite')->with('posts',$posts);
     }

@@ -34,24 +34,86 @@
                 </div>
             </div>
 
-
+         @if(in_array($post->id,$paid))
            <div class="col-sm-12 mb-12 mb-sm-5">
 {{--                    <embed src="{{$post->pdf}}" width="800px" height="2100px" />--}}
-                    <a href="{{$post->pdf}}" class="btn btn-primary btn-user">
-                        View Pdf File
+                    <a href="{{route('pdf.download',$post->id)}}" class="btn btn-primary btn-user">
+                        Download Pdf File
                     </a>
+               <input type="text" value="{{$post->id}}" id="number" hidden>
            </div>
+        @else
+        <form action="{{route('payment',$post->id)}}" method="post">
+            @csrf
+            <input type="hidden" name="amount" value="5" >
 
-
-
-
-
+            <button type="submit" class="btn btn-primary btn-user">pay with paypal</button>
+        </form>
+{{--        <div id="paypal-button-container"></div>--}}
+        @endif
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js" integrity="sha512-dw+7hmxlGiOvY3mCnzrPT5yoUwN/MRjVgYV7HGXqsiXnZeqsw1H9n9lsnnPu4kL2nx2bnrjFcuWK+P3lshekwQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <!-- Sample PayPal credentials (client-id) are included -->
+        <script src="https://www.paypal.com/sdk/js?client-id=ATnqekIBSFUGwgQ59m6DtJF8-aeBVZbkjK8Vwh8-LlVRtkxoif0CHqsCtpyQNd3AlSf5HimPJpQ5k1HB&currency=USD&intent=capture&enable-funding=venmo"></script>
+        <script>
+
+            const paypalButtonsComponent = paypal.Buttons({
+                // optional styling for buttons
+                // https://developer.paypal.com/docs/checkout/standard/customize/buttons-style-guide/
+                style: {
+                    color: "gold",
+                    shape: "rect",
+                    layout: "vertical"
+                },
+
+                // set up the transaction
+                createOrder: (data, actions) => {
+                    // pass in any options from the v2 orders create call:
+                    // https://developer.paypal.com/api/orders/v2/#orders-create-request-body
+                    const createOrderPayload = {
+                        purchase_units: [
+                            {
+                                amount: {
+                                    value: "5"
+                                }
+                            }
+                        ]
+                    };
+
+                    return actions.order.create(createOrderPayload);
+                },
+
+                // finalize the transaction
+                onApprove: (data, actions) => {
+                    const number=document.getElementById("number").value;
+                    // window.location.href = '/posts/'.number.'/pdf';
+                    const captureOrderHandler = (details) => {
+                        const payerName = details.payer.name.given_name;
+                        console.log('Transaction completed');
+
+                    };
+
+                    return actions.order.capture().then(captureOrderHandler);
+
+                },
+
+
+                // handle unrecoverable errors
+                onError: (err) => {
+                    console.error('An error prevented the buyer from checking out with PayPal');
+                }
+            });
+
+            paypalButtonsComponent
+                .render("#paypal-button-container")
+                .catch((err) => {
+                    console.error('PayPal Buttons failed to render');
+                });
+        </script>
     @endsection
     @section('pdfview')
-            @foreach($post->authors as $author)
-                <div class="card m-1" style="width:768px; height:1344px; background-repeat:no-repeat; background-image:url('https://www.sony-asia.com/image/93375262915162c04b81617da973a2c4?fmt=pjpeg&wid=330&bgcolor=FFFFFF&bgc=FFFFFF') "></div>
+            @foreach($post->images as $image)
+                <div class="card m-1" style="width:768px; height:1344px; background-repeat:no-repeat; background-size: contain; background-image:url('{{$image->image}}') "></div>
             @endforeach
 
         @endsection

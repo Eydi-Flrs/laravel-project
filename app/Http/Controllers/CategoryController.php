@@ -50,7 +50,7 @@ class CategoryController extends Controller
     }
 
     public function edit(Category $category){
-        $this->authorize('view', $category);
+//        $this->authorize('view', $category);
         return view('admin.categories.edit',['category'=> $category]);
 
     }
@@ -67,7 +67,7 @@ class CategoryController extends Controller
             }
 
 
-            return back();
+            return redirect()->route('categories.index');
 
     }
 }

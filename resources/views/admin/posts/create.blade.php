@@ -140,6 +140,11 @@
                                     </div>
 
                                     <div class="form-group">
+                                        <label for="files">Upload images</label>
+                                        <input type="file" name="images[]" id="" class="form-control" multiple accept="image/*">
+                                    </div>
+
+                                    <div class="form-group">
                                         <label for="abstract">Abstract</label>
                                         <textarea name="abstract" id="body" class="form-control" cols="30" rows="10" required></textarea>
 {{--                                        <input id="abstract" type="hidden" name="abstract" required>--}}

@@ -69,24 +69,6 @@
                                 </div>
                             </div>
 
-
-{{--                                    <form action="{{route('favorite.store')}}" method="post" enctype="multipart/form-data" autocomplete="off" >--}}
-{{--                                        @csrf--}}
-{{--                                        <input type="hidden" value="{{$post->id}}" name="post_id">--}}
-{{--                                        <button  @foreach($favorites as $favorite) @if($post->id !== $favorite->post_id)  @else disabled  @endif   @endforeach type="submit" class="btn btn-success">Remove to Favorites</button>--}}
-{{--                                    </form>--}}
-
-
-
-
-{{--                                    @if($favorite->post_id == $post->id)--}}
-{{--                            <form action="{{route('favorite.store')}}" method="post" enctype="multipart/form-data" autocomplete="off" >--}}
-{{--                                   @csrf--}}
-{{--                                   <input type="hidden" value="{{$post->id}}" name="post_id">--}}
-{{--                                   <button  type="submit" class="btn btn-danger"> Remove to Favorites</button>--}}
-{{--                            </form>--}}
-{{--                                @endif--}}
-
                         </div>
                     </div>
                 </div>
@@ -97,15 +79,21 @@
             </div>
         @endforeach
 
-        <!-- Pagination -->
-        <ul class="pagination justify-content-center mb-4">
-            <li class="page-item">
-                <a class="page-link" href="#">&larr; Older</a>
-            </li>
-            <li class="page-item disabled">
-                <a class="page-link" href="#">Newer &rarr;</a>
-            </li>
-        </ul>
+{{--        <!-- Pagination -->--}}
+{{--        <ul class="pagination justify-content-center mb-4">--}}
+{{--            <li class="page-item">--}}
+{{--                <a class="page-link" href="#">&larr; Older</a>--}}
+{{--            </li>--}}
+{{--            <li class="page-item disabled">--}}
+{{--                <a class="page-link" href="#">Newer &rarr;</a>--}}
+{{--            </li>--}}
+{{--        </ul>--}}
+
+            <div class="d-flex">
+                <div class="mx-auto">
+                    {{$posts->links()}}
+                </div>
+            </div>
     @endsection
 
     @section('categories_widget')

@@ -1,5 +1,8 @@
 <x-home-master>
     @section('content')
+        <div style="height:80vh">
+
+
         <h1>Favorites</h1>
 
         @if(session('message'))
@@ -29,13 +32,12 @@
                                     </div>
                             @endforeach
                 </div>
-
-        <div class="d-flex">
-            <div class="mx-auto">
-
+            <div class="d-flex">
+                <div class="mx-auto">
+                    {{$posts->links()}}
+                </div>
             </div>
         </div>
-
     @endsection
 
 

@@ -3,7 +3,7 @@
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth','role:Admin'])->group(function(){
+Route::middleware(['role:Admin'])->group(function(){
 Route::get('/tags',[TagController::class,'index'])->name('tags.index');
 Route::post('/tags',[TagController::class,'store'])->name('tags.store');
 Route::delete('/tags/{tag}/destroy', [TagController::class, 'destroy'])->name('tags.destroy');
