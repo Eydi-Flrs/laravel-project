@@ -24,10 +24,10 @@ Auth::routes(['verify'=>true]);
 
 
 Route::get('/search', [HomeController::class, 'search'])->name('search');
-Route::get('/search/category/{category_id}', [HomeController::class, 'searchCategory'])->name('search.category');
+Route::get('/search/{category_id}/category/{slug}', [HomeController::class, 'searchCategory'])->name('search.category');
 Route::get('/search/year/{year}', [HomeController::class, 'searchYear'])->name('search.year');
-Route::get('/search/tag/{tag}', [HomeController::class, 'searchTag'])->name('search.tag');
-Route::get('/post/{post}', [PostController::class, 'show'])->name('post');
+Route::get('/search/{tag}/tag/{slug}', [HomeController::class, 'searchTag'])->name('search.tag');
+Route::get('/post/{post}/title/{slug}', [PostController::class, 'show'])->name('post');
 
 
 Route::middleware('auth')->group(function(){

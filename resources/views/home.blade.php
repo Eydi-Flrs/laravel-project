@@ -49,14 +49,16 @@
                     <div style="float: left">
                         <img src="{{$post->qr}}">
                     </div>
-                    <a href="{{route('post',$post->id)}}"  style="text-decoration: none; color: #1a1e21"><h2 class="card-title">{{$post->title}}</h2></a>
+                    {{$post->slug}}
+                    <a href="{{route('post',[$post->id,$post->slug])}}"  style="text-decoration: none; color: #1a1e21"><h2 class="card-title">{{$post->title}}</h2></a>
                     <div>
                         <div style="text-align: justify" >
                             <p>Views: {{$post->views}}</p>
+
                             <p class="card-text">{{Str::limit($post->abstract,'280','...')}}</p>
                             <div class="form-group row">
                                 <div class="col-sm-3">
-                                    <a href="{{route('post',$post->id)}}" class="btn btn-primary">Read More &rarr; </a>
+                                    <a href="{{route('post',[$post->id,$post->slug])}}" class="btn btn-primary">Read More &rarr; </a>
                                 </div>
                                 <div class="col-sm-4">
                                     <form action="{{route('favorite.store')}}" method="post" enctype="multipart/form-data" autocomplete="off" >
@@ -105,7 +107,7 @@
                         <ul class="list-unstyled mb-0">
                             @foreach($categories as $category)
                             <li>
-                                <a href="{{route('search.category',$category->id)}}">{{$category->name}}</a>
+                                <a href="{{route('search.category',[$category->id,$category->slug])}}">{{$category->name}}</a>
                             </li>
                             @endforeach
                         </ul>
@@ -147,8 +149,26 @@
                             <ul class="list-unstyled mb-0">
                                 @foreach($tags as $tag)
                                     <li>
-                                        <a href="{{route('search.tag',$tag->id)}}">{{$tag->name}}</a>
+                                        <a href="{{route('search.tag',[$tag->id,$tag->slug])}}">{{$tag->name}}</a>
                                     </li>
+                                @endforeach
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        @endsection
+        @section('top-views')
+            <div class="card my-4">
+                <h5 class="card-header">Top Views</h5>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <ul class="list-unstyled mb-0">
+                                @foreach($posts->sortByDesc('views')->take(10) as $post)
+                                  <h5> <a href="{{route('post',[$post->id,$post->slug])}}">{{$post->title}} </a>:  {{$post->views." views"}}</h5>
                                 @endforeach
                             </ul>
                         </div>

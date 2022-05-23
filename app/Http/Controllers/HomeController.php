@@ -104,7 +104,7 @@ class HomeController extends Controller
             ->with('tags',Tag::all());
 
     }
-
+//
     public function searchCategory($category_id){
         $categories=Category::all();
         $favorites= Favorite::where('user_id',Auth::id())->get();
@@ -129,7 +129,7 @@ class HomeController extends Controller
             ->with('tags',Tag::all());
 
     }
-
+//
     public function searchTag($tag){
         $categories=Category::all();
         $favorites= Favorite::where('user_id',Auth::id())->get();

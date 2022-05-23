@@ -60,21 +60,18 @@
         <x-admin.sidebar.admin-sidebar-users-links></x-admin.sidebar.admin-sidebar-users-links>
         <!-- Divider -->
         <x-admin.sidebar.admin-sidebar-archived-links></x-admin.sidebar.admin-sidebar-archived-links>
-        <hr class="sidebar-divider">
-        <x-admin.sidebar.authorization-links></x-admin.sidebar.authorization-links>
-{{--        @if(auth()->user()->userHasRole('Admin'))--}}
-{{--            --}}
+
+        <!-- Roles and permission -->
+{{--        <hr class="sidebar-divider">--}}
 {{--        <x-admin.sidebar.authorization-links></x-admin.sidebar.authorization-links>--}}
 
-{{--        @endif--}}
 
 
 
-
-        <!-- Sidebar Toggler (Sidebar) -->
-        <div class="text-center d-none d-md-inline">
-            <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
+{{--        <!-- Sidebar Toggler (Sidebar) -->--}}
+{{--        <div class="text-center d-none d-md-inline">--}}
+{{--            <button class="rounded-circle border-0" id="sidebarToggle"></button>--}}
+{{--        </div>--}}
 
     </ul>
     <!-- End of Sidebar -->

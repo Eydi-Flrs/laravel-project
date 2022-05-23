@@ -28,7 +28,8 @@ class PostController extends Controller
         return view('admin.posts.index',['posts'=>$posts]);
     }
 
-    public function show(Post $post){
+    public function show(Post $post,$slug){
+
         $post->increment('views');
         $paidPosts=Payment::where('user_id',Auth::id())->get();
         $paid= array();
@@ -38,7 +39,6 @@ class PostController extends Controller
                $paid[$count]=$paidPost->post_id;
                $count++;
             }
-
 //       dd($paid);
 //        dd($paidPosts);
         return view('blog-post',['post'=>$post])->with('paid',$paid);

@@ -114,6 +114,7 @@
             @yield('categories_widget')
             @yield('year')
             @yield('tags')
+            @yield('top-views')
 
 
         </div>
