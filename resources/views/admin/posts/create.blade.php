@@ -136,12 +136,12 @@
 
 
                                     <div class="form-group">
-                                        <label for="pdf">Attach PDF File</label><input type="file" name="pdf" class="form-control-file" id="pdf" placeholder="Attach File" aria-describedby="" required>
+                                        <label for="pdf">Attach PDF File</label><input type="file" name="pdf" class="form-control-file" id="pdf" placeholder="Attach File" aria-describedby="" required accept="application/pdf">
                                     </div>
 
                                     <div class="form-group">
                                         <label for="files">Upload images</label>
-                                        <input type="file" name="images[]" id="" class="form-control" multiple accept="image/*">
+                                        <input type="file" name="images[]" id="" class="form-control" multiple accept="image/*" required>
                                     </div>
 
                                     <div class="form-group">
