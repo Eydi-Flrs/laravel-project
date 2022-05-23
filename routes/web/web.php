@@ -24,6 +24,7 @@ Auth::routes(['verify'=>true]);
 
 
 Route::get('/search', [HomeController::class, 'search'])->name('search');
+Route::get('/searchAll', [HomeController::class, 'searchAll'])->name('search.all');
 Route::get('/search/{category_id}/category/{slug}', [HomeController::class, 'searchCategory'])->name('search.category');
 Route::get('/search/year/{year}', [HomeController::class, 'searchYear'])->name('search.year');
 Route::get('/search/{tag}/tag/{slug}', [HomeController::class, 'searchTag'])->name('search.tag');

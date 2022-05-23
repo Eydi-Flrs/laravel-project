@@ -67,7 +67,6 @@
                             </div>
 
 
-
                         </div>
                     </li>
 
@@ -80,6 +79,18 @@
                     </li>
                 @endif
 
+                <li class="nav-item">
+                    <form  method="get" action="{{route('search.all')}} "class="row">
+                        @csrf
+                        <div class="col-md-9">
+                            <input class="form-control mr-sm-2" type="search" name="topNavSearch" placeholder="Search" aria-label="Search">
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </div>
+
+                    </form>
+                </li>
 
             </ul>
         </div>
