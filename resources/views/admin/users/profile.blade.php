@@ -1,5 +1,14 @@
 <x-home-master>
     @section('profile')
+
+                @if(session('user-updated-message'))
+                    <div class="alert alert-success alert-dismissible fade show">{{session('user-updated-message')}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+
             <div class="container rounded bg-white mt-5 mb-5">
             <form method="post" action="{{route('user.profile.update',$user)}}" enctype="multipart/form-data" >
                 @csrf

@@ -103,9 +103,38 @@
 
             </nav>
             <!-- End of Topbar -->
-
-            <!-- Begin Page Content -->
+            @if(Route::is('admin.index'))
             <div class="container-fluid">
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class=" mb-0 text-gray-800">Dashboard</h1>
+                </div>
+                <button class="btn btn-primary m-3" onclick="window.print()">print analytics</button>
+            </div>
+            @endif
+            @if(Route::is('post.qr'))
+                <div class="containe-fluid">
+                    <button class="btn btn-primary m-3" onclick="window.print()">print qr codes</button>
+                </div>
+
+            @endif
+
+            <style>
+                @media print{
+                    body *{
+                        visibility: hidden;
+                    }
+                    .print-container, .print-container *{
+                        visibility: visible;
+                    }
+                    .print-container{
+                        position: absolute;
+                        left: 0px;
+                        top: 0px;
+                    }
+                }
+            </style>
+            <!-- Begin Page Content -->
+            <div class="container-fluid print-container">
 
                 <!-- Page Heading -->
                @yield('content')

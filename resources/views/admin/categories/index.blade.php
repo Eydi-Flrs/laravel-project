@@ -1,22 +1,36 @@
 <x-admin-master>
 @section('content')
         @if ($errors->any())
-            <div class="alert alert-danger">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
                 </ul>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
         @endif
         @if(session('message'))
-            <div class="alert alert-danger">{{session('message')}}</div>
+            <div class="alert alert-danger alert-dismissible fade show">{{session('message')}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
         @elseif(session('category-created-message'))
-                <div class="alert alert-success">{{session('category-created-message')}}</div>
+                <div class="alert alert-success alert-dismissible fade show">{{session('category-created-message')}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
             @endif
             @if(session('category-updated'))
-                <div class="alert alert-success">
+                <div class="alert alert-success alert-dismissible fade show">
                     {{session('category-updated')}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
             @endif
     <!-- Page Heading -->

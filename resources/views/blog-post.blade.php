@@ -7,21 +7,26 @@
                 <img src="{{$post->qr}}">
             </div>
             <!-- Title -->
-            <h1 class="my-5">{{$post->title}}</h1>
+            <h1 class="my-3">{{$post->title}}</h1>
             <!-- Author -->
-            <h4>Authors:</h4>
-            @foreach($post->authors as $author)
-            {{$author->name."  ,"}}
+            <h6>Authors: @foreach($post->authors as $author)
+                    {{$author->name."  ,"}}</h6>
             @endforeach
-             <p>Views: {{$post->views}}</p>
-             <p>
-                <div class="product-wish">
-                    <a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                </div>
-             </p>
+             <h6>Views: {{$post->views}}</h6>
+             <h6>Category: {{$post->category->name}}</h6>
+             <h6>Tags:
+                 @foreach($post->tags as $tag)
+                {{$tag->name."  ,"}}
+                @endforeach
+             </h6>
+            @if($post->type ==='Book')
+            <h6>Vol: {{$post->volume}} Series: {{$post->series}} Publisher: {{$post->publisher}}</h6>
+            @endif
+
+
             <hr>
             <!-- Date/Time -->
-            <p>Published Date: {{$post->date_published}}</p>
+            <p>Published Date: {{$date}}</p>
 
             <div class="card mb-4">
                 <div class="card-body">

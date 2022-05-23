@@ -49,7 +49,7 @@
                     <div style="float: left">
                         <img src="{{$post->qr}}">
                     </div>
-                    {{$post->slug}}
+
                     <a href="{{route('post',[$post->id,$post->slug])}}"  style="text-decoration: none; color: #1a1e21"><h2 class="card-title">{{$post->title}}</h2></a>
                     <div>
                         <div style="text-align: justify" >

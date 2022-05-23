@@ -23,9 +23,16 @@ class PostController extends Controller
 
     public function index(){
 //        $posts =auth()->user()->posts()->paginate(5);
-        $posts=Post::paginate(10);
+//        $posts=Post::paginate(10);
+        $posts=Post::all();
 //        dd(route('post',1));
         return view('admin.posts.index',['posts'=>$posts]);
+    }
+    public function qr(){
+//        $posts =auth()->user()->posts()->paginate(5);
+        $posts=Post::all();
+//        dd(route('post',1));
+        return view('admin.posts.qr',['posts'=>$posts]);
     }
 
     public function show(Post $post,$slug){
@@ -41,7 +48,15 @@ class PostController extends Controller
             }
 //       dd($paid);
 //        dd($paidPosts);
-        return view('blog-post',['post'=>$post])->with('paid',$paid);
+        $date="";
+        if($post->month !='none' && $post->day !='none'){
+            $date.=$post->month.",".$post->day.",";
+        }
+        else if($post->month !='none'){
+            $date.=$post->month.",";
+        }
+        $date.=$post->year;
+        return view('blog-post',['post'=>$post])->with('paid',$paid)->with('date',$date);
     }
 
     public function create(){
@@ -83,7 +98,7 @@ class PostController extends Controller
                    'firstname'=>$request->firstname[$i],
                    'middle_initial'=>$request->middle_initial[$i],
                    'suffix'=>$request->suffix[$i],
-                   'name'=>$request->lastname[$i].",".$request->firstname[$i],
+                   'name'=>$request->firstname[$i]." ".$request->lastname[$i],
                    'email'=>$request->email[$i],
                 ];
 
@@ -143,7 +158,7 @@ class PostController extends Controller
         }
 
 
-        session()->flash('post-created-message','post '.strtoupper($inputs['title']). 'was created');
+        session()->flash('post-created-message','post '.strtoupper($inputs['title']).' was created');
        return redirect()->route('post.index');
     }
 
@@ -204,11 +219,6 @@ class PostController extends Controller
             'abstract'=>['required','string','max:1000'],
             'type'=>['required','string','max:255']
         ]);
-        $width="250";
-        $height="250";
-        $data= $request->title." ".$request->abstract;
-        $url="https://chart.googleapis.com/chart?cht=qr&chs={$width}x{$height}&chl={$data}";
-        $inputs['qr']=$url;
 
         if ($request->pdf){
             $post->deletePdf();
@@ -250,7 +260,37 @@ class PostController extends Controller
         $post->tags()->sync($request->tag_id);
         $post->authors()->sync($id);
 
-        session()->flash('post-updated-message','post '.strtoupper($inputs['title']). 'was updated');
+        $width="250";
+        $height="250";
+        $link= route('post',[$post->id,$post->slug]);
+        $date="";
+        if($request->month!='none' && $request->day!='none'){
+            $date.=$request->month.",".$request->day.','.$request->year;
+        }
+        else if($request->month!='none'){
+            $date.=$request->month.','.$request->year;
+        }
+        $date.=$request->year;
+
+        $authors="";
+        foreach($post->authors as $author) {
+            $authors.=$author->name."| ";
+        }
+
+        if($request->pages){
+            $data = "title: ".$request->title."  date: ".$date." author:".$authors." pages:".$request->pages."  visit this link: (".$link.")";
+        }
+        else{
+            $data = "title: ".$request->title."  date: ".$date." author:".$authors."  visit this link: (".$link.")";
+        }
+
+
+        $url="https://chart.googleapis.com/chart?cht=qr&chs={$width}x{$height}&chl={$data}";
+        $post->qr=$url;
+        $post->save();
+
+
+        session()->flash('post-updated-message','post '.strtoupper($inputs['title']).' was updated');
         return redirect()->route('post.index');
     }
 

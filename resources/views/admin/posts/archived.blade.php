@@ -2,11 +2,20 @@
     @section('content')
         <h1>All Posts</h1>
         @if(session('message'))
-            <div class="alert alert-danger">{{session('message')}}</div>
+            <div class="alert alert-danger alert-dismissible fade show">{{session('message')}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button></div>
         @elseif(session('post-created-message'))
-            <div class="alert alert-success">{{session('post-created-message')}}</div>
+            <div class="alert alert-success alert-dismissible fade show">{{session('post-created-message')}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button></div>
         @elseif(session('post-updated-message'))
-            <div class="alert alert-success">{{session('post-updated-message')}}</div>
+            <div class="alert alert-success alert-dismissible fade show">{{session('post-updated-message')}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button></div>
         @endif
         <div class="card shadow mb-4">
             <div class="card-header py-3">

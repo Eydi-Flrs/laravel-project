@@ -3,11 +3,20 @@
         <h1>All Posts</h1>
 
         @if(session('message'))
-           <div class="alert alert-danger">{{session('message')}}</div>
+           <div class="alert alert-danger alert-dismissible fade show">{{session('message')}}
+               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+               </button></div>
             @elseif(session('post-created-message'))
-            <div class="alert alert-success">{{session('post-created-message')}}</div>
+            <div class="alert alert-success alert-dismissible fade show">{{session('post-created-message')}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button></div>
             @elseif(session('post-updated-message'))
-            <div class="alert alert-success">{{session('post-updated-message')}}</div>
+            <div class="alert alert-success alert-dismissible fade show">{{session('post-updated-message')}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button></div>
         @endif
         <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -53,7 +62,7 @@
                             <tr id="pid{{$post->id}}">
                                 <td><input type="checkbox" name="checkBoxArray[]" class="checkBoxes" value="{{$post->id}}"/></td>
                                 <td>{{$post->id}}</td>
-                                <td><a href="/post/{{$post->id}}" target="_blank">{{$post->title}}</a></td>
+                                <td><a href="{{route('post',[$post->id,$post->slug])}}" target="_blank">{{$post->title}}</a></td>
                                 <td>{{$post->category->name}}</td>
                                 <td>{{$post->course}}</td>
                                 <td>
@@ -77,11 +86,11 @@
                 </div>
             </div>
         </div>
-        <div class="d-flex">
-            <div class="mx-auto">
-                {{$posts->links()}}
-            </div>
-        </div>
+{{--        <div class="d-flex">--}}
+{{--            <div class="mx-auto">--}}
+{{--                {{$posts->links()}}--}}
+{{--            </div>--}}
+{{--        </div>--}}
 
     @endsection
 
