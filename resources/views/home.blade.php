@@ -167,7 +167,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <ul class="list-unstyled mb-0">
-                                @foreach($posts->sortByDesc('views')->take(10) as $post)
+                                @foreach($allposts->sortByDesc('views')->take(10) as $post)
                                   <h5> <a href="{{route('post',[$post->id,$post->slug])}}">{{$post->title}} </a>:  {{$post->views." views"}}</h5>
                                 @endforeach
                             </ul>

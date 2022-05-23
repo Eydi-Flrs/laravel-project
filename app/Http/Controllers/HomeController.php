@@ -33,7 +33,6 @@ class HomeController extends Controller
     {
         $posts= Post::paginate(5);
         $categories=Category::all();
-
         $favorites= Favorite::where('user_id',Auth::id())->get();
 //        foreach ($favorites as $favorite){
 //            foreach ($posts->where('id',$favorite->post_id) as $post ){
@@ -49,7 +48,8 @@ class HomeController extends Controller
             ->with('favorites',$favorites)
             ->with('auth_id',Auth::id())
             ->with('carbon',Carbon::now())
-            ->with('tags',Tag::all());
+            ->with('tags',Tag::all())
+            ->with('allposts',Post::all());
     }
     public function search(Request $request){
         $posts= Post::paginate(5);
@@ -101,7 +101,8 @@ class HomeController extends Controller
             ->with('categories',$categories)
             ->with('favorites',$favorites)
             ->with('carbon',Carbon::now())
-            ->with('tags',Tag::all());
+            ->with('tags',Tag::all())
+            ->with('allposts',Post::all());
 
     }
 //
@@ -114,7 +115,8 @@ class HomeController extends Controller
             ->with('categories',$categories)
             ->with('favorites',$favorites)
             ->with('carbon',Carbon::now())
-            ->with('tags',Tag::all());
+            ->with('tags',Tag::all())
+            ->with('allposts',Post::all());
 
     }
     public function searchYear($year){
@@ -126,7 +128,8 @@ class HomeController extends Controller
             ->with('categories',$categories)
             ->with('favorites',$favorites)
             ->with('carbon',Carbon::now())
-            ->with('tags',Tag::all());
+            ->with('tags',Tag::all())
+            ->with('allposts',Post::all());
 
     }
 //
@@ -140,7 +143,8 @@ class HomeController extends Controller
             ->with('categories',$categories)
             ->with('favorites',$favorites)
             ->with('carbon',Carbon::now())
-            ->with('tags',Tag::all());
+            ->with('tags',Tag::all())
+            ->with('allposts',Post::all());
 
     }
 }

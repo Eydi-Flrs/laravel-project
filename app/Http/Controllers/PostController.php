@@ -68,11 +68,6 @@ class PostController extends Controller
            'abstract'=>['required','string','max:1000'],
            'type'=>['required','string','max:255']
        ]);
-       $width="250";
-       $height="250";
-       $data= $request->title." ".$request->abstract;
-       $url="https://chart.googleapis.com/chart?cht=qr&chs={$width}x{$height}&chl={$data}";
-       $inputs['qr']=$url;
 
        if ($request->pdf){
             $inputs['pdf'] = $request->pdf->store('pdf');
@@ -96,9 +91,42 @@ class PostController extends Controller
 //
         }
 
+
         $post=auth()->user()->posts()->create($inputs);
         $post->tags()->attach($request->tag_id);
         $post->authors()->attach($id);
+
+        $post->findOrFail($post->id);
+
+
+        $width="250";
+        $height="250";
+        $link= route('post',[$post->id,$post->slug]);
+        $date="";
+        if($request->month!='none' && $request->day!='none'){
+            $date.=$request->month.",".$request->day.','.$request->year;
+        }
+        else if($request->month!='none'){
+            $date.=$request->month.','.$request->year;
+        }
+        $date.=$request->year;
+
+        $authors="";
+        foreach($post->authors as $author) {
+            $authors.=$author->name."| ";
+        }
+        $pages="";
+        if($request->pages){
+            $data = "title: ".$request->title."  date: ".$date." author:".$authors." pages:".$request->pages."  visit this link: (".$link.")";
+        }
+        else{
+            $data = "title: ".$request->title."  date: ".$date." author:".$authors."  visit this link: (".$link.")";
+        }
+
+
+        $url="https://chart.googleapis.com/chart?cht=qr&chs={$width}x{$height}&chl={$data}";
+        $post->qr=$url;
+         $post->save();
 
         if($request->has('images')){
             $count=1;
@@ -114,7 +142,8 @@ class PostController extends Controller
             }
         }
 
-       session()->flash('post-created-message','post '.strtoupper($inputs['title']). 'was created');
+
+        session()->flash('post-created-message','post '.strtoupper($inputs['title']). 'was created');
        return redirect()->route('post.index');
     }
 
