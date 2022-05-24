@@ -27,10 +27,11 @@ class FavoriteController extends Controller
       return back();
     }
 
-    public function destroy($id){
+    public function destroy($id, Request $request){
         $favorite_post= Favorite::where('user_id',Auth::id())->where('post_id',$id);
+        session()->flash('message',$request->title.' has been removed');
             $favorite_post->delete();
-            session()->flash('message','fave deleted');
+
 
 
         return back();

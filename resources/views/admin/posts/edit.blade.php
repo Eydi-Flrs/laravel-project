@@ -145,6 +145,20 @@
                             <div class="col-sm-6 mb-2 mb-sm-0">
                                 <label for="publisher">Publisher</label><input value="{{$post->publisher}}" type="text" class="form-control form-control-user" id="publisher" name="publisher"  placeholder="Publisher" >
                             </div>
+                            <div class="col-sm-6 mb-2 mb-sm-0">
+                                <label for="isbn">ISBN</label><input value="{{$post->isbn}}" type="text" class="form-control form-control-user" id="isbn" name="isbn"  placeholder="ISBN" >
+                            </div>
+
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-6 mb-2 mb-sm-0">
+                                <label for="dcc">DCC</label><input value="{{$post->dcc}}" type="text" class="form-control form-control-user" id="dcc" name="dcc"  placeholder="DCC" >
+                            </div>
+                            <div class="col-sm-6 mb-2 mb-sm-0">
+                                <label for="authornumber">Author number</label><input value="{{$post->authornumber}}" type="text" class="form-control form-control-user" id="authornumber" name="authornumber"  placeholder="Author no." >
+                            </div>
+
                         </div>
 
 

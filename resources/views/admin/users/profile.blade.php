@@ -103,7 +103,7 @@
                 </div>
             </form>
         </div>
-        @if(auth()->user()->userHasRole('Admin'))
+        @if(auth()->user()->userHasRole('Admin') && $user->id!=1)
         <div class="row">
             <div class="col-sm-12">
                 <div class="card shadow mb-4">

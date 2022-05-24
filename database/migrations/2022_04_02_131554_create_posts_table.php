@@ -28,6 +28,9 @@ return new class extends Migration
             $table->string('volume')->nullable();
             $table->string('series')->nullable();
             $table->string('publisher')->nullable();
+            $table->string('isbn')->nullable();
+            $table->string('dcc')->nullable();
+            $table->string('authornumber')->nullable();
             $table->text('qr')->nullable();
             $table->text('abstract');
             $table->string('type');

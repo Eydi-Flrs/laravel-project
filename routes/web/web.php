@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminsController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Pdf;
@@ -22,7 +23,8 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes(['verify'=>true]);
 
-
+Route::get('/contact-us', [ContactController::class, 'contact'])->name('contact');
+Route::post('/send-message', [ContactController::class, 'sendEmail'])->name('contact.send');
 Route::get('/search', [HomeController::class, 'search'])->name('search');
 Route::get('/searchAll', [HomeController::class, 'searchAll'])->name('search.all');
 Route::get('/search/{category_id}/category/{slug}', [HomeController::class, 'searchCategory'])->name('search.category');
@@ -36,7 +38,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/', [HomeController::class, 'index'])->name('home')->middleware(['verified']);
     Route::get('/posts/{post}/pdf', [Pdf::class, 'downloadpdf'])->name('pdf.download');
     Route::post('/pay/{post}', [PaymentController::class, 'pay'])->name('payment');
-    Route::get('/success/{id}', [PaymentController::class, 'success'])->name('success');
+    Route::get('/success/{id}/{slug}', [PaymentController::class, 'success'])->name('success');
     Route::get('error', [PaymentController::class, 'error']);
 });
 

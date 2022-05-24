@@ -37,6 +37,7 @@ class UserController extends Controller
         }
 
         if(request('avatar')){
+            $user->deleteAvatar();
             $inputs['avatar'] = $request->avatar->store('images');
         }
 //        $user->remember_token=Carbon::now();
@@ -50,6 +51,7 @@ class UserController extends Controller
         return back();
     }
     public function destroy(User $user){
+        $user->deleteAvatar();
         $user->delete();
         session()->flash('user-deleted','User has been deleted');
         return back();

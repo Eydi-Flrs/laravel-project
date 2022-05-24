@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -84,6 +85,17 @@ class User extends Authenticatable implements MustVerifyEmail
             get: fn($value)=>asset("storage/images/".$value),
         );
 
+    }
+
+    public function deleteAvatar(){
+        $myString=$this->avatar;
+        $findMe='/';
+        $lenght0fString=strlen($myString);
+        $pos=strrpos($myString, $findMe)+1;
+        $trim=substr($myString,$pos,$lenght0fString);
+        $avatarPath='images/'.$trim;
+//            dd($avatarPath);
+        Storage::delete($avatarPath);
     }
 
 

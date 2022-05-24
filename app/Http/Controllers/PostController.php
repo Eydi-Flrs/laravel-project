@@ -79,6 +79,9 @@ class PostController extends Controller
            'volume'=>['nullable','string','max:255'],
            'series'=>['nullable','string','max:255'],
            'publisher'=>['nullable','string','max:255'],
+           'isbn'=>['nullable','string','max:255'],
+           'dcc'=>['nullable','string','max:255'],
+           'authornumber'=>['nullable','string','max:255'],
            'qr'=>['string','max:255'],
            'abstract'=>['required','string','max:1000'],
            'type'=>['required','string','max:255']
@@ -215,6 +218,9 @@ class PostController extends Controller
             'volume'=>['nullable','string','max:255'],
             'series'=>['nullable','string','max:255'],
             'publisher'=>['nullable','string','max:255'],
+            'isbn'=>['nullable','string','max:255'],
+            'dcc'=>['nullable','string','max:255'],
+            'authornumber'=>['nullable','string','max:255'],
             'qr'=>['string','max:255'],
             'abstract'=>['required','string','max:1000'],
             'type'=>['required','string','max:255']

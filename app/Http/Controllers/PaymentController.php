@@ -20,13 +20,13 @@ class PaymentController extends Controller
         $this->gateway->setTestMode(true);
     }
 
-    public function pay(Request $request, Post $post){
+    public function pay(Request $request, Post $post, ){
 
         try{
             $response=$this->gateway->purchase(array(
                 'amount'=>$request->amount,
                 'currency'=>env('PAYPAL_CURRENCY'),
-                'returnUrl'=>url('success/'.$post->id),
+                'returnUrl'=>url('success/'.$post->id.'/'.$request->slug),
                 'cancelUrl'=>url('error'),
             ))->send();
             if($response->isRedirect()){
@@ -39,7 +39,7 @@ class PaymentController extends Controller
             return  $th->getMessage();
         }
     }
-    public function success(Request $request, $id){
+    public function success(Request $request, $id, $slug){
         if($request->input('paymentId') && $request->input('PayerID')){
             $transaction = $this->gateway->completePurchase(array(
                 'payer_id'=>$request->input('PayerID'),
@@ -61,7 +61,7 @@ class PaymentController extends Controller
                 $payment->payment_status=$arr['state'];
                 $payment->save();
 
-                return redirect()->route('post',$id);
+                return redirect()->route('post',[$id,$slug]);
 //                return "Payment is Successfull. Your transaction Id is:".$arr['id'];
             }
             else{

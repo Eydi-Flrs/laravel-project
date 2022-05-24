@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
     {
          User::create(['firstname'=>'admin',
              'lastname'=>'admin', 'name'=> 'admin',
-             'email'=>'adminTUPKMS@gmail.com',
+             'email'=>'tupkms2022@gmail.com',
              'contact_number'=>'09999999999',
              'password'=>'12345678',
              'email_verified_at'=>Carbon::now()

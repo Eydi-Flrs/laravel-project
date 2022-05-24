@@ -120,7 +120,7 @@
                                         </div>
                                     </div>
 
-                                    <h3>Advanced Info (applicable for books only)</h3>
+                                    <h3>Additional Info (applicable for books only)</h3>
 
                                     <div class="form-group row">
                                         <div class="col-sm-6 mb-2 mb-sm-0">
@@ -134,8 +134,22 @@
                                         <div class="col-sm-6 mb-2 mb-sm-0">
                                             <label for="publisher">Publisher</label><input type="text" class="form-control form-control-user" id="publisher" name="publisher"  placeholder="Publisher" >
                                         </div>
+                                        <div class="col-sm-6 mb-2 mb-sm-0">
+                                            <label for="isbn">ISBN</label><input type="text" class="form-control form-control-user" id="isbn" name="isbn"  placeholder="ISBN" >
+                                        </div>
 
                                     </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-sm-6 mb-2 mb-sm-0">
+                                            <label for="dcc">DCC</label><input type="text" class="form-control form-control-user" id="dcc" name="dcc"  placeholder="DCC" >
+                                        </div>
+                                        <div class="col-sm-6 mb-2 mb-sm-0">
+                                            <label for="authornumber">Author number</label><input type="text" class="form-control form-control-user" id="authornumber" name="authornumber"  placeholder="Author no." >
+                                        </div>
+
+                                    </div>
+
 
 
                                     <div class="form-group">
@@ -148,7 +162,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="abstract">Abstract</label>
+                                        <label for="abstract">Abstract/Summary/Description</label>
                                         <textarea name="abstract" id="body" class="form-control" cols="30" rows="10" required></textarea>
 {{--                                        <input id="abstract" type="hidden" name="abstract" required>--}}
 {{--                                        <trix-editor input="abstract"></trix-editor>--}}

@@ -10,7 +10,10 @@
 {{--        @endif--}}
 
         @if(session('user-deleted'))
-                    <div class="alert alert-danger">{{session('user-deleted')}}</div>
+                    <div class="alert alert-danger alert-dismissible fade show">{{session('user-deleted')}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button></div></div>
         @endif
         <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -23,8 +26,8 @@
                         <tr>
                             <th>Id</th>
                             <th>Name</th>
-                            <th>Created At</th>
-                            <th>Updated At</th>
+                            <th>Contact No.</th>
+                            <th>Email</th>
                             <th>Last seen</th>
                             <th>Status</th>
                             <th>Delete</th>
@@ -37,8 +40,8 @@
                                 <td>{{$user->id}}</td>
                                 <td><a href="{{route('user.profile.show',$user->id)}}">{{$user->name}}</a></td>
 {{--                                <td><img height="40px" src="{{$user->avatar}}" alt=""></td>--}}
-                                <td>{{$user->created_at->diffForHumans()}}</td>
-                                <td>{{$user->updated_at->diffForHumans()}}</td>
+                                <td>{{$user->contact_number}}</td>
+                                <td>{{$user->email}}</td>
                                 <td>
                                     {{ Carbon\Carbon::parse($user->last_seen)->diffForHumans() }}
                                 </td>
@@ -50,6 +53,7 @@
                                     @endif
                                 </td>
                                 <td>
+                                    @if($user->id !=1)
                                     {{--                                    @can('view',$post)--}}
                                     <form method="post" action="{{route('user.destroy',$user->id)}}" enctype="multipart/form-data">
                                         @csrf
@@ -57,6 +61,7 @@
                                         <button type="submit" class="btn btn-danger">Delete</button>
                                     </form>
                                     {{--                                    @endcan--}}
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

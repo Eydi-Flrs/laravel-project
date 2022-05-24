@@ -8,25 +8,32 @@
             </div>
             <!-- Title -->
             <h1 class="my-3">{{$post->title}}</h1>
+        <h6>Views: {{$post->views}}</h6>
+        <br>
             <!-- Author -->
             <h6>Authors: @foreach($post->authors as $author)
-                    {{$author->name."  ,"}}</h6>
-            @endforeach
-             <h6>Views: {{$post->views}}</h6>
-             <h6>Category: {{$post->category->name}}</h6>
-             <h6>Tags:
-                 @foreach($post->tags as $tag)
-                {{$tag->name."  ,"}}
-                @endforeach
-             </h6>
+                    {{$author->name."  ,"}}
+            @endforeach</h6>
+        @if($post->type !='Book')
+        <h6>email: @foreach($post->authors as $author)
+                {{$author->email."  ,"}}
+        @endforeach</h6>
+        @endif
+
             @if($post->type ==='Book')
             <h6>Vol: {{$post->volume}} Series: {{$post->series}} Publisher: {{$post->publisher}}</h6>
+            <h6>ISBN: {{$post->isbn}} DCC: {{$post->dcc}} Author No.: {{$post->authornumber}}</h6>
             @endif
-
-
-            <hr>
-            <!-- Date/Time -->
+    <!-- Date/Time -->
             <p>Published Date: {{$date}}</p>
+            <hr>
+            <h6>Category: {{$post->category->name}}</h6>
+            <h6>Tags:
+                @foreach($post->tags as $tag)
+                    {{$tag->name."  ,"}}
+                @endforeach
+            </h6>
+
 
             <div class="card mb-4">
                 <div class="card-body">
@@ -51,7 +58,7 @@
         <form action="{{route('payment',$post->id)}}" method="post">
             @csrf
             <input type="hidden" name="amount" value="5" >
-
+            <input type="hidden" name="slug" value="{{$post->slug}}" >
             <button type="submit" class="btn btn-primary btn-user">pay with paypal</button>
         </form>
 {{--        <div id="paypal-button-container"></div>--}}
