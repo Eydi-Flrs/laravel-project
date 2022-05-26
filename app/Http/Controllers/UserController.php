@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityLog;
 use App\Models\Role;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -47,21 +49,48 @@ class UserController extends Controller
 
             session()->flash('user-updated-message','user '.strtoupper($user->name). 'was updated');
 
-
+        $ActivityLog = new ActivityLog();
+        $ActivityLog->user_id=Auth::id();
+        $ActivityLog->user_name=Auth::user()->name;
+        $ActivityLog->stat='UPDATE';
+        $ActivityLog->activity_description='User '.strtoupper($request->name).' updated';
+        $ActivityLog->date=Carbon::now('Asia/Manila')->toDateTimeString();
+        $ActivityLog->save();
         return back();
     }
     public function destroy(User $user){
         $user->deleteAvatar();
         $user->delete();
         session()->flash('user-deleted','User has been deleted');
+        $ActivityLog = new ActivityLog();
+        $ActivityLog->user_id=Auth::id();
+        $ActivityLog->user_name=Auth::user()->name;
+        $ActivityLog->stat='DELETE';
+        $ActivityLog->activity_description='User '.strtoupper($user->name).' deleted';
+        $ActivityLog->date=Carbon::now('Asia/Manila')->toDateTimeString();
+        $ActivityLog->save();
         return back();
     }
     public function attach(User $user){
         $user->roles()->attach(request('role'));
+        $ActivityLog = new ActivityLog();
+        $ActivityLog->user_id=Auth::id();
+        $ActivityLog->user_name=Auth::user()->name;
+        $ActivityLog->stat='ATTACH';
+        $ActivityLog->activity_description='User attach admin to '.strtoupper($user->name);
+        $ActivityLog->date=Carbon::now('Asia/Manila')->toDateTimeString();
+        $ActivityLog->save();
         return back();
     }
     public function detach(User $user){
         $user->roles()->detach(request('role'));
+        $ActivityLog = new ActivityLog();
+        $ActivityLog->user_id=Auth::id();
+        $ActivityLog->user_name=Auth::user()->name;
+        $ActivityLog->stat='DETACH';
+        $ActivityLog->activity_description='User detach admin to '.strtoupper($user->name);
+        $ActivityLog->date=Carbon::now('Asia/Manila')->toDateTimeString();
+        $ActivityLog->save();
         return back();
     }
 }

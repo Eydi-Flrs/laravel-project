@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityLog;
 use App\Models\Post;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class TagController extends Controller
@@ -21,6 +24,13 @@ class TagController extends Controller
                 'slug'=>Str::of(Str::lower(request('name')))->slug('-')
             ]
         );
+        $ActivityLog = new ActivityLog();
+        $ActivityLog->user_id=Auth::id();
+        $ActivityLog->user_name=Auth::user()->name;
+        $ActivityLog->stat='CREATE';
+        $ActivityLog->activity_description='Tag '.strtoupper($request->name).' created';
+        $ActivityLog->date=Carbon::now('Asia/Manila')->toDateTimeString();
+        $ActivityLog->save();
         session()->flash('tag-created-message','tag '.strtoupper($request->name).' was created');
         return redirect()->route('tags.index');
     }
@@ -32,6 +42,13 @@ class TagController extends Controller
         if($postAll->count()==0 && $postTrashed->count()==0){
             $tag->delete();
             $request->session()->flash('message','tag was deleted');
+            $ActivityLog = new ActivityLog();
+            $ActivityLog->user_id=Auth::id();
+            $ActivityLog->user_name=Auth::user()->name;
+            $ActivityLog->stat='DELETE';
+            $ActivityLog->activity_description='Tag '.strtoupper($tag->name).' deleted';
+            $ActivityLog->date=Carbon::now('Asia/Manila')->toDateTimeString();
+            $ActivityLog->save();
             return back();
         }
         else if($tag->posts->count()>0 || $postTrashed->count()>0){
@@ -42,6 +59,13 @@ class TagController extends Controller
 //            $this->authorize('delete',$tag); //ilalagay sa taas aayusin pa
             $tag->delete();
             $request->session()->flash('message','Category was deleted');
+            $ActivityLog = new ActivityLog();
+            $ActivityLog->user_id=Auth::id();
+            $ActivityLog->user_name=Auth::user()->name;
+            $ActivityLog->stat='DELETE';
+            $ActivityLog->activity_description='Tag '.strtoupper($tag->name).' deleted';
+            $ActivityLog->date=Carbon::now('Asia/Manila')->toDateTimeString();
+            $ActivityLog->save();
             return back();
         }
 
@@ -61,6 +85,13 @@ class TagController extends Controller
         if($tag->isDirty('name')){
             session()->flash('tag-updated','Tag Update '.request('name'));
             $tag->save();
+            $ActivityLog = new ActivityLog();
+            $ActivityLog->user_id=Auth::id();
+            $ActivityLog->user_name=Auth::user()->name;
+            $ActivityLog->stat='UPDATE';
+            $ActivityLog->activity_description='Tag '.strtoupper(request('name')).' updated';
+            $ActivityLog->date=Carbon::now('Asia/Manila')->toDateTimeString();
+            $ActivityLog->save();
         }else{
             session()->flash('tag-updated','Nothing has been updated');
         }

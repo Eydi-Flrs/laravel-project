@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\AdminsController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Pdf;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,6 +37,7 @@ Route::get('/post/{post}/title/{slug}', [PostController::class, 'show'])->name('
 
 Route::middleware('auth')->group(function(){
     Route::get('/admin', [AdminsController::class, 'index'])->name('admin.index')->middleware('role:Admin');
+    Route::get('/admin/activity-logs', [ActivityLogController::class, 'activityLog'])->name('admin.activityLog')->middleware('role:Admin');
     Route::get('/', [HomeController::class, 'index'])->name('home')->middleware(['verified']);
     Route::get('/posts/{post}/pdf', [Pdf::class, 'downloadpdf'])->name('pdf.download');
     Route::post('/pay/{post}', [PaymentController::class, 'pay'])->name('payment');

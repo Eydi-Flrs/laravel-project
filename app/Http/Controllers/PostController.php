@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityLog;
 use App\Models\Category;
 use App\Models\Image;
 use App\Models\Payment;
 use App\Models\Post;
 use App\Models\Author;
 use App\Models\Tag;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -162,6 +164,14 @@ class PostController extends Controller
 
 
         session()->flash('post-created-message','post '.strtoupper($inputs['title']).' was created');
+
+        $ActivityLog = new ActivityLog();
+        $ActivityLog->user_id=Auth::id();
+        $ActivityLog->user_name=Auth::user()->name;
+        $ActivityLog->stat='CREATE';
+        $ActivityLog->activity_description='Post '.strtoupper($request->title).' created';
+        $ActivityLog->date=Carbon::now('Asia/Manila')->toDateTimeString();
+        $ActivityLog->save();
        return redirect()->route('post.index');
     }
 
@@ -180,10 +190,24 @@ class PostController extends Controller
             $post->deletePdf();
             $post->deletePdfImages();
             $post->forceDelete();
+            $ActivityLog = new ActivityLog();
+            $ActivityLog->user_id=Auth::id();
+            $ActivityLog->user_name=Auth::user()->name;
+            $ActivityLog->stat='DELETE';
+            $ActivityLog->activity_description='Post '.strtoupper($post->title).' deleted';
+            $ActivityLog->date=Carbon::now('Asia/Manila')->toDateTimeString();
+            $ActivityLog->save();
            session()->flash('message','post was deleted');
         }
         else{
             $post->delete();
+            $ActivityLog = new ActivityLog();
+            $ActivityLog->user_id=Auth::id();
+            $ActivityLog->user_name=Auth::user()->name;
+            $ActivityLog->stat='ARCHIVE';
+            $ActivityLog->activity_description='Post '.strtoupper($post->title).' archived';
+            $ActivityLog->date=Carbon::now('Asia/Manila')->toDateTimeString();
+            $ActivityLog->save();
             session()->flash('message','post was archived');
         }
 
@@ -200,6 +224,13 @@ class PostController extends Controller
         $post=Post::withTrashed()->where('id',$id)->firstOrFail();
         $post->restore();
         $request->session()->flash('post-updated-message','post restored successfully');
+        $ActivityLog = new ActivityLog();
+        $ActivityLog->user_id=Auth::id();
+        $ActivityLog->user_name=Auth::user()->name;
+        $ActivityLog->stat='RESTORE';
+        $ActivityLog->activity_description='Post '.strtoupper($post->title).' restored';
+        $ActivityLog->date=Carbon::now('Asia/Manila')->toDateTimeString();
+        $ActivityLog->save();
         return back();
     }
 
@@ -296,6 +327,14 @@ class PostController extends Controller
         $post->save();
 
 
+        $ActivityLog = new ActivityLog();
+        $ActivityLog->user_id=Auth::id();
+        $ActivityLog->user_name=Auth::user()->name;
+        $ActivityLog->stat='UPDATE';
+        $ActivityLog->activity_description='Post '.strtoupper($request->title).' updated';
+        $ActivityLog->date=Carbon::now('Asia/Manila')->toDateTimeString();
+        $ActivityLog->save();
+
         session()->flash('post-updated-message','post '.strtoupper($inputs['title']).' was updated');
         return redirect()->route('post.index');
     }
@@ -313,9 +352,23 @@ class PostController extends Controller
                 if (!is_null($post->deleted_at)) {
                     $post->deletePdf();
                     $post->forceDelete();
+                    $ActivityLog = new ActivityLog();
+                    $ActivityLog->user_id=Auth::id();
+                    $ActivityLog->user_name=Auth::user()->name;
+                    $ActivityLog->stat='DELETE';
+                    $ActivityLog->activity_description='Post '.strtoupper($post->title).' deleted';
+                    $ActivityLog->date=Carbon::now('Asia/Manila')->toDateTimeString();
+                    $ActivityLog->save();
                     session()->flash('message', 'post was deleted');
                 } else {
                     $post->delete();
+                    $ActivityLog = new ActivityLog();
+                    $ActivityLog->user_id=Auth::id();
+                    $ActivityLog->user_name=Auth::user()->name;
+                    $ActivityLog->stat='ARCHIVE';
+                    $ActivityLog->activity_description='Post '.strtoupper($post->title).' archived';
+                    $ActivityLog->date=Carbon::now('Asia/Manila')->toDateTimeString();
+                    $ActivityLog->save();
                     session()->flash('message', 'post was archived');
                 }
             }
