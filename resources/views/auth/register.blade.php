@@ -60,7 +60,7 @@
                                     <label for="contact_number" class="col-md-4 col-form-label text-md-end">{{ __('Contact number') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="contact_number" maxlength="11" type="text" class="form-control @error('contact_number') is-invalid @enderror" name="contact_number" value="{{ old('contact_number') }}" required autocomplete="contact_number">
+                                        <input  onkeypress="return onlyNumberKey(event)" id="contact_number" maxlength="11" type="text" class="form-control @error('contact_number') is-invalid @enderror" name="contact_number" value="{{ old('contact_number') }}" required autocomplete="contact_number">
 
                                         @error('contact_number')
                                         <span class="invalid-feedback" role="alert">
@@ -88,7 +88,10 @@
                                     <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                        <div>
+                                            <input data-toggle="password" id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                        </div>
+
                                     </div>
                                 </div>
 
@@ -102,8 +105,19 @@
                             </form>
                     </div>
                 </div>
-            </div>
+            </div
         </div>
 
     </div>
+
+        <script>
+
+            function onlyNumberKey(evt) {
+                // Only ASCII character in that range allowed
+                var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+                if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+                    return false;
+                return true;
+            }
+        </script>
 @endsection

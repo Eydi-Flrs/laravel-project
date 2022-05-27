@@ -9,15 +9,15 @@
 {{--            <div class="alert alert-success">{{session('post-updated-message')}}</div>--}}
 {{--        @endif--}}
 
-        @if(session('user-deleted'))
-                    <div class="alert alert-danger alert-dismissible fade show">{{session('user-deleted')}}
+        @if(session('message'))
+                    <div class="alert alert-danger alert-dismissible fade show">{{session('message')}}
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
-                        </button></div></div>
+                        </button></div>
         @endif
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Users list</h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -55,15 +55,39 @@
                                 <td>
                                     @if($user->id !=1)
                                     {{--                                    @can('view',$post)--}}
-                                    <form method="post" action="{{route('user.destroy',$user->id)}}" enctype="multipart/form-data">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">Delete</button>
-                                    </form>
+{{--                                        <a class="btn btn-danger" href="#" data-toggle="modal" data-target="#deleteModal-{{$user->id}}">--}}
+{{--                                            Delete--}}
+{{--                                        </a>--}}
                                     {{--                                    @endcan--}}
+
+                                        <form method="post" action="{{route('user.destroy',$user->id)}}" enctype="multipart/form-data">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
                                     @endif
                                 </td>
                             </tr>
+{{--                            <div class="modal fade" id="deleteModal-{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">--}}
+{{--                                <div class="modal-dialog" role="document">--}}
+{{--                                    <div class="modal-content">--}}
+{{--                                        <div class="modal-header">--}}
+{{--                                            <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to permanently delete "{{strtoupper($user->name)}}" ?</h5>--}}
+{{--                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+{{--                                                <span aria-hidden="true">&times;</span>--}}
+{{--                                            </button>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="modal-footer">--}}
+{{--                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>--}}
+{{--                                            <form method="post" action="{{route('user.destroy',$user->id)}}" enctype="multipart/form-data">--}}
+{{--                                                @csrf--}}
+{{--                                                @method('DELETE')--}}
+{{--                                                <button type="submit" class="btn btn-danger">Delete</button>--}}
+{{--                                            </form>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                         @endforeach
                         </tbody>
                     </table>

@@ -8,6 +8,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
 {
@@ -34,7 +35,9 @@ class UserController extends Controller
         ]);
 
         if(request('password')!=""){
-            $this->validate( $request,['password'=>'same:password_confirmation']);
+            $this->validate( $request,['password'=>'same:password_confirmation',
+                Password::min(8)->letters()->numbers()->mixedCase()
+                ]);
             $inputs['password']=$request->password;
         }
 
@@ -58,19 +61,19 @@ class UserController extends Controller
         $ActivityLog->save();
         return back();
     }
-    public function destroy(User $user){
-        $user->deleteAvatar();
-        $user->delete();
-        session()->flash('user-deleted','User has been deleted');
-        $ActivityLog = new ActivityLog();
-        $ActivityLog->user_id=Auth::id();
-        $ActivityLog->user_name=Auth::user()->name;
-        $ActivityLog->stat='DELETE';
-        $ActivityLog->activity_description='User '.strtoupper($user->name).' deleted';
-        $ActivityLog->date=Carbon::now('Asia/Manila')->toDateTimeString();
-        $ActivityLog->save();
-        return back();
-    }
+//    public function destroy(User $user){
+//        $user->deleteAvatar();
+//        $user->delete();
+//        session()->flash('user-deleted','User has been deleted');
+//        $ActivityLog = new ActivityLog();
+//        $ActivityLog->user_id=Auth::id();
+//        $ActivityLog->user_name=Auth::user()->name;
+//        $ActivityLog->stat='DELETE';
+//        $ActivityLog->activity_description='User '.strtoupper($user->name).' deleted';
+//        $ActivityLog->date=Carbon::now('Asia/Manila')->toDateTimeString();
+//        $ActivityLog->save();
+//        return back();
+//    }
     public function attach(User $user){
         $user->roles()->attach(request('role'));
         $ActivityLog = new ActivityLog();
@@ -91,6 +94,57 @@ class UserController extends Controller
         $ActivityLog->activity_description='User detach admin to '.strtoupper($user->name);
         $ActivityLog->date=Carbon::now('Asia/Manila')->toDateTimeString();
         $ActivityLog->save();
+        return back();
+    }
+
+    public function destroy($id){
+        $user=User::withTrashed()->where('id',$id)->firstOrFail();
+//        $this->authorize('delete',$post);
+        if(!is_null($user->deleted_at)){
+            $user->deleteAvatar();
+            $user->forceDelete();
+            $ActivityLog = new ActivityLog();
+            $ActivityLog->user_id=Auth::id();
+            $ActivityLog->user_name=Auth::user()->name;
+            $ActivityLog->stat='DELETE';
+            $ActivityLog->activity_description='User '.strtoupper($user->name).' deleted';
+            $ActivityLog->date=Carbon::now('Asia/Manila')->toDateTimeString();
+            $ActivityLog->save();
+            session()->flash('message','user '.$user->name.' was deleted');
+        }
+        else{
+            $user->delete();
+            $ActivityLog = new ActivityLog();
+            $ActivityLog->user_id=Auth::id();
+            $ActivityLog->user_name=Auth::user()->name;
+            $ActivityLog->stat='ARCHIVE';
+            $ActivityLog->activity_description='User '.strtoupper($user->name).' archived';
+            $ActivityLog->date=Carbon::now('Asia/Manila')->toDateTimeString();
+            $ActivityLog->save();
+            session()->flash('message','user '.$user->name.' was archived');
+        }
+
+        return back();
+    }
+
+
+    public function archived(){
+        $archived= User::onlyTrashed()->get();//onlytrashed
+        return view('admin.users.archived',['users'=>$archived]);
+    }
+
+    public function restore($id,Request $request){
+        $user=User::withTrashed()->where('id',$id)->firstOrFail();
+        $user->restore();
+        $request->session()->flash('post-updated-message','post restored successfully');
+        $ActivityLog = new ActivityLog();
+        $ActivityLog->user_id=Auth::id();
+        $ActivityLog->user_name=Auth::user()->name;
+        $ActivityLog->stat='RESTORE';
+        $ActivityLog->activity_description='User '.strtoupper($user->title).' restored';
+        $ActivityLog->date=Carbon::now('Asia/Manila')->toDateTimeString();
+        $ActivityLog->save();
+        session()->flash('user-restore','user '.$user->name.' was restored');
         return back();
     }
 }

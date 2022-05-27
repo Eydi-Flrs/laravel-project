@@ -28,6 +28,7 @@ Auth::routes(['verify'=>true]);
 Route::get('/contact-us', [ContactController::class, 'contact'])->name('contact');
 Route::post('/send-message', [ContactController::class, 'sendEmail'])->name('contact.send');
 Route::get('/search', [HomeController::class, 'search'])->name('search');
+Route::get('/search-autocomplete', [HomeController::class, 'autocomplete'])->name('search.autocomplete');
 Route::get('/searchAll', [HomeController::class, 'searchAll'])->name('search.all');
 Route::get('/search/{category_id}/category/{slug}', [HomeController::class, 'searchCategory'])->name('search.category');
 Route::get('/search/year/{year}', [HomeController::class, 'searchYear'])->name('search.year');
@@ -39,6 +40,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/admin', [AdminsController::class, 'index'])->name('admin.index')->middleware('role:Admin');
     Route::get('/admin/activity-logs', [ActivityLogController::class, 'activityLog'])->name('admin.activityLog')->middleware('role:Admin');
     Route::get('/', [HomeController::class, 'index'])->name('home')->middleware(['verified']);
+    Route::get('/about-us', [HomeController::class, 'aboutUs'])->name('about-us');
     Route::get('/posts/{post}/pdf', [Pdf::class, 'downloadpdf'])->name('pdf.download');
     Route::post('/pay/{post}', [PaymentController::class, 'pay'])->name('payment');
     Route::get('/success/{id}/{slug}', [PaymentController::class, 'success'])->name('success');

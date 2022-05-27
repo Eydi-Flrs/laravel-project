@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <!-- Custom styles for this template -->
     <link href="{{asset('css/blog-home.css')}}" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js" integrity="sha512-HWlJyU4ut5HkEj0QsK/IxBCY55n5ZpskyjVlAoV9Z7XQwwkqXoYdCIC93/htL3Gu5H3R4an/S0h2NXfbZk3g7w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
 </head>
@@ -31,7 +32,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                    <a class="nav-link" href="{{route('about-us')}}">About</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('contact')}}">Contact</a>
@@ -84,7 +85,7 @@
                     <form  method="get" action="{{route('search.all')}} "class="row">
                         @csrf
                         <div class="col-md-9">
-                            <input class="form-control mr-sm-2" type="search" name="topNavSearch" placeholder="Search" aria-label="Search">
+                            <input class="form-control typehead mr-sm-2" type="search" id="topNavSearch" name="topNavSearch" placeholder="Search" aria-label="Search">
                         </div>
                         <div class="col-md-3">
                             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -149,6 +150,17 @@
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
 
+
+<script>
+    var path="{{route('search.autocomplete')}}";
+    $('#topNavSearch').typehead({
+        source:function(query,process){
+            return $.get(path,{query:query},function (data){
+                return process(data);
+            });
+        }
+    });
+</script>
 
 {{--<script>--}}
 {{--    $(document).ready(function (){--}}

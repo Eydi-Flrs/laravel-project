@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -55,7 +56,9 @@ class RegisterController extends Controller
             'lastname'=>['required','string','max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users','regex:(@tup.edu.ph)'],
             'contact_number'=>['required', 'string', 'min:8','max:11'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'confirmed',
+                Password::min(8)->letters()->numbers()->mixedCase()
+                ],
         ]);
     }
 

@@ -51,6 +51,19 @@ class HomeController extends Controller
             ->with('tags',Tag::all())
             ->with('allposts',Post::all());
     }
+    public function aboutUs()
+    {
+        return(view('about-us'));
+    }
+
+    public function autocomplete(Request $request){
+        $data=$request->topNavSearch;
+        $query=$data['query'];
+        $filter_data=Post::select('title')->where('title','LIKE','%'.$query.'%')->get();
+        return response()->json($filter_data);
+
+    }
+
     public function search(Request $request){
         $posts= Post::paginate(10);
         $categories=Category::all();

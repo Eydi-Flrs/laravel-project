@@ -47,7 +47,7 @@
         <li class="nav-item">
             <a class="nav-link" href="{{route('admin.activityLog')}}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Dashboard</span></a>
+                <span>Activity Log</span></a>
         </li>
 
         <!-- Divider -->

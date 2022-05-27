@@ -7,6 +7,8 @@
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Archived Posts</h6>
             <a class="collapse-item" href="{{route('post.archived')}}">View all Archived Posts</a>
+            <a class="collapse-item" href="{{route('user.archived')}}">View all Archived Users</a>
         </div>
     </div>
+
 </li>
