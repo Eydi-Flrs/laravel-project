@@ -167,6 +167,11 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="files">Upload images</label>
+                            <input type="file" name="images[]" id="" class="form-control" multiple accept="image/*" required>
+                        </div>
+
+                        <div class="form-group">
                             <label for="abstract">Abstract</label>
                             <textarea  name="abstract" id="body" class="form-control" cols="30" rows="10" required>{{$post->abstract}}</textarea>
 {{--                            <input value="{{$post->abstract}}" id="abstract" type="hidden" name="abstract"  required>--}}
@@ -289,11 +294,11 @@
 
         </script>
         <script>
-            $("#year").datepicker({
-                format: "yyyy",
-                viewMode: "years",
-                minViewMode: "years"
-            });
+            // $("#year").datepicker({
+            //     format: "yyyy",
+            //     viewMode: "years",
+            //     minViewMode: "years"
+            // });
 
             function onlyNumberKey(evt) {
                 // Only ASCII character in that range allowed
@@ -313,7 +318,7 @@
                     " <td class='col-sm-3'><input type='text' class='form-control' form-control-user id='firstname' name='firstname[]' placeholder='First Name' required></td>"+
                     " <td class='col-sm-2'><input type='text' class='form-control' form-control-user id='middle_initial' name='middle_initial[]' placeholder='Middle Initial' required></td>"+
                     " <td class='col-sm-1'><input type='text' class='form-control' form-control-user id='suffix' name='suffix[]' placeholder='Suffix'></td>"+
-                    " <td class='col-sm-3'><input type='text' class='form-control' form-control-user id='email' name='email[]' placeholder='Email' required></td>"+
+                    " <td class='col-sm-3'><input type='text' class='form-control' form-control-user id='email' name='email[]' placeholder='Email'></td>"+
                     "<td><a href='javascript:void(0)' class='btn btn-danger deleteRow'>-</a></td>"+
                     "</tr>"
                 $('tbody').append(tr);

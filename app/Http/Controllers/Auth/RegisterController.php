@@ -56,6 +56,7 @@ class RegisterController extends Controller
             'lastname'=>['required','string','max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users','regex:(@tup.edu.ph)'],
             'contact_number'=>['required', 'string', 'min:8','max:11'],
+            'checkbox'=>['accepted'],
             'password' => ['required', 'string', 'confirmed',
                 Password::min(8)->letters()->numbers()->mixedCase()
                 ],

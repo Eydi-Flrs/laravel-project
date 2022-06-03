@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Pdf;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\TypeaheadController;
 use App\Http\Controllers\UserController;
 
 use Illuminate\Support\Facades\Route;
@@ -25,10 +26,17 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes(['verify'=>true]);
 
+Route::get('/terms-and-conditions',function(){
+    return view('terms-and-condition');
+});
+Route::get('/privacy-policy',function(){
+    return view('privacy-policy');
+});
 Route::get('/contact-us', [ContactController::class, 'contact'])->name('contact');
+Route::get('/autocomplete-search', [TypeaheadController::class, 'autocompleteSearch']);
 Route::post('/send-message', [ContactController::class, 'sendEmail'])->name('contact.send');
 Route::get('/search', [HomeController::class, 'search'])->name('search');
-Route::get('/search-autocomplete', [HomeController::class, 'autocomplete'])->name('search.autocomplete');
+//Route::get('/search-autocomplete', [HomeController::class, 'autocomplete'])->name('search.autocomplete');
 Route::get('/searchAll', [HomeController::class, 'searchAll'])->name('search.all');
 Route::get('/search/{category_id}/category/{slug}', [HomeController::class, 'searchCategory'])->name('search.category');
 Route::get('/search/year/{year}', [HomeController::class, 'searchYear'])->name('search.year');

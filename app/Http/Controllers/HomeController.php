@@ -57,7 +57,7 @@ class HomeController extends Controller
     }
 
     public function autocomplete(Request $request){
-        $data=$request->topNavSearch;
+        $data=$request->all();
         $query=$data['query'];
         $filter_data=Post::select('title')->where('title','LIKE','%'.$query.'%')->get();
         return response()->json($filter_data);
@@ -83,6 +83,9 @@ class HomeController extends Controller
         }
         if($request->year) {
             $posts= Post::where('year',$request->year)->paginate(10);
+        }
+        if($request->course) {
+            $posts= Post::where('course',$request->course)->paginate(10);
         }
         if($request->title && $request->author) {
             $posts= Post::where('title','LIKE','%'.$request->title.'%')
@@ -110,6 +113,17 @@ class HomeController extends Controller
                 ->paginate(10);
         }
 
+//        if($request->title && $request->author && $request->category_id && $request->year && $request->course) {
+//            $posts= Post::where('title','LIKE','%'.$request->title.'%')
+//                ->whereHas('authors',function ($query) use($author){
+//                    $query->where('name','LIKE','%'.$author.'%');
+//                })
+//                ->where('category_id',$request->category_id)
+//                ->where('year',$request->year)
+//                ->where('course',$request->course)
+//                ->paginate(10);
+//        }
+
         return view('home',['posts'=>$posts])
             ->with('categories',$categories)
             ->with('favorites',$favorites)
@@ -118,17 +132,19 @@ class HomeController extends Controller
             ->with('allposts',Post::all());
 
     }
+
     public function searchAll(Request $request){
         $posts= Post::paginate(10);
         $categories=Category::all();
         $favorites= Favorite::where('user_id',Auth::id())->get();
-        $author=$request->topNavSearch;
+        $author=$request->search;
         $posts= Post::where('title','LIKE','%'.$request->topNavSearch.'%')
             ->orwhereHas('authors',function ($query) use($author){
                 $query->where('name','LIKE','%'.$author.'%');
             })
             ->orwhere('category_id',$request->topNavSearch)
             ->orwhere('year',$request->topNavSearch)
+            ->orwhere('course',$request->course)
             ->paginate(10);
 
         return view('home',['posts'=>$posts])

@@ -1,16 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+
+<div class="container   ">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+                
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
-
+                        <div class="row">
+                        <div class="col-4 mx-auto m-3 text-center">
+                        <img src="{{asset('/storage/images/profile/loginlogo.png')}}" height="200px" alt="">
+                        </div>
+                        </div>
                         <div class="row mb-3">
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 
@@ -39,20 +44,33 @@
                             </div>
                         </div>
 
-                      
-
-                        <div class="row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
+                        <div class="row mb-3">
+                            <div class="col-md-6 offset-md-4 text-md-front ">
+                        @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
+
+                              
+
+                        <div class="row mb-3">
+                            <div class="col-ms-6 offset-ms-3 text-ms-center">
+                                <button type="submit" class="btn btn-warning" style="width: 100%">
+                                    {{ __('Login') }}
+                                </button>
+
+                                
+                                 </div>
                             </div>
+
+                            <div class="col-md-6 offset-md-3 text-md-center ">
+                                @if (Route::has('register'))
+                                <a class="btn btn-link" href="{{ route('register') }}">
+                                        {{ __('Create an Account') }}
+                                    </a>
+                            @endif
+
                         </div>
                     </form>
                 </div>

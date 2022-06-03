@@ -1,15 +1,18 @@
 <x-home-master>
-    @section('content')
+    @section('contactus')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Karla:wght@500&family=Roboto:ital,wght@1,300&display=swap" rel="stylesheet">
+        <div class="col-md-12">
+<div class="p-3 py-5">
 
-
-
-            <div style="float: right">
-                <img src="{{$post->qr}}">
+            <div  style="float: right; margin-top: 10px; ">
+                <img style="height: 10em;" src="{{$post->qr}}">
             </div>
             <!-- Title -->
-            <h1 class="my-3">{{$post->title}}</h1>
+            <h1 class="my-2">{{$post->title}}</h1>
         <h6>Views: {{$post->views}}</h6>
-        <br>
             <!-- Author -->
             <h6>Authors: @foreach($post->authors as $author)
                     {{$author->name."  ,"}}
@@ -33,8 +36,27 @@
                     {{$tag->name."  ,"}}
                 @endforeach
             </h6>
+            @if(in_array($post->id,$paid))
 
+{{--                    <embed src="{{$post->pdf}}" width="800px" height="2100px" />--}}
+                    <a href="{{route('pdf.download',$post->id)}}" class="btn btn-primary btn-user">
+                        Download Pdf File
+                    </a>
+               <input type="text" value="{{$post->id}}" id="number" hidden>
 
+        @else
+        <form action="{{route('payment',$post->id)}}" method="post">
+            @csrf
+            <input type="hidden" name="amount" value="5" >
+            <input type="hidden" name="slug" value="{{$post->slug}}" >
+            Want to get a Copy? <button type="submit" class="btn btn-warning btn-user">
+            <i class="fa-brands fa-paypal fa-sm fa-fw mr-2 text-gray-400"> </i> Pay
+</button>
+        </form>
+{{--        <div id="paypal-button-container"></div>--}}
+        @endif
+</div>
+<br>
             <div class="card mb-4">
                 <div class="card-body">
                     <div>
@@ -46,23 +68,7 @@
                 </div>
             </div>
 
-         @if(in_array($post->id,$paid))
-           <div class="col-sm-12 mb-12 mb-sm-5">
-{{--                    <embed src="{{$post->pdf}}" width="800px" height="2100px" />--}}
-                    <a href="{{route('pdf.download',$post->id)}}" class="btn btn-primary btn-user">
-                        Download Pdf File
-                    </a>
-               <input type="text" value="{{$post->id}}" id="number" hidden>
-           </div>
-        @else
-        <form action="{{route('payment',$post->id)}}" method="post">
-            @csrf
-            <input type="hidden" name="amount" value="5" >
-            <input type="hidden" name="slug" value="{{$post->slug}}" >
-            <button type="submit" class="btn btn-primary btn-user">pay with paypal</button>
-        </form>
-{{--        <div id="paypal-button-container"></div>--}}
-        @endif
+
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js" integrity="sha512-dw+7hmxlGiOvY3mCnzrPT5yoUwN/MRjVgYV7HGXqsiXnZeqsw1H9n9lsnnPu4kL2nx2bnrjFcuWK+P3lshekwQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <!-- Sample PayPal credentials (client-id) are included -->
@@ -124,9 +130,12 @@
         </script>
     @endsection
     @section('pdfview')
+    <div style="width: 50rem; margin: auto;
+    display: block; ">
             @foreach($post->images as $image)
-                <div class="card m-1" style="width:768px; height:1344px; background-repeat:no-repeat; background-size: contain; background-image:url('{{$image->image}}') "></div>
+                <div class="card m-1" style="width:48rem; height:84rem; background-repeat:no-repeat; background-size: contain; background-image:url('{{$image->image}}') "></div>
             @endforeach
-
+</div>
+</div>
         @endsection
 </x-home-master>

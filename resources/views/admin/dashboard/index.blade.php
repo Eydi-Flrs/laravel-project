@@ -5,7 +5,8 @@
             <div class="row">
 
                 <!-- Card Example -->
-                <div class="col-3  mb-4">
+                <a class="col-sm-6  mb-4" href="{{route('users.index')}}">
+
                     <div class="card border-left-primary shadow h-100 py-2">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
@@ -16,24 +17,28 @@
                             </div>
                         </div>
                     </div>
-                </div>
+
+                </a>
 
                 <!-- Card Example -->
-                <div class="col-3  mb-4">
+                <a class="col-sm-6  mb-4" href="{{route('post.index')}}">
+
                     <div class="card border-left-success shadow h-100 py-2">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Academic Resources</div>
+                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Academic Resources</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">{{$posts->count()}}</div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+
+                </a>
 
                 <!-- Card Example -->
-                <div class="col-3  mb-4">
+                <a class="col-sm-6  mb-4" href="{{route('categories.index')}}">
+
                     <div class="card border-left-info shadow h-100 py-2">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
@@ -44,15 +49,17 @@
                                             <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{$categories->count()}}</div>
                                         </div>
                                     </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+
+                </a>
 
 
                 <!-- Pending Requests Card Example -->
-                <div class="col-3  mb-4">
+                <a class="col-sm-6  mb-4" href="{{route('users.index')}}">
+
                     <div class="card border-left-warning shadow h-100 py-2">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
@@ -60,19 +67,22 @@
                                     <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Active Users:</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">
                                         {{$activeUser}}
+                                    </div>
                                 </div>
 
                             </div>
                         </div>
                     </div>
-                </div>
+
+                </a>
             </div>
+
 
             <!-- Content Row -->
 
             <div class="row">
                 <!-- Pie Chart -->
-                <div class="col-lg-6">
+                <div class="col-sm-6 ">
                     <div class="card shadow mb-4">
                         <!-- Card Header - Dropdown -->
                         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -84,19 +94,33 @@
                                 <canvas id="myPieChart"></canvas>
                             </div>
                             <div class="mt-4 text-center small">
-                                @foreach($categories as $category)
-                                        <span class="mr-2">
-                                          <i class="fas fa-circle" id="{{$category->name}}" ></i> {{$category->name}}
-                                        </span>
-                                 @endforeach
-                            </div>
+                                <div class="accordion" id="accordionExample">
+                                    <div class="card">
+                                        <div class="card-header" id="headingTwo">
+                                            <h2 class="mb-0">
+                                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                    Categories Legend
+                                                </button>
+                                            </h2>
+                                        </div>
+                                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                            <div class="card-body">
+                                                @foreach($categories as $category)
+                                                    <span class="mr-2">
+                                                  <i class="fas fa-circle" id="{{$category->name}}" ></i> {{$category->name}}
+                                                </span>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                         </div>
-                    </div>
+                        </div>
+                     </div>
                 </div>
 
-
                 <!-- Bar Chart -->
-                <div class="col-lg-6">
+                <div class="col-sm-6">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Academic Resources Per Year ( {{$carbon->year}}-{{$carbon->year-6}} )</h6>
@@ -112,7 +136,7 @@
             </div>
             <div class="row">
                 <!-- TOP Views-->
-                <div class="col-6">
+                <div class="col-sm-6">
 
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -127,7 +151,7 @@
                     </div>
                 </div>
                 <!-- TOP Views-->
-                <div class="col-6">
+                <div class="col-sm-6">
 
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">

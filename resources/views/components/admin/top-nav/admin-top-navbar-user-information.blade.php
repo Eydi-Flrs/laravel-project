@@ -14,7 +14,7 @@
             Profile
         </a>
         <a class="dropdown-item" href="{{route('favorite.index',auth()->user())}}">
-            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+        <i class="fa fa-bookmark fa-sm fa-fw mr-2 text-gray-400" aria-hidden="true"></i>    
            Saved
         </a>
         <div class="dropdown-divider"></div>

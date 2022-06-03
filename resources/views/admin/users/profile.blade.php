@@ -1,13 +1,21 @@
 <x-home-master>
     @section('profile')
+    <div class="p-3 py-5">
 
-                @if(session('user-updated-message'))
-                    <div class="alert alert-success alert-dismissible fade show">{{session('user-updated-message')}}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                @endif
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    @if(session('user-updated-message'))
+
+              <div class="alert alert-success alert-dismissible fade show">
+                  {{session('user-updated-message')}}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+
+
+        @endif
+
 
             <div class="container rounded bg-white mt-5 mb-5">
             <form method="post" action="{{route('user.profile.update',$user)}}" enctype="multipart/form-data" >
@@ -75,7 +83,7 @@
                                         </div>
                                     </div>
                                     <div class="mt-5 text-center">
-                                        <button type="submit" class="btn btn-primary">Update Profile</button>
+                                        <button type="submit" class="btn btn-warning">Update Profile</button>
                                     </div>
                                 </div>
                             </div>
@@ -184,5 +192,6 @@
                 image.src = URL.createObjectURL(event.target.files[0]);
             };
         </script>
+    </div>
     @endsection
 </x-home-master>

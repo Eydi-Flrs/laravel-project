@@ -63,7 +63,7 @@
                                         <form method="post" action="{{route('user.destroy',$user->id)}}" enctype="multipart/form-data">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                            <button type="submit" class="btn btn-danger">Archive</button>
                                         </form>
                                     @endif
                                 </td>

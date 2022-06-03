@@ -61,12 +61,9 @@
                                             <select class="form-select" aria-label="Default select example" id="type" name="type">
                                                 <option selected value="Thesis Paper">Thesis Paper</option>
                                                 <option value="Book">Book</option>
-
                                             </select>
                                         </div>
                                     </div>
-
-
                                     <br>
                                     <h3>Publication Info</h3>
                                     <div class="form-group ">
@@ -116,7 +113,7 @@
                                             </select>
                                         </div>
                                         <div class="col-sm-4">
-                                            <label for="year">Year Published</label><input  onkeypress="return onlyNumberKey(event)"   type="text" class="form-control form-control-user" id="year" minlength="4" maxlength="4" name="year"placeholder="Year Published" required>
+                                            <label for="year">Year Published</label><input onkeypress="return onlyNumberKey(event)"   type="text" class="form-control form-control-user" id="year" minlength="4" maxlength="4" name="year" placeholder="Year Published" required>
                                         </div>
                                     </div>
 
@@ -149,7 +146,6 @@
                                         </div>
 
                                     </div>
-
 
 
                                     <div class="form-group">
@@ -283,11 +279,11 @@
 
         </script>
         <script>
-        $("#year").datepicker({
-                format: "yyyy",
-                viewMode: "years",
-                minViewMode: "years"
-            });
+{{--        $("#year").datepicker({--}}
+{{--                format: "yyyy",--}}
+{{--                viewMode: "years",--}}
+{{--                minViewMode: "years"--}}
+{{--            });--}}
 
         function onlyNumberKey(evt) {
             // Only ASCII character in that range allowed
@@ -306,7 +302,7 @@
                     " <td class='col-sm-3'><input type='text' class='form-control' form-control-user id='firstname' name='firstname[]' placeholder='First Name' required></td>"+
                     " <td class='col-sm-2'><input type='text' class='form-control' form-control-user id='middle_initial' name='middle_initial[]' placeholder='Middle Initial' required></td>"+
                     " <td class='col-sm-1'><input type='text' class='form-control' form-control-user id='suffix' name='suffix[]' placeholder='Suffix'></td>"+
-                    " <td class='col-sm-3'><input type='text' class='form-control' form-control-user id='email' name='email[]' placeholder='Email' required></td>"+
+                    " <td class='col-sm-3'><input type='text' class='form-control' form-control-user id='email' name='email[]' placeholder='Email'></td>"+
                     "<td><a href='javascript:void(0)' class='btn btn-danger deleteRow'>-</a></td>"+
                     "</tr>"
                 $('tbody').append(tr);

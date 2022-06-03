@@ -1,6 +1,6 @@
 <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTags" aria-expanded="true" aria-controls="collapseTwo">
-        <i class="fas fa-fw fa-cog"></i>
+    <i class="fa fa-hashtag fa-sm fa-fw mr-2 text-gray-400" aria-hidden="true"></i>
         <span>Tags</span>
     </a>
     <div id="collapseTags" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">

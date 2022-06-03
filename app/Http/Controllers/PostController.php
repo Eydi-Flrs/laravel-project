@@ -85,7 +85,7 @@ class PostController extends Controller
            'dcc'=>['nullable','string','max:255'],
            'authornumber'=>['nullable','string','max:255'],
            'qr'=>['string','max:255'],
-           'abstract'=>['required','string','max:1000'],
+           'abstract'=>['required','string','max:2000'],
            'type'=>['required','string','max:255']
        ]);
 

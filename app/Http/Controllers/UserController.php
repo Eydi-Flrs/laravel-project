@@ -46,11 +46,11 @@ class UserController extends Controller
             $inputs['avatar'] = $request->avatar->store('images');
         }
 //        $user->remember_token=Carbon::now();
-        $user->name =$request->lastname.",".$request->firstname;
+        $user->name =$request->firstname." ".$request->lastname;
         $user->update($inputs);
 
 
-            session()->flash('user-updated-message','user '.strtoupper($user->name). 'was updated');
+            session()->flash('user-updated-message','Profile Successfully Updated');
 
         $ActivityLog = new ActivityLog();
         $ActivityLog->user_id=Auth::id();
