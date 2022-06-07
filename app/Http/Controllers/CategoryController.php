@@ -13,12 +13,16 @@ use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
-    //
+    //show all Category
     public function index(){
         return view('admin.categories.index',['categories'=>Category::all()]);
     }
+
+    //save Category
     public function store(Request $request){
-        request()->validate(['name'=>['unique:categories','required','string','max:255']]);
+        request()->validate(['name'=>['unique:categories','required','string','max:255','regex:/^[a-zA-Z ]+$/']],[
+            'name.regex' => 'Category name must not have numerical value'
+        ]);
 
         Category::create([
             'name'=>Str::ucfirst(request('name')),
@@ -34,17 +38,15 @@ class CategoryController extends Controller
         $ActivityLog->date=Carbon::now('Asia/Manila')->toDateTimeString();
         $ActivityLog->save();
 
-
         session()->flash('category-created-message','category '.strtoupper($request->name).' was created');
         return redirect()->route('categories.index');
     }
 
+    //delete Category
     public function destroy(Category $category, Request $request){
-        //ayusin ko pa destroy logic
         $postAll=Post::all();
         $postTrashed=Post::onlyTrashed()->get();
-//        dd($category->posts->count());
-       if($postAll->count()==0 && $postTrashed->count()==0){
+        if($postAll->count()==0 && $postTrashed->count()==0){
            $category->delete();
 
            $ActivityLog = new ActivityLog();
@@ -63,7 +65,6 @@ class CategoryController extends Controller
             return redirect()->back();
        }
        else{
-//           $this->authorize('delete',$category); //ilalagay sa taas aayusin pa
            $category->delete();
 
            $ActivityLog = new ActivityLog();
@@ -81,12 +82,12 @@ class CategoryController extends Controller
 
     }
 
+    //goto update page
     public function edit(Category $category){
-//        $this->authorize('view', $category);
         return view('admin.categories.edit',['category'=> $category]);
-
     }
 
+    //update Category
     public function update(Category $category,Request $request){
 
             $category->name=Str::ucfirst(request('name'));
@@ -107,7 +108,6 @@ class CategoryController extends Controller
             }else{
                 session()->flash('category-updated','Nothing has been updated');
             }
-
 
             return redirect()->route('categories.index');
 

@@ -1,6 +1,6 @@
 <x-home-master>
 @section('homepage')
-    <div style="background-image: url({{asset('/storage/images/profile/tao.jpg')}});
+    <div style="background-image: url({{asset('/storage/images/profile/lib.jpg')}});
         min-height: 500px;
         background-attachment: fixed;
         background-position: center;
@@ -13,10 +13,11 @@
             letter-spacing: 10px;">
             <span style="position: absolute;
             left: 0;
-            top: 30%;
+            top: 25%;
             width: 100%;
             text-align: center;
-            color: white;"><img src="{{asset('/storage/images/profile/yellowcos.png')}}" style="height: 6rem;" alt=""><h1 class="fw-bold">TECHNOLOGICAL UNIVERSITY OF THE PHILIPPINES</h1></span>
+            color: white;"><img src="{{asset('/storage/images/profile/yellowcos.png')}}" style="height: 6rem;" alt=""><h1 class="fw-bold "
+style="text-shadow: 2px 3px #000000; "><br>KNOWLEDGE MANAGEMENT SYSTEM</h1></span>
         </div>
         </div>
 {{--<img src="{{asset('/storage/images/profile/COS.jpg')}}" class="img-fluid d-block w-100% " alt="Responsive image">--}}
@@ -27,13 +28,17 @@
                 @csrf
                 <div class="form-group row">
                     <h4>Advanced Search</h4>
-                    <div class="col-md-3 m-1">
+                    <div class="col-md-6">
                         <input type="text" name="title" id="search" class="form-control mr-sm-2" placeholder="Title">
                     </div>
-                    <div class="col-md-2 m-1">
+
+                    <div class="col-md-6">
                         <input type="text" name="author" id="search" class="form-control mr-sm-2" placeholder="Author">
                     </div>
-                    <div class="col-md-2 m-1">
+                </div>
+                <br>
+                <div class="form-group row">
+                    <div class="col-md-3 m-1">
                         <select class="form-select" aria-label="Default select example" id="category_id" name="category_id" >
                             <option selected value="">Category</option>
                             @foreach($categories as $category)
@@ -41,7 +46,8 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-md-1 m-1">
+
+                    <div class="col-md-3 m-1">
                         <select class="form-select" aria-label="Default select example" id="year" name="year" >
                             <option selected value="">Year</option>
                             @for($i=0;$i<7;$i++)
@@ -60,8 +66,17 @@
                             <option value="Bachelor of Science in Computer Science">Bachelor of Science in Computer Science</option>
                         </select>
                     </div>
+
+                    <div class="col-md-2 m-1">
+                        <select class="form-select" aria-label="Default select example" id="type" name="type" >
+                            <option selected value="">Type</option>
+                            <option value="Thesis Paper">Thesis Paper</option>
+                            <option value="Book">Books</option>
+                        </select>
+                    </div>
+
                     <div class="col-md-1 m-1">
-                        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                        <button class="btn btn-secondary my-2 my-sm-0" style="width: 160px;" type="submit">Search</button>
                     </div>
                 </div>
             </form>
@@ -97,7 +112,7 @@
                                     <div class="col-sm-3">
 
                                         <a href="{{route('post',[$post->id,$post->slug])}}" >
-                                            <button class="btn btn-primary m-1">
+                                            <button class="btn btn-primary ">
                                                 Read More &raquo;
                                             </button>
                                         </a>
@@ -107,7 +122,7 @@
                                             @csrf
                                             <input type="hidden" value="{{$post->id}}" name="post_id">
                                             <button @foreach($favorites as $favorite) @if($favorite->post_id === $post->id)  hidden
-                                                    @endif   @endforeach type="submit" class="btn btn-success m-1">Read It Later &raquo; </button>
+                                                    @endif   @endforeach type="submit" class="btn btn-success ">Read It Later &raquo; </button>
                                             {{--need lumabas message--}}
                                         </form>
                                     </div>

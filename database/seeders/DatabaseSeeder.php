@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
              'email_verified_at'=>Carbon::now()
          ]);
          Role::create(['name'=>'Admin','slug'=>'admin']);
+         Role::create(['name'=>'Librarian','slug'=>'librarian']);
          DB::table('role_user')->insert(['user_id'=>1,'role_id'=>1]);
     }
 }

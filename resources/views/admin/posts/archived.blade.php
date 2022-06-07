@@ -5,17 +5,20 @@
             <div class="alert alert-danger alert-dismissible fade show">{{session('message')}}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
-                </button></div>
+                </button>
+            </div>
         @elseif(session('post-created-message'))
             <div class="alert alert-success alert-dismissible fade show">{{session('post-created-message')}}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
-                </button></div>
+                </button>
+            </div>
         @elseif(session('post-updated-message'))
             <div class="alert alert-success alert-dismissible fade show">{{session('post-updated-message')}}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
-                </button></div>
+                </button>
+            </div>
         @endif
         <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -23,12 +26,10 @@
             </div>
             <div class="card-body">
 
-
-
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
-                        <tr>
+                            <tr>
 
                             <th>ID</th>
                             <th>Title</th>
@@ -42,8 +43,7 @@
                         </tr>
                         </thead>
                         <tfoot>
-                        <tr>
-
+                            <tr>
                             <th>ID</th>
                             <th>Title</th>
                             <th>Category</th>

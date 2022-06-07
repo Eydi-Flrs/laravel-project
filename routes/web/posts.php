@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth','role:Admin'])->group(function(){
     Route::get('/posts', [PostController::class, 'index'])->name('post.index');
+//    Route::get('/posts/filter-date', [PostController::class, 'filterDate'])->name('post.filterDate');
     Route::get('/posts/qr', [PostController::class, 'qr'])->name('post.qr');
     Route::get('/posts/create', [PostController::class, 'create'])->name('post.create')->middleware(['verifyCategoriesCount','verifyTagsCount']);
     Route::post('/posts', [PostController::class, 'store'])->name('post.store')->middleware(['verifyCategoriesCount','verifyTagsCount']);

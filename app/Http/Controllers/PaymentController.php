@@ -13,6 +13,8 @@ class PaymentController extends Controller
     //
 
     private $gateway;
+
+    //env connection
     public function  __construct(){
         $this->gateway = Omnipay::create('PayPal_Rest');
         $this->gateway->setClientId(env('PAYPAL_CLIENT_ID'));
@@ -20,8 +22,8 @@ class PaymentController extends Controller
         $this->gateway->setTestMode(true);
     }
 
+    //goto paypal
     public function pay(Request $request, Post $post, ){
-
         try{
             $response=$this->gateway->purchase(array(
                 'amount'=>$request->amount,
@@ -39,6 +41,8 @@ class PaymentController extends Controller
             return  $th->getMessage();
         }
     }
+
+    //successful transaction
     public function success(Request $request, $id, $slug){
         if($request->input('paymentId') && $request->input('PayerID')){
             $transaction = $this->gateway->completePurchase(array(
@@ -62,7 +66,6 @@ class PaymentController extends Controller
                 $payment->save();
 
                 return redirect()->route('post',[$id,$slug]);
-//                return "Payment is Successfull. Your transaction Id is:".$arr['id'];
             }
             else{
                 return $response->getMessage();
@@ -73,7 +76,7 @@ class PaymentController extends Controller
         }
     }
 
-
+    //payment declined
     public function error(){
         return 'User declined the payment';
     }

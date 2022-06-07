@@ -33,7 +33,7 @@ Route::get('/privacy-policy',function(){
     return view('privacy-policy');
 });
 Route::get('/contact-us', [ContactController::class, 'contact'])->name('contact');
-Route::get('/autocomplete-search', [TypeaheadController::class, 'autocompleteSearch']);
+//Route::get('/autocomplete-search', [TypeaheadController::class, 'autocompleteSearch']);
 Route::post('/send-message', [ContactController::class, 'sendEmail'])->name('contact.send');
 Route::get('/search', [HomeController::class, 'search'])->name('search');
 //Route::get('/search-autocomplete', [HomeController::class, 'autocomplete'])->name('search.autocomplete');
@@ -41,7 +41,7 @@ Route::get('/searchAll', [HomeController::class, 'searchAll'])->name('search.all
 Route::get('/search/{category_id}/category/{slug}', [HomeController::class, 'searchCategory'])->name('search.category');
 Route::get('/search/year/{year}', [HomeController::class, 'searchYear'])->name('search.year');
 Route::get('/search/{tag}/tag/{slug}', [HomeController::class, 'searchTag'])->name('search.tag');
-Route::get('/post/{post}/title/{slug}', [PostController::class, 'show'])->name('post');
+Route::get('/post/{post}/title/{slug}', [PostController::class, 'show'])->name('post')->middleware(['verified']);
 
 
 Route::middleware('auth')->group(function(){

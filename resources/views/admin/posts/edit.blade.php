@@ -1,6 +1,6 @@
 <x-admin-master>
     @section('content')
-        <h1>Edit a Post</h1>
+        <h1>Edit Resource</h1>
         @if ($errors->any())
             <div class="alert alert-danger alert-dismissible fade show">
                 <ul>
@@ -153,7 +153,7 @@
 
                         <div class="form-group row">
                             <div class="col-sm-6 mb-2 mb-sm-0">
-                                <label for="dcc">DCC</label><input value="{{$post->dcc}}" type="text" class="form-control form-control-user" id="dcc" name="dcc"  placeholder="DCC" >
+                                <label for="lc">Library of Congress</label><input value="{{$post->lc}}" type="text" class="form-control form-control-user" id="lc" name="lc"  placeholder="LC" >
                             </div>
                             <div class="col-sm-6 mb-2 mb-sm-0">
                                 <label for="authornumber">Author number</label><input value="{{$post->authornumber}}" type="text" class="form-control form-control-user" id="authornumber" name="authornumber"  placeholder="Author no." >
@@ -168,7 +168,7 @@
 
                         <div class="form-group">
                             <label for="files">Upload images</label>
-                            <input type="file" name="images[]" id="" class="form-control" multiple accept="image/*" required>
+                            <input type="file" name="images[]" id="" class="form-control" multiple accept="image/*">
                         </div>
 
                         <div class="form-group">

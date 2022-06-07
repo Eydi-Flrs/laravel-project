@@ -30,11 +30,11 @@
 
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-    
+
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('home')}}">
             <div class="sidebar-brand-text mx-3"><img src="{{asset('/storage/images/profile/black.png')}}" height="50px" alt="">COS KMS</div>
-            
+
         </a>
 
         <!-- Divider -->
@@ -119,7 +119,7 @@
             </div>
             @endif
             @if(Route::is('post.qr'))
-                <div class="containe-fluid">
+                <div class="container-fluid">
                     <button class="btn btn-primary m-3" onclick="window.print()">print qr codes</button>
                 </div>
 

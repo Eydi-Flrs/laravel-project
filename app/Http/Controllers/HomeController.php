@@ -29,19 +29,13 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+
+    //homepage
     public function index()
     {
         $posts= Post::paginate(10);
         $categories=Category::all();
         $favorites= Favorite::where('user_id',Auth::id())->get();
-//        foreach ($favorites as $favorite){
-//            foreach ($posts->where('id',$favorite->post_id) as $post ){
-//                echo $post->title . ",";
-//            }
-//        }
-//        if ($favorites->isEmpty()){
-//            echo "alaws laman";
-//        }
 
         return view('home',['posts' => $posts])
             ->with('categories',$categories)
@@ -51,18 +45,13 @@ class HomeController extends Controller
             ->with('tags',Tag::all())
             ->with('allposts',Post::all());
     }
+
+    //about-us page
     public function aboutUs()
     {
         return(view('about-us'));
     }
 
-    public function autocomplete(Request $request){
-        $data=$request->all();
-        $query=$data['query'];
-        $filter_data=Post::select('title')->where('title','LIKE','%'.$query.'%')->get();
-        return response()->json($filter_data);
-
-    }
 
     public function search(Request $request){
         $posts= Post::paginate(10);
@@ -86,6 +75,9 @@ class HomeController extends Controller
         }
         if($request->course) {
             $posts= Post::where('course',$request->course)->paginate(10);
+        }
+        if($request->type) {
+            $posts= Post::where('type',$request->type)->paginate(10);
         }
         if($request->title && $request->author) {
             $posts= Post::where('title','LIKE','%'.$request->title.'%')
@@ -113,16 +105,17 @@ class HomeController extends Controller
                 ->paginate(10);
         }
 
-//        if($request->title && $request->author && $request->category_id && $request->year && $request->course) {
-//            $posts= Post::where('title','LIKE','%'.$request->title.'%')
-//                ->whereHas('authors',function ($query) use($author){
-//                    $query->where('name','LIKE','%'.$author.'%');
-//                })
-//                ->where('category_id',$request->category_id)
-//                ->where('year',$request->year)
-//                ->where('course',$request->course)
-//                ->paginate(10);
-//        }
+        if($request->title && $request->author && $request->category_id && $request->year && $request->course) {
+            $posts= Post::where('title','LIKE','%'.$request->title.'%')
+                ->whereHas('authors',function ($query) use($author){
+                    $query->where('name','LIKE','%'.$author.'%');
+                })
+                ->where('category_id',$request->category_id)
+                ->where('year',$request->year)
+                ->where('course',$request->course)
+                ->paginate(10);
+        }
+
 
         return view('home',['posts'=>$posts])
             ->with('categories',$categories)
@@ -137,14 +130,13 @@ class HomeController extends Controller
         $posts= Post::paginate(10);
         $categories=Category::all();
         $favorites= Favorite::where('user_id',Auth::id())->get();
-        $author=$request->search;
+        $author=$request->topNavSearch;
         $posts= Post::where('title','LIKE','%'.$request->topNavSearch.'%')
             ->orwhereHas('authors',function ($query) use($author){
                 $query->where('name','LIKE','%'.$author.'%');
             })
             ->orwhere('category_id',$request->topNavSearch)
             ->orwhere('year',$request->topNavSearch)
-            ->orwhere('course',$request->course)
             ->paginate(10);
 
         return view('home',['posts'=>$posts])

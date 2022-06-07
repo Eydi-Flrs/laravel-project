@@ -12,6 +12,7 @@ use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
 {
+    //show Users
     public function index(Request $request){
 //        $users=User::all();
         $users = User::select("*")
@@ -22,9 +23,13 @@ class UserController extends Controller
         return view('admin.users.index', compact('users'));
 //        return view('admin.users.index',['users'=>$users]);
     }
+
+    //goto User profile
     public function show(User $user){
         return view('admin.users.profile',['user'=>$user,'roles'=>Role::all()]);
     }
+
+    // update Users
     public function update(User $user,Request $request){
         $inputs =$request->validate([
             'firstname'=>['required','string','max:255'],
@@ -49,7 +54,6 @@ class UserController extends Controller
         $user->name =$request->firstname." ".$request->lastname;
         $user->update($inputs);
 
-
             session()->flash('user-updated-message','Profile Successfully Updated');
 
         $ActivityLog = new ActivityLog();
@@ -61,19 +65,8 @@ class UserController extends Controller
         $ActivityLog->save();
         return back();
     }
-//    public function destroy(User $user){
-//        $user->deleteAvatar();
-//        $user->delete();
-//        session()->flash('user-deleted','User has been deleted');
-//        $ActivityLog = new ActivityLog();
-//        $ActivityLog->user_id=Auth::id();
-//        $ActivityLog->user_name=Auth::user()->name;
-//        $ActivityLog->stat='DELETE';
-//        $ActivityLog->activity_description='User '.strtoupper($user->name).' deleted';
-//        $ActivityLog->date=Carbon::now('Asia/Manila')->toDateTimeString();
-//        $ActivityLog->save();
-//        return back();
-//    }
+
+    //attach admin role to user
     public function attach(User $user){
         $user->roles()->attach(request('role'));
         $ActivityLog = new ActivityLog();
@@ -85,6 +78,8 @@ class UserController extends Controller
         $ActivityLog->save();
         return back();
     }
+
+    //detach admin role to user
     public function detach(User $user){
         $user->roles()->detach(request('role'));
         $ActivityLog = new ActivityLog();
@@ -97,6 +92,7 @@ class UserController extends Controller
         return back();
     }
 
+    //delete or softdelete User
     public function destroy($id){
         $user=User::withTrashed()->where('id',$id)->firstOrFail();
 //        $this->authorize('delete',$post);
@@ -127,12 +123,13 @@ class UserController extends Controller
         return back();
     }
 
-
+    //goto archived Users
     public function archived(){
         $archived= User::onlyTrashed()->get();//onlytrashed
         return view('admin.users.archived',['users'=>$archived]);
     }
 
+    //restore archived Users
     public function restore($id,Request $request){
         $user=User::withTrashed()->where('id',$id)->firstOrFail();
         $user->restore();

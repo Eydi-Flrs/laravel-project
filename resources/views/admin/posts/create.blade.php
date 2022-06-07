@@ -1,6 +1,6 @@
 <x-admin-master>
     @section('content')
-        <h1>Create Post</h1>
+        <h1>Create Academic Resource</h1>
         @if ($errors->any())
             <div class="alert alert-danger alert-dismissible fade show">
                 <ul>
@@ -10,7 +10,8 @@
                 </ul>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
-                </button></div>
+                </button>
+            </div>
 
         @endif
         <div class="col-md-12">
@@ -22,7 +23,7 @@
 
                                         <table class="table table-sm table-responsive" >
                                             <thead>
-                                            <tr>
+                                                <tr>
                                                 <th class="col-sm-3">Lastname</th>
                                                 <th class="col-sm-3">Firstname</th>
                                                 <th class="col-sm-2">M.I</th>
@@ -44,7 +45,6 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-
 
                                     <div class="form-group row">
                                         <div class="col-sm-6">
@@ -139,14 +139,13 @@
 
                                     <div class="form-group row">
                                         <div class="col-sm-6 mb-2 mb-sm-0">
-                                            <label for="dcc">DCC</label><input type="text" class="form-control form-control-user" id="dcc" name="dcc"  placeholder="DCC" >
+                                            <label for="lc">Library Congress</label><input type="text" class="form-control form-control-user" id="dcc" name="lc"  placeholder="LC" >
                                         </div>
                                         <div class="col-sm-6 mb-2 mb-sm-0">
                                             <label for="authornumber">Author number</label><input type="text" class="form-control form-control-user" id="authornumber" name="authornumber"  placeholder="Author no." >
                                         </div>
 
                                     </div>
-
 
                                     <div class="form-group">
                                         <label for="pdf">Attach PDF File</label><input type="file" name="pdf" class="form-control-file" id="pdf" placeholder="Attach File" aria-describedby="" required accept="application/pdf">

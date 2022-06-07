@@ -10,7 +10,7 @@
 <body>
     <h1>Contact Message</h1>
     <p>Name:{{$details['name']}}</p>
-    <p>Name:{{$details['email']}}</p>
-    <p>Name:{{$details['msg']}}</p>
+    <p>Email:{{$details['email']}}</p>
+    <p>Msg:{{$details['msg']}}</p>
 </body>
 </html>

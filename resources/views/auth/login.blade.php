@@ -5,14 +5,14 @@
 <div class="container   ">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                
+            <div class="card shadow-lg">
+
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="row">
-                        <div class="col-4 mx-auto m-3 text-center">
+                        <div class="d-block mx-auto text-center">
                         <img src="{{asset('/storage/images/profile/loginlogo.png')}}" height="200px" alt="">
                         </div>
                         </div>
@@ -46,33 +46,37 @@
 
                         <div class="row mb-3">
                             <div class="col-md-6 offset-md-4 text-md-front ">
-                        @if (Route::has('password.request'))
+                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
-
-                              
-
-                        <div class="row mb-3">
-                            <div class="col-ms-6 offset-ms-3 text-ms-center">
-                                <button type="submit" class="btn btn-warning" style="width: 100%">
-                                    {{ __('Login') }}
-                                </button>
-
-                                
-                                 </div>
                             </div>
 
-                            <div class="col-md-6 offset-md-3 text-md-center ">
+                        <div class="row mb-0">
+                            <div class="col  text-center">
+                                <button type="submit" class="btn btn-warning" style="width: 70%;">
+                                    {{ __('Login') }}
+                                </button>
+                            </div>
+
+                            </div>
+
+
+
+
+
+                            <div class="col-md-6 offset-md-3 text-center ">
                                 @if (Route::has('register'))
-                                <a class="btn btn-link" href="{{ route('register') }}">
+                                    <a class="btn btn-link" href="{{ route('register') }}">
                                         {{ __('Create an Account') }}
                                     </a>
-                            @endif
+                                @endif
 
+                            </div>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>

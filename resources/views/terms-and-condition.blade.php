@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="card-body justify-content">
-                        <div style="text-align: justify; color: black; padding:1.25rem;" >
+                        <div style="text-align: justify; color: black; padding:1.25rem; background: white" >
 
                             <h2 style='margin-right:0cm;margin-left:0cm;font-size:24px;font-family:"Times New Roman",serif;font-weight:bold;margin-top:0cm;margin-bottom:13.5pt;background:white;'><strong><span style='font-size:15px;font-family:"Calibri",sans-serif;color:black;font-weight:normal;'>Terms and Conditions</span></strong></h2>
                             <p style='margin-right:0cm;margin-left:0cm;font-size:15px;font-family:"Calibri",sans-serif;margin-top:0cm;margin-bottom:15.0pt;line-height:107%;background:white;'><span style='font-size:15px;font-family:"Calibri",sans-serif;color:black;'>Welcome to COS KMS !</span></p>

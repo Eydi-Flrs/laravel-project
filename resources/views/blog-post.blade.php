@@ -4,24 +4,23 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Karla:wght@500&family=Roboto:ital,wght@1,300&display=swap" rel="stylesheet">
-        <div class="col-md-12">
-<div class="p-3 py-5">
+        <div class="p-3 py-5">
 
             <div  style="float: right; margin-top: 10px; ">
-                <img style="height: 10em;" src="{{$post->qr}}">
+                <img style="height: 10rem;" src="{{$post->qr}}">
             </div>
             <!-- Title -->
             <h1 class="my-2">{{$post->title}}</h1>
-        <h6>Views: {{$post->views}}</h6>
+            <h6>Views: {{$post->views}}</h6>
             <!-- Author -->
             <h6>Authors: @foreach($post->authors as $author)
                     {{$author->name."  ,"}}
             @endforeach</h6>
-        @if($post->type !='Book')
-        <h6>email: @foreach($post->authors as $author)
-                {{$author->email."  ,"}}
-        @endforeach</h6>
-        @endif
+            @if($post->type !='Book')
+            <h6>email: @foreach($post->authors as $author)
+                    {{$author->email."  ,"}}
+            @endforeach</h6>
+            @endif
 
             @if($post->type ==='Book')
             <h6>Vol: {{$post->volume}} Series: {{$post->series}} Publisher: {{$post->publisher}}</h6>
@@ -36,7 +35,7 @@
                     {{$tag->name."  ,"}}
                 @endforeach
             </h6>
-            @if(in_array($post->id,$paid))
+{{--            @if(in_array($post->id,$paid))--}}
 
 {{--                    <embed src="{{$post->pdf}}" width="800px" height="2100px" />--}}
                     <a href="{{route('pdf.download',$post->id)}}" class="btn btn-primary btn-user">
@@ -44,23 +43,24 @@
                     </a>
                <input type="text" value="{{$post->id}}" id="number" hidden>
 
-        @else
-        <form action="{{route('payment',$post->id)}}" method="post">
-            @csrf
-            <input type="hidden" name="amount" value="5" >
-            <input type="hidden" name="slug" value="{{$post->slug}}" >
-            Want to get a Copy? <button type="submit" class="btn btn-warning btn-user">
-            <i class="fa-brands fa-paypal fa-sm fa-fw mr-2 text-gray-400"> </i> Pay
-</button>
-        </form>
+{{--        @else--}}
+{{--        <form action="{{route('payment',$post->id)}}" method="post">--}}
+{{--            @csrf--}}
+{{--            <input type="hidden" name="amount" value="5" >--}}
+{{--            <input type="hidden" name="slug" value="{{$post->slug}}" >--}}
+{{--            Want to get a Copy? --}}
+{{--            <button type="submit" class="btn btn-warning btn-user">--}}
+{{--                <i class="fa-brands fa-paypal fa-sm fa-fw mr-2 text-gray-400"> </i> Pay--}}
+{{--            </button>--}}
+{{--        </form>--}}
 {{--        <div id="paypal-button-container"></div>--}}
-        @endif
+{{--        @endif--}}
 </div>
 <br>
-            <div class="card mb-4">
-                <div class="card-body">
+            <div class="card mb-4" >
+                <div class="card-body" >
                     <div>
-                        <div style="text-align: justify" >
+                        <div style="text-align: justify " >
                             <h1>Abstract</h1  >
                             <p>{{$post->abstract}}</p>
                         </div>
@@ -133,7 +133,7 @@
     <div style="width: 50rem; margin: auto;
     display: block; ">
             @foreach($post->images as $image)
-                <div class="card m-1" style="width:48rem; height:84rem; background-repeat:no-repeat; background-size: contain; background-image:url('{{$image->image}}') "></div>
+                <div class="card m-1" style="width: 100%; height:84rem; background-repeat:no-repeat; background-size: contain; background-image:url('{{$image->image}}') "></div>
             @endforeach
 </div>
 </div>

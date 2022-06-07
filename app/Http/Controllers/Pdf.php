@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class Pdf extends Controller
 {
+    // button for downloading pdf
     public function downloadpdf(Post $post){
         $myString=$post->pdf;
         $findMe='/';
@@ -15,7 +16,5 @@ class Pdf extends Controller
         $trim=substr($myString,$pos,$lenght0fString);
         $path='storage\\'.'pdf'.'\\'.$trim;
         return response()->download($path);
-//        return redirect()->route('post',$post->id);
-            //lilitaw nalang download button sa blogpost
     }
 }

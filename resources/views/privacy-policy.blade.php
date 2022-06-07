@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="card-body justify-content">
-        <div style="text-align: justify; color: black; padding:1.25rem;" >
+        <div style="text-align: justify; color: black; padding:1.25rem; background: white" >
             <p style='margin-top:0cm;margin-right:0cm;margin-bottom:13.5pt;margin-left:0cm;line-height:normal;font-size:15px;font-family:"Calibri",sans-serif;background:white;'><strong><span style="color:black;">Privacy Policy of College of Science Knowledge Management System</span></strong></p>
             <p style='margin-top:0cm;margin-right:0cm;margin-bottom:15.0pt;margin-left:0cm;line-height:normal;font-size:15px;font-family:"Calibri",sans-serif;background:white;'><span style="color:black;">College of Science Knowledge Management System operates the www.coskms.edu website, which provides the SERVICE.</span></p>
             <p style='margin-top:0cm;margin-right:0cm;margin-bottom:15.0pt;margin-left:0cm;line-height:normal;font-size:15px;font-family:"Calibri",sans-serif;background:white;'><span style="color:black;">This page is used to inform website visitors regarding our policies with the collection, use, and disclosure of Personal Information if anyone decided to use our Service, the COS KMS website.</span></p>

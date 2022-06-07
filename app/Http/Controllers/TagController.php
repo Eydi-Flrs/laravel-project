@@ -12,12 +12,16 @@ use Illuminate\Support\Str;
 
 class TagController extends Controller
 {
-    //
+    //show Tags
     public function index(){
         return view('admin.tags.index',['tags'=>Tag::all()]);
     }
+
+    //save Tags
     public function store(Request $request){
-        request()->validate(['name'=>['unique:tags','required','string','max:255']]);
+        request()->validate(['name'=>['unique:tags','required','string','max:255','regex:/^[a-zA-Z ]+$/']],[
+            'name.regex' => 'Category name must not have numerical value'
+        ]);
 
         Tag::create([
                 'name'=>Str::ucfirst(request('name')),
@@ -35,6 +39,7 @@ class TagController extends Controller
         return redirect()->route('tags.index');
     }
 
+    //delete Tag
     public function destroy(Tag $tag, Request $request){
         $postAll=Post::all();
         $postTrashed=Post::onlyTrashed()->get();
@@ -72,14 +77,14 @@ class TagController extends Controller
 
     }
 
+    //goto edit tags
     public function edit(Tag $tag){
-//        $this->authorize('view', $tag);
         return view('admin.tags.edit',['tag'=> $tag]);
 
     }
 
+    //update Tag
     public function update(Tag $tag,Request $request){
-
         $tag->name=Str::ucfirst(request('name'));
         $tag->slug=Str::of(request('name'))->slug('-');
         if($tag->isDirty('name')){

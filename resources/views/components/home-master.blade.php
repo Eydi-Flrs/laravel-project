@@ -41,7 +41,7 @@
             <form method="get" action="{{route('search.all')}}" class="row d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" autocomplete="off">
                 @csrf
                 <div class="input-group">
-                    <input type="text" id="search" name="search" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                    <input type="search"  name="topNavSearch" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                     <div class="input-group-append">
                         <button class="btn btn-warning" type="submit">
                             <i class="fas fa-search fa-sm"></i>
@@ -49,6 +49,7 @@
                     </div>
                 </div>
             </form>
+
         </li>
         </ul>
         <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -70,6 +71,7 @@
                     <a class="nav-link" href="{{route('admin.index')}}">Admin</a>
                 </li>
                 @endif
+
                 @if(Auth::check())
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -107,7 +109,6 @@
                 @endif
 
 
-
             </ul>
         </div>
     </div>
@@ -116,9 +117,6 @@
 <!-- Page Content -->
 @yield('homepage')
 <div class="container">
-
-
-
 
     @yield('profile')
 
@@ -143,7 +141,7 @@
         <div class="col-md-4">
 
             <!-- Categories Widget -->
-            @if(Route::is('home'))
+            @if(Route::is('home') || Route::is('search') || Route::is('search.all') || Route::is('search.tag') || Route::is('search.year') || Route::is('search.category'))
             <div id="accordion">
                 <div class="card">
                     <div class="card-header" id="headingOne">
@@ -222,23 +220,10 @@
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js">
 
-<script>
 
-</script>
-<script type="text/javascript">
-    var route = "{{ url('autocomplete-search') }}";
-    $('#search').typeahead({
-        source: function (query, process) {
-            return $.get(route, {
-                query: query
-            }, function (data) {
-                return process(data);
-            });
-        }
-    });
-</script>
+
+
 
 </body>
 

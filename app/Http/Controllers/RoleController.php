@@ -9,9 +9,12 @@ use Illuminate\Support\Str;
 
 class RoleController extends Controller
 {
+    //show Roles optional
     public function index(){
         return view('admin.roles.index',['roles'=>Role::all()]);
     }
+
+    //goto edit Role
     public function edit(Role $role){
 
         return view('admin.roles.edit',[
@@ -19,6 +22,8 @@ class RoleController extends Controller
             'permissions'=>Permission::all()
         ]);
     }
+
+    //update Role
     public function update(Role $role){
         $role->name=Str::ucfirst(request('name'));
         $role->slug=Str::of(request('name'))->slug('-');
@@ -31,6 +36,8 @@ class RoleController extends Controller
 
         return back();
     }
+
+    //store Role
     public function store(){
         request()->validate([
             'name'=>['required']
@@ -41,15 +48,20 @@ class RoleController extends Controller
         ]);
        return back();
     }
+
+    //attach Admin Role
     public function attach_permission(Role $role){
         $role->permissions()->attach(request('permission'));
         return back();
     }
+
+    //detach Admin Role
     public function detach_permission(Role $role){
         $role->permissions()->detach(request('permission'));
         return back();
     }
 
+    //delete Role
     public function destroy(Role $role){
 
         $role->delete();

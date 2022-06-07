@@ -31,6 +31,8 @@ class UserPolicy
     {
 //        if($user->userHasRole('admin')){
 //            return true;
+//        }elseif ($user->userHasRole('librarian')){
+//            return true;
 //        }
         //
         return $user->userHasRole('admin') ?: $user->id ==$model->id;

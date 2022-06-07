@@ -38,13 +38,12 @@
             <h1 class="h3 mb-2 text-gray-800">Manage Categories</h1>
             <div class="d-flex flex-row-reverse bd-highlight">
 
-
             </div>
         </div>
 
         <!-- DataTales Example -->
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-12">
 
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
@@ -60,8 +59,8 @@
                                         <input type="text" class="form-control" id="name" name="name" placeholder="name">
                                     </div>
                                     <button type="submit" class="btn btn-primary mb-2">add</button>
-
                                 </form>
+
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -72,7 +71,7 @@
                                             <th>Name</th>
                                             <th>Slug</th>
                                             <th>Post Count</th>
-                                            <th>Delete</th>
+                                           @if(auth()->user()->userHasRole('Admin')) <th>Delete</th> @endif
                                         </tr>
                                         </thead>
                                         <tfoot>
@@ -81,21 +80,25 @@
                                             <th>Name</th>
                                             <th>Slug</th>
                                             <th>Post Count</th>
-                                            <th>Delete</th>
+                                            @if(auth()->user()->userHasRole('Admin')) <th>Delete</th> @endif
                                         </tr>
                                         </tfoot>
                                         <tbody>
                                         @foreach($categories as $category)
                                             <tr>
                                                 <td>{{$category->id}}</td>
-                                                <td><a href="{{route('categories.edit',$category->id)}}">{{$category->name}}</a></td>
+                                                <td><a   @if(auth()->user()->userHasRole('Admin'))style="pointer-events: none;cursor: default" @endif href="{{route('categories.edit',$category->id)}}">{{$category->name}}</a></td>
                                                 <td>{{$category->slug}}</td>
                                                 <td>{{$category->posts->count()}}</td>
+
+                                                @if(auth()->user()->userHasRole('Admin'))
                                                 <td>
                                                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal-{{$category->id}}">
                                                         Delete
                                                     </button>
                                                 </td>
+                                                @endif
+
                                                 <!-- Modal -->
                                                 <div class="modal fade" id="deleteModal-{{$category->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog" role="document">
@@ -126,7 +129,6 @@
                                 </div>
                             </div>
                         </div>
-
                 </div>
             </div>
 

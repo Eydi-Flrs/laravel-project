@@ -3,7 +3,6 @@
             <!-- Page Heading -->
             <!-- Content Row -->
             <div class="row">
-
                 <!-- Card Example -->
                 <a class="col-sm-6  mb-4" href="{{route('users.index')}}">
 
@@ -49,17 +48,16 @@
                                             <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{$categories->count()}}</div>
                                         </div>
                                     </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
                 </a>
 
 
                 <!-- Pending Requests Card Example -->
                 <a class="col-sm-6  mb-4" href="{{route('users.index')}}">
-
                     <div class="card border-left-warning shadow h-100 py-2">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
@@ -69,14 +67,12 @@
                                         {{$activeUser}}
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
-
                 </a>
-            </div>
 
+            </div>
 
             <!-- Content Row -->
 
@@ -107,14 +103,14 @@
                                             <div class="card-body">
                                                 @foreach($categories as $category)
                                                     <span class="mr-2">
-                                                  <i class="fas fa-circle" id="{{$category->name}}" ></i> {{$category->name}}
+                                                            <i class="fas fa-circle" id="{{$category->name}}" ></i> {{$category->name}}
                                                 </span>
                                                 @endforeach
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                        </div>
+                            </div>
                         </div>
                      </div>
                 </div>

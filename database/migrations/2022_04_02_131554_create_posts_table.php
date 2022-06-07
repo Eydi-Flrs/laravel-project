@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            $table->string('key')->unique();
             $table->foreignId('user_id');
             $table->foreignId('category_id');
             $table->string('title');
@@ -29,7 +30,7 @@ return new class extends Migration
             $table->string('series')->nullable();
             $table->string('publisher')->nullable();
             $table->string('isbn')->nullable();
-            $table->string('dcc')->nullable();
+            $table->string('lc')->nullable();
             $table->string('authornumber')->nullable();
             $table->text('qr')->nullable();
             $table->text('abstract');

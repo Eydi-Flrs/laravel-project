@@ -10592,7 +10592,7 @@ a:focus {
 .bg-register-image {
     background-image: url("/storage/images/profile/register.png");
     background-position: center;
-    background-size: auto 90%;
+    background-size: auto 60%;
     background-color: #ffe9aa;
 
     background-repeat: no-repeat;

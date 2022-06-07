@@ -8,9 +8,12 @@ use Illuminate\Support\Str;
 
 class PermissionController extends Controller
 {
+    //permission page optional functionality
     public function index(){
         return view('admin.permissions.index',['permissions'=>Permission::all()]);
     }
+
+    //add Permission
     public function store(){
         request()->validate([
             'name'=>['required']
@@ -21,9 +24,13 @@ class PermissionController extends Controller
         ]);
         return back();
     }
+
+    //goto update Permission Page
     public function edit(Permission $permission){
         return view('admin.permissions.edit',['permission'=>$permission]);
     }
+
+    //update Permission
     public function update(Permission $permission){
         $permission->name=Str::ucfirst(request('name'));
         $permission->slug=Str::of(request('name'))->slug('-');
@@ -37,6 +44,8 @@ class PermissionController extends Controller
 
         return back();
     }
+
+    //delete Permission
     public function destroy(Permission $permission){
         $permission->delete();
         return back();

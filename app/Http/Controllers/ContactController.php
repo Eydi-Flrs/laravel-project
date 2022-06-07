@@ -8,11 +8,13 @@ use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
 {
+    //goto contactus view
     public function contact()
     {
         return view('admin.contact-us');
     }
 
+    //send Mail
     public function sendEmail(Request $request){
         $details=[
             'name'=>$request->name,

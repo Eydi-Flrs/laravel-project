@@ -61,7 +61,8 @@
                                                                checked
                                                             @endif
                                                             @endforeach
-                                                        ></td>
+                                                        >
+                                                    </td>
                                                     <td>{{$permission->id}}</td>
                                                     <td>{{$permission->name}}</td>
                                                     <td>{{$permission->slug}}</td>
