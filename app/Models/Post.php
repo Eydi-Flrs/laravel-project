@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Support\Facades\File;
 
 class Post extends Model
 {
@@ -48,7 +49,7 @@ class Post extends Model
 
     public function pdf():Attribute{
         return Attribute::make(
-            set:fn($value)=>substr($value,4),
+        //set:fn($value)=>substr($value,4),
             get: fn($value)=>asset("/storage/pdf/".$value),
         );
 
@@ -64,9 +65,9 @@ class Post extends Model
         $lenght0fString=strlen($myString);
         $pos=strrpos($myString, $findMe)+1;
         $trim=substr($myString,$pos,$lenght0fString);
-        $pdfPath='pdf/'.$trim;
+        $pdfPath='storage/pdf/'.$trim;
 //            dd($pdfPath);
-        Storage::delete($pdfPath);
+        File::delete($pdfPath);
     }
 
     public function deletePdfImages(){
@@ -77,8 +78,9 @@ class Post extends Model
             $lenght0fString = strlen($myString);
             $pos = strrpos($myString, $findMe) + 1;
             $trim = substr($myString, $pos, $lenght0fString);
-            $pdfPath = 'pdf_images/' . $trim;
-            Storage::delete($pdfPath);
+            Image::where('image',$trim)->delete();
+            $pdfPath = 'storage/pdf_images/' . $trim;
+            File::delete($pdfPath);
         }
     }
 

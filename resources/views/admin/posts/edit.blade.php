@@ -34,20 +34,20 @@
                             </thead>
                             <tbody>
                             @foreach($post->authors as $author)
-                            <tr>
-                                <td class="col-sm-3"><input value="{{$author->lastname}}" type="text" class="form-control form-control-user @error('lastname') is-invalid @enderror" id="lastname" name="lastname[]" placeholder="Last Name" required></td>
-                                <td class="col-sm-3"><input value="{{$author->firstname}}"type="text" class="form-control form-control-user @error('firstname') is-invalid @enderror" id="firstname" name="firstname[]" placeholder="First Name" required></td>
-                                <td class="col-sm-2"><input value="{{$author->middle_initial}}" type="text" class="form-control form-control-user" id="middle_initial" name="middle_initial[]" placeholder="Middle Initial"></td>
-                                <td class="col-sm-1"><input value="{{$author->suffix}}" type="text" class="form-control form-control-user" id="suffix"  name="suffix[]" placeholder="Suffix"></td>
-                                <td class="col-sm-3"><input value="{{$author->email}}"type="email" class="form-control form-control-user" id="email" name="email[]" placeholder="Email"></td>
-                                <td>
-                                    @if($loop->first)
-                                        <a href="javascript:void(0)" class="btn btn-primary addRow">+</a>
-                                    @else
-                                        <a href='javascript:void(0)' class='btn btn-danger deleteRow'>-</a>
-                                    @endif
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td class="col-sm-3"><input value="{{$author->lastname}}" type="text" class="form-control form-control-user @error('lastname') is-invalid @enderror" id="lastname" name="lastname[]" placeholder="Last Name" required></td>
+                                    <td class="col-sm-3"><input value="{{$author->firstname}}"type="text" class="form-control form-control-user @error('firstname') is-invalid @enderror" id="firstname" name="firstname[]" placeholder="First Name" required></td>
+                                    <td class="col-sm-2"><input value="{{$author->middle_initial}}" type="text" class="form-control form-control-user" id="middle_initial" name="middle_initial[]" placeholder="Middle Initial"></td>
+                                    <td class="col-sm-1"><input value="{{$author->suffix}}" type="text" class="form-control form-control-user" id="suffix"  name="suffix[]" placeholder="Suffix"></td>
+                                    <td class="col-sm-3"><input value="{{$author->email}}"type="email" class="form-control form-control-user" id="email" name="email[]" placeholder="Email"></td>
+                                    <td>
+                                        @if($loop->first)
+                                            <a href="javascript:void(0)" class="btn btn-primary addRow">+</a>
+                                        @else
+                                            <a href='javascript:void(0)' class='btn btn-danger deleteRow'>-</a>
+                                        @endif
+                                    </td>
+                                </tr>
                             @endforeach
                             </tbody>
                         </table>
@@ -85,7 +85,7 @@
 
                             <div class="col-sm-4 mb-3 mb-sm-0">
                                 <label for="category_id">Categories</label>
-                                <select class="form-select" aria-label="Default select example" id="category_id" name="category_id" required>
+                                <select class="form-select" aria-label="Default select example" id="category_id" name="category_id">
                                     @foreach($categories as $category)
                                         <option @if($post->category_id==$category->id) selected @endif value="{{$category->id}}">{{$category->name}}</option>
                                     @endforeach
@@ -100,14 +100,14 @@
                                                 @if(isset($post))
                                                 @if($post->hasTag($tag->id)) selected @endif
                                                 @endif
-                                            value="{{$tag->id}}">{{$tag->name}}</option>
+                                                value="{{$tag->id}}">{{$tag->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             @endif
-                            <div class="col-sm-4">
-                                <label for="pages">Pages</label><input value="{{$post->pages}}" type="number" class="form-control form-control-user" id="pages" name="pages" placeholder="Pages">
-                            </div>
+                            {{--                            <div class="col-sm-4">--}}
+                            {{--                                <label for="pages">Pages</label><input value="{{$post->pages}}" type="number" class="form-control form-control-user" id="pages" name="pages" placeholder="Pages">--}}
+                            {{--                            </div>--}}
                         </div>
                         <h3>Date</h3>
                         <div class="form-group row">
@@ -174,8 +174,8 @@
                         <div class="form-group">
                             <label for="abstract">Abstract</label>
                             <textarea  name="abstract" id="body" class="form-control" cols="30" rows="10" required>{{$post->abstract}}</textarea>
-{{--                            <input value="{{$post->abstract}}" id="abstract" type="hidden" name="abstract"  required>--}}
-{{--                            <trix-editor input="abstract" ></trix-editor>--}}
+                            {{--                            <input value="{{$post->abstract}}" id="abstract" type="hidden" name="abstract"  required>--}}
+                            {{--                            <trix-editor input="abstract" ></trix-editor>--}}
                         </div>
 
                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -194,13 +194,13 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.js" integrity="sha512-/1nVu72YEESEbcmhE/EvjH/RxTg62EKvYWLG3NdeZibTCuEtW5M4z3aypcvsoZw03FAopi94y04GhuqRU9p+CQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         {{--    tag selector--}}
 
-{{--        <script src="https://code.jquery.com/jquery-3.3.1.min.js"--}}
-{{--                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="--}}
-{{--                crossorigin="anonymous"></script>--}}
+        {{--        <script src="https://code.jquery.com/jquery-3.3.1.min.js"--}}
+        {{--                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="--}}
+        {{--                crossorigin="anonymous"></script>--}}
 
-{{--        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"--}}
-{{--                integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="--}}
-{{--                crossorigin="anonymous"></script>--}}
+        {{--        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"--}}
+        {{--                integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="--}}
+        {{--                crossorigin="anonymous"></script>--}}
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
 

@@ -1,6 +1,6 @@
 <x-home-master>
     @section('contactus')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Karla:wght@500&family=Roboto:ital,wght@1,300&display=swap" rel="stylesheet">
@@ -15,58 +15,58 @@
             <!-- Author -->
             <h6>Authors: @foreach($post->authors as $author)
                     {{$author->name."  ,"}}
-            @endforeach</h6>
+                @endforeach</h6>
             @if($post->type !='Book')
-            <h6>email: @foreach($post->authors as $author)
-                    {{$author->email."  ,"}}
-            @endforeach</h6>
+                <h6>email: @foreach($post->authors as $author)
+                        {{$author->email."  ,"}}
+                    @endforeach</h6>
             @endif
-
+            <h6>Pages: {{$post->pages}}</h6>
             @if($post->type ==='Book')
-            <h6>Vol: {{$post->volume}} Series: {{$post->series}} Publisher: {{$post->publisher}}</h6>
-            <h6>ISBN: {{$post->isbn}} DCC: {{$post->dcc}} Author No.: {{$post->authornumber}}</h6>
+                <h6>Vol: {{$post->volume}} Series: {{$post->series}} Publisher: {{$post->publisher}}</h6>
+                <h6>ISBN: {{$post->isbn}} DCC: {{$post->dcc}} Author No.: {{$post->authornumber}}</h6>
             @endif
-    <!-- Date/Time -->
+        <!-- Date/Time -->
             <p>Published Date: {{$date}}</p>
             <hr>
             <h6>Category: {{$post->category->name}}</h6>
-            <h6>Tags:
+            <h6>Keywords:
                 @foreach($post->tags as $tag)
                     {{$tag->name."  ,"}}
                 @endforeach
             </h6>
-{{--            @if(in_array($post->id,$paid))--}}
+            {{--            @if(in_array($post->id,$paid))--}}
 
-{{--                    <embed src="{{$post->pdf}}" width="800px" height="2100px" />--}}
-                    <a href="{{route('pdf.download',$post->id)}}" class="btn btn-primary btn-user">
-                        Download Pdf File
-                    </a>
-               <input type="text" value="{{$post->id}}" id="number" hidden>
+            {{--                    <embed src="{{$post->pdf}}" width="800px" height="2100px" />--}}
+            <a href="{{route('pdf.download',$post->id)}}" class="btn btn-primary btn-user">
+                Download Pdf File ({{$post->pdf_size}})
+            </a>
+            <input type="text" value="{{$post->id}}" id="number" hidden>
 
-{{--        @else--}}
-{{--        <form action="{{route('payment',$post->id)}}" method="post">--}}
-{{--            @csrf--}}
-{{--            <input type="hidden" name="amount" value="5" >--}}
-{{--            <input type="hidden" name="slug" value="{{$post->slug}}" >--}}
-{{--            Want to get a Copy? --}}
-{{--            <button type="submit" class="btn btn-warning btn-user">--}}
-{{--                <i class="fa-brands fa-paypal fa-sm fa-fw mr-2 text-gray-400"> </i> Pay--}}
-{{--            </button>--}}
-{{--        </form>--}}
-{{--        <div id="paypal-button-container"></div>--}}
-{{--        @endif--}}
-</div>
-<br>
-            <div class="card mb-4" >
-                <div class="card-body" >
-                    <div>
-                        <div style="text-align: justify " >
-                            <h1>Abstract</h1  >
-                            <p>{{$post->abstract}}</p>
-                        </div>
+            {{--        @else--}}
+            {{--        <form action="{{route('payment',$post->id)}}" method="post">--}}
+            {{--            @csrf--}}
+            {{--            <input type="hidden" name="amount" value="5" >--}}
+            {{--            <input type="hidden" name="slug" value="{{$post->slug}}" >--}}
+            {{--            Want to get a Copy? --}}
+            {{--            <button type="submit" class="btn btn-warning btn-user">--}}
+            {{--                <i class="fa-brands fa-paypal fa-sm fa-fw mr-2 text-gray-400"> </i> Pay--}}
+            {{--            </button>--}}
+            {{--        </form>--}}
+            {{--        <div id="paypal-button-container"></div>--}}
+            {{--        @endif--}}
+        </div>
+        <br>
+        <div class="card mb-4" >
+            <div class="card-body" >
+                <div>
+                    <div style="text-align: justify " >
+                        <h1>Abstract</h1  >
+                        <p>{{$post->abstract}}</p>
                     </div>
                 </div>
             </div>
+        </div>
 
 
 
@@ -130,12 +130,12 @@
         </script>
     @endsection
     @section('pdfview')
-    <div style="width: 50rem; margin: auto;
+        <div style="width: 50rem; margin: auto;
     display: block; ">
             @foreach($post->images as $image)
                 <div class="card m-1" style="width: 100%; height:84rem; background-repeat:no-repeat; background-size: contain; background-image:url('{{$image->image}}') "></div>
             @endforeach
-</div>
-</div>
-        @endsection
+        </div>
+        </div>
+    @endsection
 </x-home-master>

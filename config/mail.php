@@ -91,7 +91,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'tupkms2022@gamil.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'tup@coskms.online'),
         'name' => env('MAIL_FROM_NAME', 'COS KMS'),
     ],
 

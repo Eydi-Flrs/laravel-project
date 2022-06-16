@@ -12,6 +12,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="{{asset('vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <!-- Custom styles for this template -->
     <link href="{{asset('css/blog-home.css')}}" rel="stylesheet">
@@ -41,7 +42,7 @@
             <form method="get" action="{{route('search.all')}}" class="row d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" autocomplete="off">
                 @csrf
                 <div class="input-group">
-                    <input type="search"  name="topNavSearch" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                    <input type="search"  name="topNavSearch" class="form-control bg-light border-0 small search" id="search" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                     <div class="input-group-append">
                         <button class="btn btn-warning" type="submit">
                             <i class="fas fa-search fa-sm"></i>
@@ -49,6 +50,7 @@
                     </div>
                 </div>
             </form>
+
 
         </li>
         </ul>
@@ -194,6 +196,7 @@
 
 
             @yield('top-views')
+            @yield('top-downloads')
 
 
         </div>
@@ -219,7 +222,9 @@
 {{--<script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>--}}
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+{{--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>--}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 
 
 

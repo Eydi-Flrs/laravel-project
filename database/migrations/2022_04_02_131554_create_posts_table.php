@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('course');
             $table->string('pages')->nullable();
             $table->string('pdf');
+            $table->string('pdf_size');
             $table->string('month')->nullable();
             $table->string('day')->nullable();
             $table->string('year');
@@ -36,6 +37,7 @@ return new class extends Migration
             $table->text('abstract');
             $table->string('type');
             $table->integer('views')->default('0');
+            $table->integer('downloads')->default('0');
             $table->timestamps();
         });
     }

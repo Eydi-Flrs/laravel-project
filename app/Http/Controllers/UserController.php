@@ -42,19 +42,23 @@ class UserController extends Controller
         if(request('password')!=""){
             $this->validate( $request,['password'=>'same:password_confirmation',
                 Password::min(8)->letters()->numbers()->mixedCase()
-                ]);
+            ]);
             $inputs['password']=$request->password;
         }
 
         if(request('avatar')){
             $user->deleteAvatar();
-            $inputs['avatar'] = $request->avatar->store('images');
+            $file=$request->file('avatar');
+            $filename=$request->email.$file->getClientOriginalName();
+            $file->move('storage/images/',$filename);
+            $inputs['avatar'] = $filename;
+//            $inputs['avatar'] = $request->avatar->store('images');
         }
 //        $user->remember_token=Carbon::now();
         $user->name =$request->firstname." ".$request->lastname;
         $user->update($inputs);
 
-            session()->flash('user-updated-message','Profile Successfully Updated');
+        session()->flash('user-updated-message','Profile Successfully Updated');
 
         $ActivityLog = new ActivityLog();
         $ActivityLog->user_id=Auth::id();

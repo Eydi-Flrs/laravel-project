@@ -11,6 +11,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\File;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -82,10 +83,9 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function Avatar():Attribute{
         return Attribute::make(
-            set:fn($value)=>substr($value,7),
+//            set:fn($value)=>substr($value,7),
             get: fn($value)=>asset("storage/images/".$value),
         );
-
     }
 
     public function deleteAvatar(){
@@ -94,9 +94,9 @@ class User extends Authenticatable implements MustVerifyEmail
         $lenght0fString=strlen($myString);
         $pos=strrpos($myString, $findMe)+1;
         $trim=substr($myString,$pos,$lenght0fString);
-        $avatarPath='images/'.$trim;
+        $avatarPath='storage/images/'.$trim;
 //            dd($avatarPath);
-        Storage::delete($avatarPath);
+        File::delete($avatarPath);
     }
 
 

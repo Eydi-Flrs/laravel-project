@@ -12,6 +12,7 @@ use App\Models\Tag;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
@@ -28,9 +29,9 @@ class PostController extends Controller
 
     //show all QR
     public function qr(){
-    //$posts =auth()->user()->posts()->paginate(5);
+        //$posts =auth()->user()->posts()->paginate(5);
         $posts=Post::all();
-    //dd(route('post',1));
+        //dd(route('post',1));
         return view('admin.posts.qr',['posts'=>$posts]);
     }
 
@@ -41,9 +42,9 @@ class PostController extends Controller
         $paid= array();
         $count=0;
         foreach($paidPosts as $paidPost){
-               $paid[$count]=$paidPost->post_id;
-               $count++;
-            }
+            $paid[$count]=$paidPost->post_id;
+            $count++;
+        }
         $date="";
         if($post->month !='none' && $post->day !='none'){
             $date.=$post->month.",".$post->day.",";
@@ -64,28 +65,35 @@ class PostController extends Controller
     //save Post
     public function store(Request $request){
 
-       $inputs= $request->validate([
-           'title'=>['required','string','max:255'],
-           'course'=>['required','string','max:255'],
-           'category_id'=>['required','string','max:255'],
-           'month'=>['nullable','string','max:255'],
-           'day'=>['nullable','string','max:255'],
-           'year'=>['required','string','max:255'],
-           'pages'=>['nullable','string','max:255'],
-           'pdf'=>['required','file'],
-           'volume'=>['nullable','string','max:255'],
-           'series'=>['nullable','string','max:255'],
-           'publisher'=>['nullable','string','max:255'],
-           'isbn'=>['nullable','string','max:255'],
-           'lc'=>['nullable','string','max:255'],
-           'authornumber'=>['nullable','string','max:255'],
-           'qr'=>['string','max:255'],
-           'abstract'=>['required','string','max:2000'],
-           'type'=>['required','string','max:255']
-       ]);
+        $inputs= $request->validate([
+            'title'=>['required','string','max:255'],
+            'course'=>['required','string','max:255'],
+            'category_id'=>['string','max:255'],
+            'month'=>['nullable','string','max:255'],
+            'day'=>['nullable','string','max:255'],
+            'year'=>['required','string','max:255'],
+            //'pages'=>['nullable','string','max:255'],
+            'pdf'=>['required','file'],
+            'volume'=>['nullable','string','max:255'],
+            'series'=>['nullable','string','max:255'],
+            'publisher'=>['nullable','string','max:255'],
+            'isbn'=>['nullable','string','max:255'],
+            'lc'=>['nullable','string','max:255'],
+            'authornumber'=>['nullable','string','max:255'],
+            'qr'=>['string','max:255'],
+            'abstract'=>['required','string','max:2000'],
+            'type'=>['required','string','max:255']
+        ]);
 
-       if ($request->pdf){
-            $inputs['pdf'] = $request->pdf->store('pdf');
+        if ($request->pdf){
+
+            $file=$request->file('pdf');
+            $filename=$file->getClientOriginalName();
+            $file->move('storage/pdf/',$filename);
+            $inputs['pdf'] = $filename;
+
+            $size=File::size('storage/pdf/'.$filename);
+            $inputs['pdf_size']=round($size / 1024 / 1024,4) . 'MB';
         }
         $inputs['key']=$request->title.$request->year;
 
@@ -95,13 +103,13 @@ class PostController extends Controller
         $id=[];
         for($i=0;$i<$num;$i++){
             $data[$i]=[
-                   'lastname'=>$request->lastname[$i],
-                   'firstname'=>$request->firstname[$i],
-                   'middle_initial'=>$request->middle_initial[$i],
-                   'suffix'=>$request->suffix[$i],
-                   'name'=>$request->firstname[$i]." ".$request->lastname[$i],
-                   'email'=>$request->email[$i],
-                ];
+                'lastname'=>$request->lastname[$i],
+                'firstname'=>$request->firstname[$i],
+                'middle_initial'=>$request->middle_initial[$i],
+                'suffix'=>$request->suffix[$i],
+                'name'=>$request->firstname[$i]." ".$request->lastname[$i],
+                'email'=>$request->email[$i],
+            ];
             $inputs['key'].= $request->firstname[$i].$request->lastname[$i];
             $id[$i]=$author->insertGetId($data[$i]);
         }
@@ -124,29 +132,31 @@ class PostController extends Controller
             else if($request->month!='none'){
                 $date.=$request->month.','.$request->year;
             }
-            $date.=$request->year;
-
+            else{
+                $date.=$request->year;
+            }
             $authors="";
             foreach($post->authors as $author) {
                 $authors.=$author->name."| ";
             }
-            $pages="";
-            if($request->pages){
-                $data = "title: ".$request->title."  date: ".$date." author:".$authors." pages:".$request->pages."  visit this link: (".$link.")";
-            }
-            else{
-                $data = "title: ".$request->title."  date: ".$date." author:".$authors."  visit this link: (".$link.")";
-            }
+            //$pages="";
+            //if($request->pages){
+            //  $data = "title: ".$request->title."  date: ".$date." author:".$authors." pages:".$request->pages."  visit this link: (".$link.")";
+            //}
+            //else{
+            $data = "title: ".$request->title."  date: ".$date." author:".$authors."  visit this link: (".$link.")";
+            //}
 
             $url="https://chart.googleapis.com/chart?cht=qr&chs={$width}x{$height}&chl={$data}";
             $post->qr=$url;
-            $post->save();
+
 
             if($request->has('images')){
                 $count=1;
                 foreach ($request->file('images') as $image){
                     $imageName=$inputs['title'].'-image-'.'page-'.$count.'.'.$image->extension();
-                    $image->storeAs('pdf_images',$imageName);
+//                $image->storeAs('pdf_images',$imageName);
+                    $image->move('storage/pdf_images/',$imageName);
 
                     Image::create([
                         'post_id'=>$post->id,
@@ -155,8 +165,10 @@ class PostController extends Controller
                     $count++;
                 }
             }
+            $post->pages=$count-1;
+            $post->save();
 
-            session()->flash('post-created-message','post '.strtoupper($inputs['title']).' was created');
+            session()->flash('post-created-message','Post '.strtoupper($inputs['title']).' was created');
 
             $ActivityLog = new ActivityLog();
             $ActivityLog->user_id=Auth::id();
@@ -166,11 +178,11 @@ class PostController extends Controller
             $ActivityLog->date=Carbon::now('Asia/Manila')->toDateTimeString();
             $ActivityLog->save();
         }else{
-            session()->flash('message','You insert a duplicate academic resource');
+            session()->flash('message','You insert a duplicate Academic Resource');
         }
 
 
-       return redirect()->route('post.index');
+        return redirect()->route('post.index');
     }
 
     //goto update post page
@@ -192,7 +204,7 @@ class PostController extends Controller
             $ActivityLog->activity_description='Post '.strtoupper($post->title).' deleted';
             $ActivityLog->date=Carbon::now('Asia/Manila')->toDateTimeString();
             $ActivityLog->save();
-           session()->flash('message','post was deleted');
+            session()->flash('message','Post was deleted');
         }
         else{
             $post->delete();
@@ -219,7 +231,7 @@ class PostController extends Controller
     public function restore($id,Request $request){
         $post=Post::withTrashed()->where('id',$id)->firstOrFail();
         $post->restore();
-        $request->session()->flash('post-updated-message','post restored successfully');
+        $request->session()->flash('post-updated-message','Post restored successfully');
         $ActivityLog = new ActivityLog();
         $ActivityLog->user_id=Auth::id();
         $ActivityLog->user_name=Auth::user()->name;
@@ -235,11 +247,11 @@ class PostController extends Controller
         $inputs= $request->validate([
             'title'=>['required','string','max:255'],
             'course'=>['required','string','max:255'],
-            'category_id'=>['required','string','max:255'],
+            'category_id'=>['string','max:255'],
             'month'=>['nullable','string','max:255'],
             'day'=>['nullable','string','max:255'],
             'year'=>['required','string','max:255'],
-            'pages'=>['nullable','string','max:255'],
+            // 'pages'=>['nullable','string','max:255'],
             'pdf'=>['file'],
             'volume'=>['nullable','string','max:255'],
             'series'=>['nullable','string','max:255'],
@@ -248,28 +260,21 @@ class PostController extends Controller
             'lc'=>['nullable','string','max:255'],
             'authornumber'=>['nullable','string','max:255'],
             'qr'=>['string','max:255'],
-            'abstract'=>['required','string','max:1000'],
+            'abstract'=>['required','string','max:2000'],
             'type'=>['required','string','max:255']
         ]);
 
         if ($request->pdf){
             $post->deletePdf();
-            $inputs['pdf'] = $request->pdf->store('pdf');
-        }
-        if($request->has('images')){
-            $post->deletePdfImages();
-            $count=1;
-            foreach ($request->file('images') as $image){
-                $imageName=$inputs['title'].'-image-'.'page-'.$count.'.'.$image->extension();
-                $image->storeAs('pdf_images',$imageName);
+            $file=$request->file('pdf');
+            $filename=$file->getClientOriginalName();
+            $file->move('storage/pdf/',$filename);
+            $inputs['pdf'] = $filename;
 
-                Image::create([
-                    'post_id'=>$post->id,
-                    'image'=>$imageName
-                ]);
-                $count++;
-            }
+            $size=File::size('storage/pdf/'.$filename);
+            $inputs['pdf_size']=round($size / 1024 / 1024,4) . 'MB';
         }
+
 
         $inputs['key']=$request->title.$request->year;
 
@@ -304,23 +309,42 @@ class PostController extends Controller
         }
         else if($request->month!='none'){
             $date.=$request->month.','.$request->year;
+        }else{
+            $date.=$request->year;
         }
-        $date.=$request->year;
 
         $authors="";
         foreach($post->authors as $author) {
             $authors.=$author->name."| ";
         }
 
-        if($request->pages){
-            $data = "title: ".$request->title."  date: ".$date." author:".$authors." pages:".$request->pages."  visit this link: (".$link.")";
-        }
-        else{
-            $data = "title: ".$request->title."  date: ".$date." author:".$authors."  visit this link: (".$link.")";
-        }
+        // if($request->pages){
+        //   $data = "title: ".$request->title."  date: ".$date." author:".$authors." pages:".$request->pages."  visit this link: (".$link.")";
+        //}
+        //else{
+        $data = "title: ".$request->title."  date: ".$date." author:".$authors."  visit this link: (".$link.")";
+        //}
 
         $url="https://chart.googleapis.com/chart?cht=qr&chs={$width}x{$height}&chl={$data}";
         $post->qr=$url;
+
+
+        if($request->has('images')){
+            $post->deletePdfImages();
+            $count=1;
+            foreach ($request->file('images') as $image){
+                $imageName=$inputs['title'].'-image-'.'page-'.$count.'.'.$image->extension();
+//                $image->storeAs('pdf_images',$imageName);
+                $image->move('storage/pdf_images/',$imageName);
+
+                Image::create([
+                    'post_id'=>$post->id,
+                    'image'=>$imageName
+                ]);
+                $count++;
+            }
+        }
+        $post->pages=$count-1;
         $post->save();
 
 
@@ -332,7 +356,7 @@ class PostController extends Controller
         $ActivityLog->date=Carbon::now('Asia/Manila')->toDateTimeString();
         $ActivityLog->save();
 
-        session()->flash('post-updated-message','post '.strtoupper($inputs['title']).' was updated');
+        session()->flash('post-updated-message','Post '.strtoupper($inputs['title']).' was updated');
         return redirect()->route('post.index');
     }
 
@@ -357,7 +381,7 @@ class PostController extends Controller
                     $ActivityLog->activity_description='Post '.strtoupper($post->title).' deleted';
                     $ActivityLog->date=Carbon::now('Asia/Manila')->toDateTimeString();
                     $ActivityLog->save();
-                    session()->flash('message', 'post was deleted');
+                    session()->flash('message', 'Post was deleted');
                 } else {
                     $post->delete();
                     $ActivityLog = new ActivityLog();
@@ -367,7 +391,7 @@ class PostController extends Controller
                     $ActivityLog->activity_description='Post '.strtoupper($post->title).' archived';
                     $ActivityLog->date=Carbon::now('Asia/Manila')->toDateTimeString();
                     $ActivityLog->save();
-                    session()->flash('message', 'post was archived');
+                    session()->flash('message', 'Post was archived');
                 }
             }
             return redirect()->back();
